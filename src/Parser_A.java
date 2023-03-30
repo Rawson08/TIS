@@ -16,13 +16,15 @@ public class Parser_A {
         int arg2 = Integer.parseInt(tokens[2]);
 
         switch (operation) {
-            case "add":
+            case "MOVE":
+                // AFTER this command I am thinking of add the ports so that whatever the port user is asking to take the
+                // value from we can retrieve that value. I am thinking of making a separate class which holds up, down,
+                // right, and left port values for all ports
                 int sum = arg1 + arg2;
                 System.out.println("Result: " + sum);
                 break;
-            case "subtract":
-                int difference = arg1 - arg2;
-                System.out.println("Result: " + difference);
+            case "SWAP":
+                // add the function of swap command
                 break;
             default:
                 System.out.println("Invalid command.");
