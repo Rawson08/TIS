@@ -32,6 +32,10 @@ public class Tokenizer_J {
         return tokenValue;
     }
 
+    /**
+     * looks for the next token and sets tokenType and tokenValue if found
+     * @return true if not EOF
+     */
     public boolean nextToken() {
         if (pos >= input.length()) {
             tokenType = TokenType.END_OF_FILE;
