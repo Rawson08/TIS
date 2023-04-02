@@ -5,7 +5,7 @@
 public class Tokenizer_J {
     private final String input;
     private int pos;
-    private String tokenValue;
+    private static String tokenValue;
     private TokenType tokenType;
 
     /**
@@ -55,7 +55,7 @@ public class Tokenizer_J {
             tokenValue = ",";
             return true;
         }
-        //determines if the character is a number or possibly a negative sign
+        //determines if the character is a number or a negative sign
         if (Character.isDigit(c) || c == '-') {
             int start = pos;
             pos++;
@@ -64,6 +64,7 @@ public class Tokenizer_J {
             }
             tokenType = TokenType.NUMBER;
             tokenValue = input.substring(start, pos);
+            System.out.println(tokenValue);
             return true;
         }
 
@@ -125,13 +126,15 @@ public class Tokenizer_J {
                     break;
             }
             tokenValue = word;
+            System.out.println(word);
             return true;
         }
-        //catches unhandled errors
-        tokenType = TokenType.ERROR;
-        tokenValue = Character.toString(c);
-        pos++;
+//        //catches unhandled errors
+//        tokenType = TokenType.ERROR;
+//        tokenValue = Character.toString(c);
+//        pos++;
         return true;
     }
+
 }
 
