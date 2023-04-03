@@ -39,9 +39,8 @@ public class Parser_J {
     private String parseStatement() {
         // TODO: implement the parsing logic for the statement rule
         String tokenValue = null;
-        while (tokenizer.getTokenType() != Tokenizer_J.TokenType.END_OF_FILE) {
+        while (tokenizer.nextToken()) {
             // Get the current token type and value
-            tokenizer.nextToken();
             Tokenizer_J.TokenType tokenType = tokenizer.getTokenType();
             tokenValue = tokenizer.getTokenValue();
 
@@ -105,8 +104,6 @@ public class Parser_J {
                     break;
             }
 
-            // Get the next token and continue parsing
-            tokenizer.nextToken();
         }
         return tokenValue;
     }
