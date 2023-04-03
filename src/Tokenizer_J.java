@@ -12,7 +12,7 @@ public class Tokenizer_J {
      * these enums represent the token type
      */
     public enum TokenType {
-        NOOP, MOVE, SWAP, SAVE, ADD, SUB, NEGATE, JUMP, JEZ, JNZ, JGZ, JLZ, JRO, REGISTER, NUMBER, COMMA, END_OF_FILE, ERROR
+        NOOP, MOVE, SWAP, SAVE, ADD, SUB, NEGATE, JUMP, JEZ, JNZ, JGZ, JLZ, JRO, REGISTER, NUMBER, COMMA, END_OF_FILE, PORT, ERROR
     }
 
     /**
@@ -119,6 +119,12 @@ public class Tokenizer_J {
                 case "ACC":
                 case "BAK":
                     tokenType = TokenType.REGISTER;
+                    break;
+                case "RIGHT":
+                case "LEFT":
+                case "UP":
+                case "DOWN":
+                    tokenType = tokenType.PORT;
                     break;
                 //if unrecognized word pattern
                 default:
