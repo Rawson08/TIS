@@ -5,7 +5,7 @@
 public class Tokenizer_J {
     private final String input;
     private int pos;
-    private static String tokenValue;
+    private String tokenValue;
     private TokenType tokenType;
 
     /**
@@ -66,7 +66,6 @@ public class Tokenizer_J {
             }
             tokenType = TokenType.NUMBER;
             tokenValue = input.substring(start, pos);
-            System.out.println("type: " + tokenType + " value: " + tokenValue);
             return true;
         }
 
@@ -154,14 +153,8 @@ public class Tokenizer_J {
                     break;
             }
             tokenValue = word;
-            System.out.println("type: " + tokenType + " value: " + tokenValue);
-
             return true;
         }
-
-//        tokenType = TokenType.ERROR;
-//        tokenValue = Character.toString(c);
-//        pos++;
         return true;
     }
 
