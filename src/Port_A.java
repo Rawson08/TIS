@@ -15,4 +15,36 @@ public class Port_A {
         this.rightPortAccValue = rightPortAccValue;
         this.leftPortAccValue = leftPortAccValue;
     }
+    public int getUpPortAccValue() {
+        return upPortAccValue;
+    }
+
+    public void setUpPortAccValue(int upPortAccValue) {
+        this.upPortAccValue = upPortAccValue;
+    }
+
+    public int getDownPortAccValue() {
+        return downPortAccValue;
+    }
+
+    public void setDownPortAccValue(int downPortAccValue) {
+        this.downPortAccValue = downPortAccValue;
+    }
+
+    public int getRightPortAccValue() {
+        return rightPortAccValue;
+    }
+
+    public void setRightPortAccValue(int rightPortAccValue) {
+        this.rightPortAccValue = rightPortAccValue;
+    }
+
+    public int getLeftPortAccValue() {
+        return leftPortAccValue;
+    }
+
+    public void setLeftPortAccValue(int leftPortAccValue) {
+        this.leftPortAccValue = leftPortAccValue;
+    }
+
 }
