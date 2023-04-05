@@ -5,14 +5,15 @@
 public class Tokenizer_J {
     private final String input;
     private int pos;
-    private static String tokenValue;
+    private String tokenValue;
     private TokenType tokenType;
 
     /**
      * these enums represent the token type
      */
     public enum TokenType {
-        NOOP, MOVE, SWAP, SAVE, ADD, SUB, NEGATE, JUMP, JEZ, JNZ, JGZ, JLZ, JRO, REGISTER, NUMBER, COMMA, END_OF_FILE, PORT, ERROR
+        NOOP, MOVE, SWAP, SAVE, ADD, SUB, NEGATE, JUMP, JEZ, JNZ, JGZ, JLZ, JRO, REGISTER, NUMBER, COMMA, END_OF_FILE,
+        PORT, ERROR, LABEL
     }
 
     /**
@@ -55,6 +56,7 @@ public class Tokenizer_J {
             tokenValue = ",";
             return true;
         }
+
         //determines if the character is a number or a negative sign
         if (Character.isDigit(c) || c == '-') {
             int start = pos;
@@ -64,7 +66,26 @@ public class Tokenizer_J {
             }
             tokenType = TokenType.NUMBER;
             tokenValue = input.substring(start, pos);
-            System.out.println(tokenValue);
+            return true;
+        }
+
+        //if LABEL
+        if(c == ':'){
+            int start = pos;
+            pos++;
+            while(pos < input.length() && Character.isAlphabetic(input.charAt(pos))){
+                pos++;
+            }
+            if(Character.valueOf(input.charAt(pos)) == ':') {
+                tokenType = TokenType.LABEL;
+                tokenValue = input.substring(start,pos + 1);
+            }
+            else{
+                tokenType = TokenType.ERROR;
+                tokenValue = input.substring(start,pos + 1);
+            }
+            System.out.println("type: " + tokenType + " value: " + tokenValue);
+            pos++;
             return true;
         }
 
@@ -132,13 +153,8 @@ public class Tokenizer_J {
                     break;
             }
             tokenValue = word;
-            System.out.println(word);
             return true;
         }
-//        //catches unhandled errors
-//        tokenType = TokenType.ERROR;
-//        tokenValue = Character.toString(c);
-//        pos++;
         return true;
     }
 
