@@ -13,10 +13,10 @@ public class Parser_J {
     }
 
     /**
-     * starts the parsing process and will return the root node of the AST
-     * @return the root node of the AST (String currently)
+     * starts the parsing process
+     * @return an interface object corresponding with the statement parsed
      */
-    public String parse() {
+    public Instruction parse() {
         return parseStatement();
     }
 
@@ -34,9 +34,9 @@ public class Parser_J {
      *           | JGZ expression
      *           | JLZ expression
      *           | JRO expression
-     * @return a statement node representing the matched statement
+     * @return an interface object of the matched statement
      */
-    private String parseStatement() {
+    private Instruction parseStatement() {
         // TODO: implement the parsing logic for the statement rule
         String tokenValue = null;
         while (tokenizer.nextToken()) {
@@ -47,44 +47,54 @@ public class Parser_J {
             // Use a series of conditional statements to handle each type of token
             switch (tokenType) {
                 case NOOP:
-                    // Handle NOOP token
-                    break;
+                    return new NoopInstruction();
                 case MOVE:
-                    // Handle MOVE token
-                    break;
+                    tokenizer.nextToken();
+                    // TODO: check for proper src and dst tokens
+                    String src = tokenizer.getTokenValue();
+                    tokenizer.nextToken();
+                    String dst = tokenizer.getTokenValue();
+                    return new MoveInstruction(src, dst);
                 case SWAP:
-                    // Handle SWAP token
-                    break;
+                    return new SwapInstruction();
                 case SAVE:
-                    // Handle SAVE token
-                    break;
+                    return new SaveInstruction();
                 case ADD:
-                    // Handle ADD token
-                    break;
+                    tokenizer.nextToken();
+                    // TODO: check for proper follow-up token
+                    String addString = tokenizer.getTokenValue();
+                    return new AddInstruction(addString);
                 case SUB:
-                    // Handle SUB token
-                    break;
+                    tokenizer.nextToken();
+                    // TODO: check for proper follow-up token
+                    String subString = tokenizer.getTokenValue();
+                    return new SubInstruction(subString);
                 case NEGATE:
-                    // Handle NEGATE token
-                    break;
+                    return new NegateInstruction();
                 case JUMP:
-                    // Handle JUMP token
-                    break;
+                    tokenizer.nextToken();
+                    String jumpString = tokenizer.getTokenValue();
+                    return new JumpInstruction(jumpString);
                 case JEZ:
-                    // Handle JEZ token
-                    break;
+                    tokenizer.nextToken();
+                    String jezString = tokenizer.getTokenValue();
+                    return new JezInstruction(jezString);
                 case JNZ:
-                    // Handle JNZ token
-                    break;
+                    tokenizer.nextToken();
+                    String jnzString = tokenizer.getTokenValue();
+                    return new JnzInstruction(jnzString);
                 case JGZ:
-                    // Handle JGZ token
-                    break;
+                    tokenizer.nextToken();
+                    String jgzString = tokenizer.getTokenValue();
+                    return new JgzInstruction(jgzString);
                 case JLZ:
-                    // Handle JLZ token
-                    break;
+                    tokenizer.nextToken();
+                    String jlzString = tokenizer.getTokenValue();
+                    return new JlzInstruction(jlzString);
                 case JRO:
-                    // Handle JRO token
-                    break;
+                    tokenizer.nextToken();
+                    int jro = Integer.parseInt(tokenizer.getTokenValue());
+                    return new JroInstruction(jro);
                 case REGISTER:
                     // Handle REGISTER token
                     break;
@@ -105,7 +115,7 @@ public class Parser_J {
             }
 
         }
-        return tokenValue;
+        return null;
     }
 
 }
