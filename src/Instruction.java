@@ -1,3 +1,5 @@
+import jdk.incubator.vector.VectorOperators;
+
 /**
  * this abstract class provides creation of instruction nodes
  * that can be placed in a silos instructions List
@@ -5,6 +7,7 @@
  */
 
 // TODO: implement the logic for each execute function
+
 public abstract class Instruction {
     public abstract void execute();
 }
@@ -33,14 +36,14 @@ class LabelInstruction extends Instruction {
 
     @Override
     public void execute() {
-        // execute LABEL instruction
+        // execute LABEL instruction (does nothing)
     }
 }
 
 class NoopInstruction extends Instruction {
     @Override
     public void execute() {
-        // execute NOOP instruction
+        // execute NOOP instruction (does nothing)
     }
 }
 
@@ -48,13 +51,18 @@ class SwapInstruction extends Instruction {
     @Override
     public void execute() {
         // execute SWAP instruction
+        int temp = TestMain.acc;
+        TestMain.acc = TestMain.bak;
+        TestMain.bak = temp;
     }
 }
 
 class SaveInstruction extends Instruction {
+
     @Override
     public void execute() {
         // execute SAVE instruction
+        TestMain.bak = TestMain.acc;
     }
 }
 
@@ -67,7 +75,7 @@ class AddInstruction extends Instruction {
 
     @Override
     public void execute() {
-        // execute ADD instruction
+        // execute ADD instruction should get src value and add to acc
     }
 }
 
@@ -80,7 +88,7 @@ class SubInstruction extends Instruction {
 
     @Override
     public void execute() {
-        // execute SUB instruction
+        // execute SUB instruction will subtract src value from acc
     }
 }
 
@@ -88,6 +96,7 @@ class NegateInstruction extends Instruction {
     @Override
     public void execute() {
         // execute NEGATE instruction
+        TestMain.acc = (-1) * TestMain.acc;
     }
 }
 
@@ -114,6 +123,9 @@ class JezInstruction extends Instruction {
     @Override
     public void execute() {
         // execute JEZ instruction
+        if(TestMain.acc == 0){
+            //goto label somehow
+        }
     }
 }
 
@@ -127,6 +139,9 @@ class JnzInstruction extends Instruction {
     @Override
     public void execute() {
         // execute JNZ instruction
+        if(TestMain.acc != 0){
+            //goto label somehow
+        }
     }
 }
 
@@ -140,6 +155,10 @@ class JgzInstruction extends Instruction {
     @Override
     public void execute() {
         // execute JGZ instruction
+        if(TestMain.acc > 0){
+            //goto label somehow
+        }
+
     }
 }
 
@@ -153,6 +172,9 @@ class JlzInstruction extends Instruction {
     @Override
     public void execute() {
         // execute JLZ instruction
+        if(TestMain.acc < 0){
+            //goto label somehow
+        }
     }
 }
 
@@ -165,7 +187,7 @@ class JroInstruction extends Instruction {
 
     @Override
     public void execute() {
-        // execute JRO instruction
+        // execute JRO instruction (move offset number of Instructions somehow)
     }
 }
 

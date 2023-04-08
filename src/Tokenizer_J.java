@@ -84,7 +84,8 @@ public class Tokenizer_J {
                 tokenType = TokenType.ERROR;
                 tokenValue = input.substring(start,pos + 1);
             }
-            System.out.println("type: " + tokenType + " value: " + tokenValue);
+            //test print
+            //System.out.println("type: " + tokenType + " value: " + tokenValue);
             pos++;
             return true;
         }

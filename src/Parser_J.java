@@ -10,6 +10,7 @@ public class Parser_J {
      */
     public Parser_J(Tokenizer_J tokenizer) {
         this.tokenizer = tokenizer;
+
     }
 
     /**
