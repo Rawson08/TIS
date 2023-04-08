@@ -24,5 +24,6 @@ public class Parser_A {
             default:
                 break;
         }
+        return rawTextToClassify;
     }
 }
