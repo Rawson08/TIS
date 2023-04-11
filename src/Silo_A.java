@@ -7,7 +7,7 @@ public class Silo_A {
     private int[][] arrayOfSilos;
     private Port_A[][] ports;
 
-    public Silo_A(int numOfSilos) {
+    public Silo_A(int numRow, int numColumn) {
         this.numOfSilos = numOfSilos;
         this.arrayOfSilos = new int[numOfSilos][numOfSilos];
         this.ports = new Port_A[numOfSilos][numOfSilos];

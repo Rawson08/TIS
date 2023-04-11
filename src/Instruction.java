@@ -1,4 +1,3 @@
-import jdk.incubator.vector.VectorOperators;
 
 /**
  * this abstract class provides creation of instruction nodes
