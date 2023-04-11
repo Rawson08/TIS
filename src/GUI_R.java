@@ -2,12 +2,14 @@ import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextFormatter;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
@@ -18,6 +20,10 @@ public class GUI_R extends Application {
     private static final int SILO_COL = 4;
     private static final int LINES = 15;
     private static final int CHARS = 20;
+    private boolean isRunning = false;
+    private static Button startButton;
+    private static Button pauseStepButton;
+    private static Button stopButton;
 
     @Override
     public void start(Stage primaryStage) {
@@ -76,8 +82,58 @@ public class GUI_R extends Application {
         ioLabel.getChildren().addAll(inputLabel, outputLabel);
         ioPanel.getChildren().addAll(inputArea, outputArea);
 
+        VBox vBox = new VBox();
+        vBox.getChildren().addAll(ioLabel, ioPanel);
+        vBox.setPadding(new Insets(10));
+        vBox.prefWidthProperty().bind(root.widthProperty().multiply(0.25));
+
 //        root.setOnSwipeLeft(event -> );
-        root.setLeft(ioPanel);
+        root.setLeft(vBox);
+
+
+        //TODO: Buttons with the change on click functionality
+        startButton = new Button("Start");
+        pauseStepButton = new Button("Pause");
+        stopButton = new Button("Stop");
+
+        startButton.setOnAction(event -> {
+            isRunning = true;
+            startButton.setDisable(true);
+            pauseStepButton.setDisable(false);
+            stopButton.setDisable(false);
+        });
+
+        pauseStepButton.setOnAction(event -> {
+            if (isRunning) {
+                pauseStepButton.setText("Step");
+                isRunning = false;
+            } else {
+                // TODO: Execute 1 instruction from each silo
+            }
+        });
+
+        stopButton.setOnAction(event -> {
+            isRunning = false;
+            startButton.setDisable(false);
+            pauseStepButton.setDisable(true);
+            pauseStepButton.setText("Pause");
+            stopButton.setDisable(true);
+            // TODO: Reset all the silos
+        });
+
+        // Disable the pause/step and stop buttons initially
+        pauseStepButton.setDisable(true);
+        stopButton.setDisable(true);
+
+        // Add the buttons to an HBox
+        HBox buttonBox = new HBox();
+        buttonBox.getChildren().addAll(startButton, pauseStepButton, stopButton);
+        buttonBox.setSpacing(10);
+        buttonBox.setPadding(new Insets(10));
+
+
+        root.setBottom(buttonBox);
+
 
         // Create silo grid
         GridPane siloGrid = new GridPane();
@@ -101,12 +157,15 @@ public class GUI_R extends Application {
                 return change;
             });
             siloArea.setTextFormatter(textFormatter);
-            siloArea.setFont(Font.font("Monospaced", 12));
+            siloArea.setFont(Font.font("Monospaced", 15));
             siloArea.setStyle("-fx-control-inner-background: #222222; -fx-text-fill: #ffffff;");
             siloGrid.add(siloArea, i % 4, i / 4);
         }
 
+        siloGrid.prefWidthProperty().bind(root.widthProperty().multiply(0.75));
         root.setCenter(siloGrid);
+
+
 
         primaryStage.setTitle("Project 4: TIS-100");
         primaryStage.setScene(new Scene(root, 1280, 720));
