@@ -123,7 +123,7 @@ public class GUI_R extends Application {
             pauseStepButton.setDisable(true);
             pauseStepButton.setText("Pause");
             stopButton.setDisable(true);
-            // TODO: Reset all the silos
+            // TODO: Reset all of the silos
         });
 
         // Disable the pause/step and stop buttons initially
