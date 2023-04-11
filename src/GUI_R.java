@@ -14,6 +14,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
+import java.util.Objects;
+
 public class GUI_R extends Application {
 
     private static final int SILO_ROW = 3;
@@ -28,6 +30,8 @@ public class GUI_R extends Application {
     @Override
     public void start(Stage primaryStage) {
         BorderPane root = new BorderPane();
+        Scene scene = new Scene(root, 1280, 720);
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("buttonStyles.css")).toExternalForm());
         root.setStyle("-fx-background-color: #222222;");
 
         // Create input/output panel
@@ -93,6 +97,7 @@ public class GUI_R extends Application {
 
         //TODO: Buttons with the change on click functionality
         startButton = new Button("Start");
+        startButton.getStyleClass().add("button");
         pauseStepButton = new Button("Pause");
         stopButton = new Button("Stop");
 
@@ -168,7 +173,7 @@ public class GUI_R extends Application {
 
 
         primaryStage.setTitle("Project 4: TIS-100");
-        primaryStage.setScene(new Scene(root, 1280, 720));
+        primaryStage.setScene(scene);
         primaryStage.show();
     }
 

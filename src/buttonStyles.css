@@ -1,0 +1,15 @@
+.button {
+    -fx-background-color: #222222;
+    -fx-text-fill: #ffffff;
+    -fx-font-family: "Courier New";
+    -fx-font-size: 12px;
+    -fx-padding: 10px 20px;
+}
+
+.button:hover {
+    -fx-background-color: #444444;
+}
+
+.button:pressed {
+    -fx-background-color: #666666;
+}
