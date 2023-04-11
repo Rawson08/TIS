@@ -5,6 +5,9 @@ import java.util.Scanner;
 public class TestMain {
 private static int numRows;
 private static int numCols;
+public static int acc = 0;
+public static int bak = 0;
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         List<String> gameLines = new ArrayList<>();
