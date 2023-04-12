@@ -1,13 +1,19 @@
+import java.util.ArrayList;
+import java.util.List;
+
 /**
- * This class is where we index every silo through two dimensional array as we discussed in our weekly meeting.
+ * This class is where we index every silo through two-dimensional array as we discussed in our weekly meeting.
  *
  */
 public class Silo_A {
     private int numOfSilos;
     private int[][] arrayOfSilos;
     private Port_A[][] ports;
+    //added list of instructions
+    private List<Instruction> instructions = new ArrayList<>();
 
     public Silo_A(int numRow, int numColumn) {
+        this.instructions = new ArrayList<>();
         this.numOfSilos = numOfSilos;
         this.arrayOfSilos = new int[numOfSilos][numOfSilos];
         this.ports = new Port_A[numOfSilos][numOfSilos];
