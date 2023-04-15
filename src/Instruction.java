@@ -47,21 +47,29 @@ class NoopInstruction extends Instruction {
 }
 
 class SwapInstruction extends Instruction {
+    private Silo_A silo;
+    public SwapInstruction(Silo_A silo){
+        this.silo = silo;
+    }
     @Override
     public void execute() {
         // execute SWAP instruction
-        int temp = TestMain.acc;
-        TestMain.acc = TestMain.bak;
-        TestMain.bak = temp;
+        int temp = silo.getAcc();
+        silo.setAcc(silo.getBak());
+        silo.setBak(temp);
     }
 }
 
 class SaveInstruction extends Instruction {
+    private Silo_A silo;
+    public SaveInstruction(Silo_A silo){
+        this.silo = silo;
+    }
 
     @Override
     public void execute() {
         // execute SAVE instruction
-        TestMain.bak = TestMain.acc;
+        silo.setBak(silo.getAcc());
     }
 }
 
