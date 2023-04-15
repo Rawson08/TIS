@@ -1,6 +1,7 @@
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -12,6 +13,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import java.util.Objects;
@@ -29,8 +31,14 @@ public class GUI_R extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+
+        //To get the current screen Width and Height
+        Rectangle2D visualBounds = Screen.getPrimary().getVisualBounds();
+        double screenWidth = visualBounds.getWidth();
+        double screenHeight = visualBounds.getHeight();
+
         BorderPane root = new BorderPane();
-        Scene scene = new Scene(root, 1280, 720);
+        Scene scene = new Scene(root, screenWidth, screenHeight);
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("buttonStyles.css")).toExternalForm());
         root.setStyle("-fx-background-color: #222222;");
 
@@ -38,7 +46,8 @@ public class GUI_R extends Application {
         HBox ioPanel = new HBox(10);
         ioPanel.setAlignment(Pos.CENTER);
         ioPanel.setPadding(new Insets(10));
-        ioPanel.setPrefWidth(200);
+        ioPanel.setPrefWidth(screenWidth/3);
+        ioPanel.setPrefHeight(screenHeight*0.75);
         ioPanel.setStyle("-fx-background-color: #1a1a1a;");
 
         HBox ioLabel = new HBox(10);
@@ -69,6 +78,7 @@ public class GUI_R extends Application {
         outputLabel.setFont(Font.font("Monospaced", 14));
         outputLabel.setTextFill(Color.WHITE);
         TextArea outputArea = new TextArea();
+        inputArea.setEditable(false);
         outputArea.setEditable(false);
         outputArea.setPrefHeight(200);
         outputArea.setWrapText(true);
@@ -103,6 +113,7 @@ public class GUI_R extends Application {
 
         startButton.setOnAction(event -> {
             isRunning = true;
+            //TODO: Execution
             startButton.setDisable(true);
             pauseStepButton.setDisable(false);
             stopButton.setDisable(false);
@@ -114,6 +125,7 @@ public class GUI_R extends Application {
                 isRunning = false;
             } else {
                 // TODO: Execute 1 instruction from each silo
+
             }
         });
 
