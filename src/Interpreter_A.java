@@ -7,10 +7,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Interpreter_A {
-    private int numRows;
-    private int numCols;
-    public int acc = 0;
-    public int bak = 0;
+    private Silo_A[][] arrayOfSilos;
 
     /**
      * This class handles the execution of internal AST. The value of the parameter tokenizer will be
@@ -22,13 +19,17 @@ public class Interpreter_A {
         Parser_J parser = new Parser_J(tokenizer);
         parser.parse();
     }
-
-    public int getNumRows() {
-        return numRows;
+    public Silo_A[][] getArrayOfSilos() {
+        return arrayOfSilos;
     }
 
-    public int getNumCols() {
-        return numCols;
+    public void setArrayOfSilos(Silo_A[][] arrayOfSilos) {
+        this.arrayOfSilos = arrayOfSilos;
     }
+
+    public void addSiloToArray(Silo_A siloA, int row, int column){
+        this.arrayOfSilos[row][column] = siloA;
+    }
+
 }
 
