@@ -38,8 +38,10 @@ private List<Integer> inputValues;
         numCols = Integer.parseInt(gridValues[1]);
 
         // only prints the statement before the input values
+        int inputCounter = 0;
         for (int i=0; i<inputs.size(); i++){
             if (inputs.equals("INPUT")){
+                inputCounter++;
                 break;
             }
             System.out.println("v: " + inputs.get(i) );
@@ -95,13 +97,11 @@ private List<Integer> inputValues;
         // TODO: Instead of making a silo for input and output values, use them to make the table.
         int siloCounter = 0;
         for (List<String> silo : silos) {
-            Silo_A siloForPorts = new Silo_A(numRows, numCols);
             System.out.println("Silo Number: " + siloCounter);
+            Interpreter_A interpreterA;
             // here instruction passes the whole line of instruction
             for (String instruction : silo) {
-                Tokenizer_J tokenizer = new Tokenizer_J(instruction);
-                Parser_J parser = new Parser_J(tokenizer);
-                parser.parse();
+                interpreterA = new Interpreter_A(instruction);
             }
             siloCounter++;
         }

@@ -7,7 +7,7 @@ public class Port_A {
     private int rightPortAccValue;
     private int leftPortAccValue;
 
-    public Port_A(int siloIndex, int upPortAccValue, int downPortAccValue, int rightPortAccValue, int leftPortAccValue){
+    public Port_A(){
         // I am thinking of making the right value of silo index 0 to the left value of silo index 1
         // this can be done where ever port class is called.
         this.upPortAccValue = upPortAccValue;
