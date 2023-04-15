@@ -21,8 +21,11 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import java.util.Objects;
+import java.util.Scanner;
 
 public class GUI_R extends Application {
+    Interpreter_A interpreterA = new Interpreter_A("");
+
     private final int SILO_ROW = 3;
     private static final int SILO_COL = 4;
     private static final int LINES = 15;
@@ -35,15 +38,16 @@ public class GUI_R extends Application {
     @Override
     public void start(Stage primaryStage) {
 
+
         //To get the current screen Width and Height
         Rectangle2D visualBounds = Screen.getPrimary().getVisualBounds();
         double screenWidth = visualBounds.getWidth();
         double screenHeight = visualBounds.getHeight();
 
-        BorderPane root = new BorderPane();
-        Scene scene = new Scene(root, screenWidth, screenHeight);
+        BorderPane IORoot = new BorderPane();
+        Scene scene = new Scene(IORoot, screenWidth, screenHeight);
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("buttonStyles.css")).toExternalForm());
-        root.setStyle("-fx-background-color: #222222;");
+        IORoot.setStyle("-fx-background-color: #222222;");
 
         // Create input/output panel
         HBox ioPanel = new HBox(10);
@@ -102,10 +106,10 @@ public class GUI_R extends Application {
         VBox vBox = new VBox();
         vBox.getChildren().addAll(ioLabel, ioPanel);
         vBox.setPadding(new Insets(10));
-        vBox.prefWidthProperty().bind(root.widthProperty().multiply(0.25));
+        vBox.prefWidthProperty().bind(IORoot.widthProperty().multiply(0.25));
 
 //        root.setOnSwipeLeft(event -> );
-        root.setLeft(vBox);
+        IORoot.setLeft(vBox);
 
 
         //TODO: Buttons with the change on click functionality
@@ -152,7 +156,7 @@ public class GUI_R extends Application {
         buttonBox.setPadding(new Insets(10));
 
 
-        root.setBottom(buttonBox);
+        IORoot.setBottom(buttonBox);
 
 
 
@@ -169,6 +173,9 @@ public class GUI_R extends Application {
 
             //TODO: I am thinking to update the Labels based on the values of Acc and Bak we get from the interpreter
 
+            int accIntValue = 0;
+            int bakIntValue = 0;
+
             // Add the Acc and Bak labels
             HBox accBakBox = new HBox();
             accBakBox.setAlignment(Pos.TOP_RIGHT);
@@ -176,13 +183,13 @@ public class GUI_R extends Application {
             Label accLabel = new Label("ACC");
             accLabel.setFont(Font.font("Monospaced", FontWeight.BOLD, 15));
             accLabel.setTextFill(Color.WHITE);
-            Label accValue = new Label("000");
+            Label accValue = new Label(String.valueOf(accIntValue));
             accValue.setFont(Font.font("Monospaced", 15));
             accValue.setTextFill(Color.WHITE);
             Label bakLabel = new Label("BAK");
             bakLabel.setFont(Font.font("Monospaced", FontWeight.BOLD, 15));
             bakLabel.setTextFill(Color.WHITE);
-            Label bakValue = new Label("000");
+            Label bakValue = new Label(String.valueOf(bakIntValue));
             bakValue.setFont(Font.font("Monospaced", 15));
             bakValue.setTextFill(Color.WHITE);
 
@@ -196,24 +203,31 @@ public class GUI_R extends Application {
             ImageView leftArrowPNG = new ImageView("file:src/Arrows/left-arrow.png");
             ImageView rightArrowPNG = new ImageView("file:src/Arrows/right-arrow.png");
 
+            ImageView upArrowOnPNG = new ImageView("file:src/Arrows/up-arrow-on.png");
+            ImageView downArrowOnPNG = new ImageView("file:src/Arrows/down-arrow-on.png");
+            ImageView leftArrowOnPNG = new ImageView("file:src/Arrows/left-arrow-on.png");
+            ImageView rightArrowOnPNG = new ImageView("file:src/Arrows/right-arrow-on.png");
+
+            //2D Array to store the arrows and we can use the arrow giving 0 for unlit, and 1 for lit arrow
+            ImageView [][] imageViewArray = {{upArrowPNG, downArrowPNG, leftArrowPNG, rightArrowPNG},{upArrowOnPNG, downArrowOnPNG, leftArrowOnPNG, rightArrowOnPNG}};
 
             HBox arrowBox = new HBox();
             arrowBox.setAlignment(Pos.CENTER);
             arrowBox.setSpacing(10);
             Label upArrow = new Label();
-            upArrow.setGraphic(upArrowPNG);
+            upArrow.setGraphic(imageViewArray[0][0]);
             upArrow.setFont(Font.font("Monospaced", FontWeight.BOLD, 15));
             upArrow.setTextFill(Color.LIGHTGRAY);
             Label downArrow = new Label();
-            downArrow.setGraphic(downArrowPNG);
+            downArrow.setGraphic(imageViewArray[0][1]);
             downArrow.setFont(Font.font("Monospaced", FontWeight.BOLD, 15));
             downArrow.setTextFill(Color.LIGHTGRAY);
             Label leftArrow = new Label();
-            leftArrow.setGraphic(leftArrowPNG);
+            leftArrow.setGraphic(imageViewArray[0][2]);
             leftArrow.setFont(Font.font("Monospaced", FontWeight.BOLD, 15));
             leftArrow.setTextFill(Color.LIGHTGRAY);
             Label rightArrow = new Label();
-            rightArrow.setGraphic(rightArrowPNG);
+            rightArrow.setGraphic(imageViewArray[0][3]);
             rightArrow.setFont(Font.font("Monospaced", FontWeight.BOLD, 15));
             rightArrow.setTextFill(Color.LIGHTGRAY);
             upArrow.setAlignment(Pos.TOP_CENTER);
@@ -226,7 +240,8 @@ public class GUI_R extends Application {
             rightOfSilo.setSpacing(5);
 
             //Setting the co-ordinates for the arrows and BAK/ACC
-            BorderPane.setMargin(leftArrow, new Insets(100, 10, 0, 0));
+            //TODO: Currently the co-ordinates only works for a fixed 1920X1080 Display, when resized, they don't move with the silo
+            BorderPane.setMargin(leftArrow, new Insets(105, 10, 0, 0));
             BorderPane.setMargin(rightOfSilo, new Insets(10, 0, 0, 10));
             BorderPane.setMargin(upArrow, new Insets(10, 0, 0, 125));
             BorderPane.setMargin(downArrow, new Insets(0, 0, 10, 125));
@@ -254,8 +269,8 @@ public class GUI_R extends Application {
             siloGrid.add(borderPane, i % 4, i / 4);
         }
 
-        siloGrid.prefWidthProperty().bind(root.widthProperty().multiply(0.75));
-        root.setCenter(siloGrid);
+        siloGrid.prefWidthProperty().bind(IORoot.widthProperty().multiply(0.75));
+        IORoot.setCenter(siloGrid);
 
 
         primaryStage.setTitle("Project 4: TIS-100");
