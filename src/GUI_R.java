@@ -19,8 +19,7 @@ import javafx.stage.Stage;
 import java.util.Objects;
 
 public class GUI_R extends Application {
-
-    private static final int SILO_ROW = 3;
+    private final int SILO_ROW = 3;
     private static final int SILO_COL = 4;
     private static final int LINES = 15;
     private static final int CHARS = 20;

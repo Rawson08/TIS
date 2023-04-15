@@ -52,6 +52,7 @@ public class Parser_J {
                 case MOVE:
                     tokenizer.nextToken();
                     // TODO: check for proper src and dst tokens
+                    // update for src and dst tokens
                     String src = tokenizer.getTokenValue();
                     tokenizer.nextToken();
                     String dst = tokenizer.getTokenValue();
