@@ -7,12 +7,16 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextFormatter;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
@@ -151,6 +155,7 @@ public class GUI_R extends Application {
         root.setBottom(buttonBox);
 
 
+
         // Create silo grid
         GridPane siloGrid = new GridPane();
         siloGrid.setAlignment(Pos.CENTER);
@@ -159,7 +164,74 @@ public class GUI_R extends Application {
         siloGrid.setPadding(new Insets(10));
         siloGrid.setStyle("-fx-background-color: #1a1a1a;");
 
+
         for (int i = 0; i < SILO_ROW * SILO_COL; i++) {
+
+            //TODO: I am thinking to update the Labels based on the values of Acc and Bak we get from the interpreter
+
+            // Add the Acc and Bak labels
+            HBox accBakBox = new HBox();
+            accBakBox.setAlignment(Pos.TOP_RIGHT);
+            accBakBox.setSpacing(10);
+            Label accLabel = new Label("ACC");
+            accLabel.setFont(Font.font("Monospaced", FontWeight.BOLD, 15));
+            accLabel.setTextFill(Color.WHITE);
+            Label accValue = new Label("000");
+            accValue.setFont(Font.font("Monospaced", 15));
+            accValue.setTextFill(Color.WHITE);
+            Label bakLabel = new Label("BAK");
+            bakLabel.setFont(Font.font("Monospaced", FontWeight.BOLD, 15));
+            bakLabel.setTextFill(Color.WHITE);
+            Label bakValue = new Label("000");
+            bakValue.setFont(Font.font("Monospaced", 15));
+            bakValue.setTextFill(Color.WHITE);
+
+
+            //TODO: Arrows needs more work, as currently we can't be sure if any arrow is in use. I am thinking to
+            // import the 'in-use' arrows as well which will be used if any arrow is used.
+
+            // Importing the Arrows PNGs
+            ImageView upArrowPNG = new ImageView("file:src/Arrows/up-arrow.png");
+            ImageView downArrowPNG = new ImageView("file:src/Arrows/down-arrow.png");
+            ImageView leftArrowPNG = new ImageView("file:src/Arrows/left-arrow.png");
+            ImageView rightArrowPNG = new ImageView("file:src/Arrows/right-arrow.png");
+
+
+            HBox arrowBox = new HBox();
+            arrowBox.setAlignment(Pos.CENTER);
+            arrowBox.setSpacing(10);
+            Label upArrow = new Label();
+            upArrow.setGraphic(upArrowPNG);
+            upArrow.setFont(Font.font("Monospaced", FontWeight.BOLD, 15));
+            upArrow.setTextFill(Color.LIGHTGRAY);
+            Label downArrow = new Label();
+            downArrow.setGraphic(downArrowPNG);
+            downArrow.setFont(Font.font("Monospaced", FontWeight.BOLD, 15));
+            downArrow.setTextFill(Color.LIGHTGRAY);
+            Label leftArrow = new Label();
+            leftArrow.setGraphic(leftArrowPNG);
+            leftArrow.setFont(Font.font("Monospaced", FontWeight.BOLD, 15));
+            leftArrow.setTextFill(Color.LIGHTGRAY);
+            Label rightArrow = new Label();
+            rightArrow.setGraphic(rightArrowPNG);
+            rightArrow.setFont(Font.font("Monospaced", FontWeight.BOLD, 15));
+            rightArrow.setTextFill(Color.LIGHTGRAY);
+            upArrow.setAlignment(Pos.TOP_CENTER);
+            downArrow.setAlignment(Pos.BOTTOM_CENTER);
+            leftArrow.setAlignment(Pos.CENTER_LEFT);
+            rightArrow.setAlignment(Pos.CENTER_RIGHT);
+
+            VBox rightOfSilo = new VBox();
+            rightOfSilo.getChildren().addAll(bakLabel, bakValue, accLabel, accValue, rightArrow);
+            rightOfSilo.setSpacing(5);
+
+            //Setting the co-ordinates for the arrows and BAK/ACC
+            BorderPane.setMargin(leftArrow, new Insets(100, 10, 0, 0));
+            BorderPane.setMargin(rightOfSilo, new Insets(10, 0, 0, 10));
+            BorderPane.setMargin(upArrow, new Insets(10, 0, 0, 125));
+            BorderPane.setMargin(downArrow, new Insets(0, 0, 10, 125));
+
+
             TextArea siloArea = new TextArea();
             siloArea.setEditable(true);
             siloArea.setPrefColumnCount(CHARS);
@@ -173,14 +245,17 @@ public class GUI_R extends Application {
                 return change;
             });
             siloArea.setTextFormatter(textFormatter);
-            siloArea.setFont(Font.font("Monospaced", 15));
+            siloArea.setFont(Font.font("Monospaced", 12));
             siloArea.setStyle("-fx-control-inner-background: #222222; -fx-text-fill: #ffffff;");
-            siloGrid.add(siloArea, i % 4, i / 4);
+            BorderPane borderPane = new BorderPane(siloArea, upArrow, rightOfSilo, downArrow, leftArrow);
+//            borderPane.setLeft(bakLabel);
+//            siloVBox.getChildren().addAll(borderPane);
+
+            siloGrid.add(borderPane, i % 4, i / 4);
         }
 
         siloGrid.prefWidthProperty().bind(root.widthProperty().multiply(0.75));
         root.setCenter(siloGrid);
-
 
 
         primaryStage.setTitle("Project 4: TIS-100");
@@ -188,7 +263,5 @@ public class GUI_R extends Application {
         primaryStage.show();
     }
 
-    public static void main(String[] args) {
-        launch(args);
-    }
+    public static void main(String[] args) {launch(args);}
 }
