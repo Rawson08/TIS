@@ -17,8 +17,13 @@ public class Interpreter_A {
 
     private int numRows;
     private int numCols;
-    private Silo_A[][] arrayOfSilos = new Silo_A[numRows][numCols];
+    private Silo_A[][] arrayOfSilos;
     private List<Integer> inputValues;
+    private List<List<Integer>> inputValuesList;
+    private int inputRow[];
+    private int inputColumn[];
+    private int outputFromSiloX;
+    private int outputFromSiloY;
 
     /**
      * This class handles the execution of internal AST. The value of the parameter tokenizer will be
@@ -27,7 +32,6 @@ public class Interpreter_A {
      */
     public Interpreter_A(String aLineInstruction){
         // read from the command line when the program starts
-
 
         // call tokenizer and parser to work with in the GUI after interpreter is being called
         Tokenizer_J tokenizer = new Tokenizer_J(aLineInstruction);
@@ -50,7 +54,6 @@ public class Interpreter_A {
         Scanner scanner = new Scanner(System.in);
         List<String> inputs = new ArrayList<>();
 
-
         // Read in game instructions
         String line;
         while (true) {
@@ -66,15 +69,20 @@ public class Interpreter_A {
         String[] gridValues = line.split("\\s+");
         this.numRows = Integer.parseInt(gridValues[0]);
         this.numCols = Integer.parseInt(gridValues[1]);
+        this.arrayOfSilos = new Silo_A[numRows][numCols];
 
         // only prints the statement before the input values
         int inputCounter = 0;
+        int outputCounter = 0;
         for (int i=0; i<inputs.size(); i++){
             if (inputs.get(i).equals("INPUT")){
                 inputCounter++;
                 break;
             }
-            System.out.println("v: " + inputs.get(i) );
+            else if (inputs.get(i).equals("OUTPUT")){
+                outputCounter++;
+                break;
+            }
         }
         System.out.println("Input count is: " + inputCounter);
 
@@ -82,72 +90,80 @@ public class Interpreter_A {
         // TODO: Handle if the number of input (inputCounter) is more than 1.
         this.inputValues = new ArrayList<>();
         int outputIndex = inputs.indexOf("OUTPUT");
-        if (inputs.contains("INPUT")){
-            int inputIndex = inputs.indexOf("INPUT");
-            // add the input row and input column to the header variable
-            String inputRowAndColumn = inputs.remove(inputIndex+1);
-            String[] inputRowAndColumnSplit = inputRowAndColumn.split("\\s+");
-            for (int i=0; i<inputRowAndColumnSplit.length; i++){
-                if (inputRowAndColumnSplit[i].equals("-")){
-                    String concatRow = inputRowAndColumnSplit[i] + inputRowAndColumnSplit[i+1];
-                    // concatRow is the input row
-//                    this.inputRow = Integer.parseInt(concatRow);
-//                    System.out.println(testMain.inputRow);
-                    i++;
+        for (int j=0; j<inputCounter;j++) {
+            int endIndex = inputs.indexOf("END");
+            if (inputs.contains("INPUT")) {
+                int inputIndex = inputs.indexOf("INPUT");
+                // add the input row and input column to the header variable
+                String inputRowAndColumn = inputs.remove(inputIndex + 1);
+                String[] inputRowAndColumnSplit = inputRowAndColumn.split("\\s+");
+                for (int i = 0; i < inputRowAndColumnSplit.length; i++) {
+                    if (inputRowAndColumnSplit[i].equals("-")) {
+                        String concatRow = inputRowAndColumnSplit[i] + inputRowAndColumnSplit[i + 1];
+                        // concatRow is the input row
+                        this.inputRow = new int[inputCounter];
+                        this.inputRow[j] = Integer.parseInt(concatRow);
+                        System.out.println(inputRow[j]);
+                        i++;
+                    } else {
+                        // otherwise get the input Column
+                        this.inputColumn = new int[inputCounter];
+                        this.inputColumn[j] = Integer.parseInt(inputRowAndColumnSplit[i]);
+                        System.out.println(inputColumn[j]);
+                    }
                 }
-                else {
-                    // otherwise get the input Column
-//                    testMain.inputColumn = Integer.parseInt(inputRowAndColumnSplit[i]);
-//                    System.out.println(testMain.outputRow);
+                // add all the input values for input into inputValues
+                for (int i = inputIndex + 1; i < outputIndex - 2; i++) {
+                    this.inputValues.add(Integer.parseInt(inputs.get(i)));
+                    System.out.println("Input Value: " + this.inputValues);
                 }
-            }
-            // add all the input values for input into inputValues
-            for (int i=inputIndex+1; i<outputIndex-2; i++){
-                this.inputValues.add(Integer.parseInt(inputs.get(i)));
-                System.out.println("Input Value: " + this.inputValues);
             }
         }
         if (inputs.contains("OUTPUT")){
             String outputRowAndColumn = inputs.remove(outputIndex);
             String[] outputRowAndColumnSplit = outputRowAndColumn.split("\\s+");
-//            testMain.outputRow = Integer.parseInt(outputRowAndColumnSplit[0]);
-//            testMain.outputColumn = Integer.parseInt(outputRowAndColumnSplit[1]);
+            outputFromSiloX = Integer.parseInt(outputRowAndColumnSplit[0]);
+            outputFromSiloY = Integer.parseInt(outputRowAndColumnSplit[1]);
         }
 
 
         // Load instructions into silos
-        List<List<String>> silos = new ArrayList<>();
-        List<String> currentSilo = new ArrayList<>();
+        List<String> currSiloInstruction = new ArrayList<>();
+        Silo_A currSilo = new Silo_A();
+        int siloCounterX = 0;
+        int siloCounterY = 0;
         for (String instruction : inputs) {
-            for (int i=0; i<numRows; i++){
-                for (int j=0; j<numCols; j++){
-                    if (instruction.equals("END")) {
-                        arrayOfSilos[i][j].setListOfInstructions(currentSilo);
-                        silos.add(currentSilo);
-                        currentSilo = new ArrayList<>();
-                    }
-                    else {
-                        currentSilo.add(instruction);
-                    }
+            if (instruction.equals("INPUT")){
+                break;
+            }
+            if (instruction.equals("END")) {
+                currSilo.setListOfInstructions(currSiloInstruction);
+                arrayOfSilos[siloCounterX][siloCounterY] = currSilo;
+                currSilo = new Silo_A();
+                currSiloInstruction = new ArrayList<>();
+                if (siloCounterY++ == numCols){
+                    siloCounterX++;
+                }
+                else {
+                    siloCounterY++;
+                }
+            }
+            else {
+                currSiloInstruction.add(instruction);
+            }
+        }
+        // Add last silo
+        currSilo.setListOfInstructions(currSiloInstruction);
+        arrayOfSilos[siloCounterX][siloCounterY] = currSilo;
+
+        for (int i=0; i<numRows; i++){
+            for (int j=0; j<numCols; j++){
+
+                for (int k=0; k<arrayOfSilos[i][j].getListOfInstructions().size();k++) {
+                    System.out.println("inp: " + arrayOfSilos[i][j].getListOfInstructions().get(k));
                 }
             }
         }
-        silos.add(currentSilo); // Add last silo
-
-
-//        // Set the ports for each silo
-//        // TODO: Instead of making a silo for input and output values, use them to make the table.
-//        int siloCounter = 0;
-//        for (List<String> silo : silos) {
-//            System.out.println("Silo Number: " + siloCounter);
-//            Interpreter_A interpreterA;
-//            // here instruction passes the whole line of instruction
-//            for (String instruction : silo) {
-//                interpreterA = new Interpreter_A(instruction);
-//                System.out.println("" + instruction);
-//            }
-//            siloCounter++;
-//        }
     }
 }
 
