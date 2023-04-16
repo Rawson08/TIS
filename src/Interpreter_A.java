@@ -134,15 +134,18 @@ public class Interpreter_A {
         int siloCounterY = 0;
         for (String instruction : inputs) {
             if (instruction.equals("INPUT")){
+                System.out.println("break time");
                 break;
             }
             if (instruction.equals("END")) {
                 currSilo.setListOfInstructions(currSiloInstruction);
                 arrayOfSilos[siloCounterX][siloCounterY] = currSilo;
+
                 currSilo = new Silo_A();
                 currSiloInstruction = new ArrayList<>();
-                if (siloCounterY++ == numCols){
+                if (siloCounterY + 1 == numCols){
                     siloCounterX++;
+                    siloCounterY = 0;
                 }
                 else {
                     siloCounterY++;
@@ -151,10 +154,11 @@ public class Interpreter_A {
             else {
                 currSiloInstruction.add(instruction);
             }
+            System.out.println("x:" + siloCounterX + " y:" + siloCounterY);
         }
         // Add last silo
         currSilo.setListOfInstructions(currSiloInstruction);
-        arrayOfSilos[siloCounterX][siloCounterY] = currSilo;
+        //arrayOfSilos[siloCounterX][siloCounterY] = currSilo;
 
         for (int i=0; i<numRows; i++){
             for (int j=0; j<numCols; j++){
