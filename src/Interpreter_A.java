@@ -134,7 +134,6 @@ public class Interpreter_A {
         int siloCounterY = 0;
         for (String instruction : inputs) {
             if (instruction.equals("INPUT")){
-                System.out.println("break time");
                 break;
             }
             if (instruction.equals("END")) {
@@ -154,7 +153,6 @@ public class Interpreter_A {
             else {
                 currSiloInstruction.add(instruction);
             }
-            System.out.println("x:" + siloCounterX + " y:" + siloCounterY);
         }
         // Add last silo
         currSilo.setListOfInstructions(currSiloInstruction);
