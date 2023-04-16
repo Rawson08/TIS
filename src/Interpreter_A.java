@@ -160,7 +160,7 @@ public class Interpreter_A {
 
         for (int i=0; i<numRows; i++){
             for (int j=0; j<numCols; j++){
-
+                System.out.println("silo[" + i + "]["+ j +"]");
                 for (int k=0; k<arrayOfSilos[i][j].getListOfInstructions().size();k++) {
                     System.out.println("inp: " + arrayOfSilos[i][j].getListOfInstructions().get(k));
                 }
