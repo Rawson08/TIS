@@ -7,6 +7,14 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Interpreter_A {
+    public int getNumRows() {
+        return numRows;
+    }
+
+    public int getNumCols() {
+        return numCols;
+    }
+
     private int numRows;
     private int numCols;
     private Silo_A[][] arrayOfSilos = new Silo_A[numRows][numCols];

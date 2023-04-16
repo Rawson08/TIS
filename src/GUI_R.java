@@ -7,21 +7,18 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextFormatter;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import java.util.Objects;
-import java.util.Scanner;
 
 public class GUI_R extends Application {
     Interpreter_A interpreterA = new Interpreter_A("");
@@ -44,10 +41,10 @@ public class GUI_R extends Application {
         double screenWidth = visualBounds.getWidth();
         double screenHeight = visualBounds.getHeight();
 
-        BorderPane IORoot = new BorderPane();
-        Scene scene = new Scene(IORoot, screenWidth, screenHeight);
+        BorderPane root = new BorderPane();
+        Scene scene = new Scene(root, screenWidth, screenHeight);
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("buttonStyles.css")).toExternalForm());
-        IORoot.setStyle("-fx-background-color: #222222;");
+//        root.setStyle("-fx-background-color: #222222;");
 
         // Create input/output panel
         HBox ioPanel = new HBox(10);
@@ -70,15 +67,10 @@ public class GUI_R extends Application {
         TextArea inputArea = new TextArea();
         inputArea.setPrefHeight(200);
         inputArea.setWrapText(true);
+
         // Limit the number of lines to 15
-        int maxLines = 15;
-        TextFormatter<String> textFormatterIn = new TextFormatter<>(change -> {
-            if (change.getControlNewText().lines().count() > maxLines) {
-                return null;
-            }
-            return change;
-        });
-        inputArea.setTextFormatter(textFormatterIn);
+        textAreaLimiter(inputArea);
+
         inputArea.setFont(Font.font("Monospaced", 12));
         inputArea.setStyle("-fx-control-inner-background: #222222; -fx-text-fill: #ffffff;");
         Label outputLabel = new Label("OUTPUT");
@@ -89,14 +81,10 @@ public class GUI_R extends Application {
         outputArea.setEditable(false);
         outputArea.setPrefHeight(200);
         outputArea.setWrapText(true);
+
         // Limit the number of lines to 15
-        TextFormatter<String> textFormatterOut = new TextFormatter<>(change -> {
-            if (change.getControlNewText().lines().count() > maxLines) {
-                return null;
-            }
-            return change;
-        });
-        outputArea.setTextFormatter(textFormatterOut);
+        textAreaLimiter(outputArea);
+
         outputArea.setFont(Font.font("Monospaced", 12));
         outputArea.setStyle("-fx-control-inner-background: #222222; -fx-text-fill: #ffffff;");
 
@@ -106,17 +94,19 @@ public class GUI_R extends Application {
         VBox vBox = new VBox();
         vBox.getChildren().addAll(ioLabel, ioPanel);
         vBox.setPadding(new Insets(10));
-        vBox.prefWidthProperty().bind(IORoot.widthProperty().multiply(0.25));
+        vBox.prefWidthProperty().bind(root.widthProperty().multiply(0.25));
 
-//        root.setOnSwipeLeft(event -> );
-        IORoot.setLeft(vBox);
+        root.setLeft(vBox);
+        root.setStyle("-fx-background-color: #222222;");
 
 
         //TODO: Buttons with the change on click functionality
         startButton = new Button("Start");
-        startButton.getStyleClass().add("button");
+        startButton.setStyle("-fx-border-color: white; -fx-border-width: 1px;");
         pauseStepButton = new Button("Pause");
+        pauseStepButton.setStyle("-fx-border-color: white; -fx-border-width: 1px;");
         stopButton = new Button("Stop");
+        stopButton.setStyle("-fx-border-color: white; -fx-border-width: 1px;");
 
         startButton.setOnAction(event -> {
             isRunning = true;
@@ -132,7 +122,6 @@ public class GUI_R extends Application {
                 isRunning = false;
             } else {
                 // TODO: Execute 1 instruction from each silo
-
             }
         });
 
@@ -156,8 +145,7 @@ public class GUI_R extends Application {
         buttonBox.setPadding(new Insets(10));
 
 
-        IORoot.setBottom(buttonBox);
-
+        root.setBottom(buttonBox);
 
 
         // Create silo grid
@@ -170,112 +158,36 @@ public class GUI_R extends Application {
 
 
         for (int i = 0; i < SILO_ROW * SILO_COL; i++) {
-
-            //TODO: I am thinking to update the Labels based on the values of Acc and Bak we get from the interpreter
-
-            int accIntValue = 0;
-            int bakIntValue = 0;
-
-            // Add the Acc and Bak labels
-            HBox accBakBox = new HBox();
-            accBakBox.setAlignment(Pos.TOP_RIGHT);
-            accBakBox.setSpacing(10);
-            Label accLabel = new Label("ACC");
-            accLabel.setFont(Font.font("Monospaced", FontWeight.BOLD, 15));
-            accLabel.setTextFill(Color.WHITE);
-            Label accValue = new Label(String.valueOf(accIntValue));
-            accValue.setFont(Font.font("Monospaced", 15));
-            accValue.setTextFill(Color.WHITE);
-            Label bakLabel = new Label("BAK");
-            bakLabel.setFont(Font.font("Monospaced", FontWeight.BOLD, 15));
-            bakLabel.setTextFill(Color.WHITE);
-            Label bakValue = new Label(String.valueOf(bakIntValue));
-            bakValue.setFont(Font.font("Monospaced", 15));
-            bakValue.setTextFill(Color.WHITE);
-
-
-            //TODO: Arrows needs more work, as currently we can't be sure if any arrow is in use. I am thinking to
-            // import the 'in-use' arrows as well which will be used if any arrow is used.
-
-            // Importing the Arrows PNGs
-            ImageView upArrowPNG = new ImageView("file:src/Arrows/up-arrow.png");
-            ImageView downArrowPNG = new ImageView("file:src/Arrows/down-arrow.png");
-            ImageView leftArrowPNG = new ImageView("file:src/Arrows/left-arrow.png");
-            ImageView rightArrowPNG = new ImageView("file:src/Arrows/right-arrow.png");
-
-            ImageView upArrowOnPNG = new ImageView("file:src/Arrows/up-arrow-on.png");
-            ImageView downArrowOnPNG = new ImageView("file:src/Arrows/down-arrow-on.png");
-            ImageView leftArrowOnPNG = new ImageView("file:src/Arrows/left-arrow-on.png");
-            ImageView rightArrowOnPNG = new ImageView("file:src/Arrows/right-arrow-on.png");
-
-            //2D Array to store the arrows and we can use the arrow giving 0 for unlit, and 1 for lit arrow
-            ImageView [][] imageViewArray = {{upArrowPNG, downArrowPNG, leftArrowPNG, rightArrowPNG},{upArrowOnPNG, downArrowOnPNG, leftArrowOnPNG, rightArrowOnPNG}};
-
-            HBox arrowBox = new HBox();
-            arrowBox.setAlignment(Pos.CENTER);
-            arrowBox.setSpacing(10);
-            Label upArrow = new Label();
-            upArrow.setGraphic(imageViewArray[0][0]);
-            upArrow.setFont(Font.font("Monospaced", FontWeight.BOLD, 15));
-            upArrow.setTextFill(Color.LIGHTGRAY);
-            Label downArrow = new Label();
-            downArrow.setGraphic(imageViewArray[0][1]);
-            downArrow.setFont(Font.font("Monospaced", FontWeight.BOLD, 15));
-            downArrow.setTextFill(Color.LIGHTGRAY);
-            Label leftArrow = new Label();
-            leftArrow.setGraphic(imageViewArray[0][2]);
-            leftArrow.setFont(Font.font("Monospaced", FontWeight.BOLD, 15));
-            leftArrow.setTextFill(Color.LIGHTGRAY);
-            Label rightArrow = new Label();
-            rightArrow.setGraphic(imageViewArray[0][3]);
-            rightArrow.setFont(Font.font("Monospaced", FontWeight.BOLD, 15));
-            rightArrow.setTextFill(Color.LIGHTGRAY);
-            upArrow.setAlignment(Pos.TOP_CENTER);
-            downArrow.setAlignment(Pos.BOTTOM_CENTER);
-            leftArrow.setAlignment(Pos.CENTER_LEFT);
-            rightArrow.setAlignment(Pos.CENTER_RIGHT);
-
-            VBox rightOfSilo = new VBox();
-            rightOfSilo.getChildren().addAll(bakLabel, bakValue, accLabel, accValue, rightArrow);
-            rightOfSilo.setSpacing(5);
-
-            //Setting the co-ordinates for the arrows and BAK/ACC
-            //TODO: Currently the co-ordinates only works for a fixed 1920X1080 Display, when resized, they don't move with the silo
-            BorderPane.setMargin(leftArrow, new Insets(105, 10, 0, 0));
-            BorderPane.setMargin(rightOfSilo, new Insets(10, 0, 0, 10));
-            BorderPane.setMargin(upArrow, new Insets(10, 0, 0, 125));
-            BorderPane.setMargin(downArrow, new Insets(0, 0, 10, 125));
-
-
-            TextArea siloArea = new TextArea();
-            siloArea.setEditable(true);
-            siloArea.setPrefColumnCount(CHARS);
-            siloArea.setPrefRowCount(LINES);
-            siloArea.setWrapText(true);
-            // Limit the number of lines to 15
-            TextFormatter<String> textFormatter = new TextFormatter<>(change -> {
-                if (change.getControlNewText().lines().count() > maxLines) {
-                    return null;
-                }
-                return change;
-            });
-            siloArea.setTextFormatter(textFormatter);
-            siloArea.setFont(Font.font("Monospaced", 12));
-            siloArea.setStyle("-fx-control-inner-background: #222222; -fx-text-fill: #ffffff;");
-            BorderPane borderPane = new BorderPane(siloArea, upArrow, rightOfSilo, downArrow, leftArrow);
-//            borderPane.setLeft(bakLabel);
-//            siloVBox.getChildren().addAll(borderPane);
-
-            siloGrid.add(borderPane, i % 4, i / 4);
+            SiloGUI silo = new SiloGUI();
+            SiloGUI[] silos = new SiloGUI[SILO_ROW*SILO_COL];
+            silos[i] = silo;
+            siloGrid.add(silo.drawSilo(), i % 4, i / 4);
         }
 
-        siloGrid.prefWidthProperty().bind(IORoot.widthProperty().multiply(0.75));
-        IORoot.setCenter(siloGrid);
-
+        siloGrid.prefWidthProperty().bind(root.widthProperty().multiply(0.75));
+        root.setCenter(siloGrid);
 
         primaryStage.setTitle("Project 4: TIS-100");
         primaryStage.setScene(scene);
         primaryStage.show();
+    }
+
+
+    public static void textAreaLimiter(TextArea textArea){
+        int maxLines = 15;
+        TextFormatter<String> textFormatterIn = new TextFormatter<>(change -> {
+            if (change.getControlNewText().lines().count() > maxLines) {
+                return null;
+            }
+            return change;
+        });
+        textArea.setTextFormatter(textFormatterIn);
+    }
+
+    public void createSilos(){
+        Interpreter_A interpreterA1 = new Interpreter_A("");
+        interpreterA1.getArrayOfSilos();
+        interpreterA1.getNumCols();
     }
 
     public static void main(String[] args) {launch(args);}
