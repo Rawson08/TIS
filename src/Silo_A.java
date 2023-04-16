@@ -22,6 +22,23 @@ public class Silo_A {
         this.portA = new Port_A();
     }
 
+    public LinkedList<Instruction> getInstructions() {
+        return instructions;
+    }
+
+    public void setInstructions(LinkedList<Instruction> instructions) {
+        this.instructions = instructions;
+    }
+
+
+    public List<String> getListOfInstructions() {
+        return listOfInstructions;
+    }
+
+    public void setListOfInstructions(List<String> listOfInstructions) {
+        this.listOfInstructions = listOfInstructions;
+    }
+
     public int getAcc() {
         return acc;
     }

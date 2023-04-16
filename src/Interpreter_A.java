@@ -7,9 +7,9 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Interpreter_A {
-    private Silo_A[][] arrayOfSilos;
     private int numRows;
     private int numCols;
+    private Silo_A[][] arrayOfSilos = new Silo_A[numRows][numCols];
     private List<Integer> inputValues;
 
     /**
@@ -62,14 +62,16 @@ public class Interpreter_A {
         // only prints the statement before the input values
         int inputCounter = 0;
         for (int i=0; i<inputs.size(); i++){
-            if (inputs.equals("INPUT")){
+            if (inputs.get(i).equals("INPUT")){
                 inputCounter++;
                 break;
             }
             System.out.println("v: " + inputs.get(i) );
         }
+        System.out.println("Input count is: " + inputCounter);
 
         // find input and output values in inputs
+        // TODO: Handle if the number of input (inputCounter) is more than 1.
         this.inputValues = new ArrayList<>();
         int outputIndex = inputs.indexOf("OUTPUT");
         if (inputs.contains("INPUT")){
@@ -109,27 +111,35 @@ public class Interpreter_A {
         List<List<String>> silos = new ArrayList<>();
         List<String> currentSilo = new ArrayList<>();
         for (String instruction : inputs) {
-            if (instruction.equals("END")) {
-                silos.add(currentSilo);
-                currentSilo = new ArrayList<>();
+            for (int i=0; i<numRows; i++){
+                for (int j=0; j<numCols; j++){
+                    if (instruction.equals("END")) {
+                        arrayOfSilos[i][j].setListOfInstructions(currentSilo);
+                        silos.add(currentSilo);
+                        currentSilo = new ArrayList<>();
+                    }
+                    else {
+                        currentSilo.add(instruction);
+                    }
+                }
             }
-            currentSilo.add(instruction);
         }
         silos.add(currentSilo); // Add last silo
 
-        // Set the ports for each silo
-        // TODO: Instead of making a silo for input and output values, use them to make the table.
-        int siloCounter = 0;
-        for (List<String> silo : silos) {
-            System.out.println("Silo Number: " + siloCounter);
-            Interpreter_A interpreterA;
-            // here instruction passes the whole line of instruction
-            for (String instruction : silo) {
-                interpreterA = new Interpreter_A(instruction);
-                System.out.println("" + instruction);
-            }
-            siloCounter++;
-        }
+
+//        // Set the ports for each silo
+//        // TODO: Instead of making a silo for input and output values, use them to make the table.
+//        int siloCounter = 0;
+//        for (List<String> silo : silos) {
+//            System.out.println("Silo Number: " + siloCounter);
+//            Interpreter_A interpreterA;
+//            // here instruction passes the whole line of instruction
+//            for (String instruction : silo) {
+//                interpreterA = new Interpreter_A(instruction);
+//                System.out.println("" + instruction);
+//            }
+//            siloCounter++;
+//        }
     }
 }
 
