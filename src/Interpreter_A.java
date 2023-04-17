@@ -42,11 +42,11 @@ public class Interpreter_A {
 
     }
 
-    public void runInstructions(String commandFromGUI){
+    public void runInstructions(String commandFromGUI, int i, int j){
         // call tokenizer and parser to work with in the GUI after interpreter is being called
         Tokenizer_J tokenizer = new Tokenizer_J(commandFromGUI);
         Parser_J parser = new Parser_J(tokenizer);
-        parser.parse().execute();
+        parser.parse(i, j).execute();
     }
 
     public String getCommandFromGUI() {

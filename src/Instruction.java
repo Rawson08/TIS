@@ -23,6 +23,7 @@ class MoveInstruction extends Instruction {
     @Override
     public void execute() {
         // execute MOVE instruction
+        System.out.println("moving: " + src + " to:" + dst);
     }
 }
 
@@ -61,15 +62,18 @@ class SwapInstruction extends Instruction {
 }
 
 class SaveInstruction extends Instruction {
-    private Silo_A silo;
-    public SaveInstruction(Silo_A silo){
-        this.silo = silo;
+    private int i, j;
+    public SaveInstruction(int i, int j){
+        this.i = i;
+        this.j = j;
     }
 
     @Override
     public void execute() {
         // execute SAVE instruction
-        silo.setBak(silo.getAcc());
+        Interpreter_A.arrayOfSilos[i][j].setAcc(5);
+        System.out.println("saving: " + Interpreter_A.arrayOfSilos[i][j].getAcc());
+        Interpreter_A.arrayOfSilos[i][j].setBak(Interpreter_A.arrayOfSilos[i][j].getAcc());
     }
 }
 

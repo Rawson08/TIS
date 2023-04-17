@@ -17,8 +17,8 @@ public class Parser_J {
      * starts the parsing process
      * @return an interface object corresponding with the statement parsed
      */
-    public Instruction parse() {
-        return parseStatement();
+    public Instruction parse(int i, int j) {
+        return parseStatement(i, j);
     }
 
     /**
@@ -37,7 +37,7 @@ public class Parser_J {
      *           | JRO expression
      * @return an interface object of the matched statement
      */
-    private Instruction parseStatement() {
+    private Instruction parseStatement(int i, int j) {
         // TODO: implement the parsing logic for the statement rule
         String tokenValue = null;
         while (tokenizer.nextToken()) {
@@ -64,10 +64,16 @@ public class Parser_J {
                 case SAVE:
                     //TODO: needs to use an interpreter method to pass the silo here (not a new silo)
                     Silo_A b = new Silo_A();
-                    return new SaveInstruction(b);
+                    return new SaveInstruction(i, j);
                 case ADD:
                     tokenizer.nextToken();
                     // TODO: check for proper follow-up token
+                    if(tokenizer.getTokenType() == Tokenizer_J.TokenType.NUMBER){
+                        return new AddInstruction(tokenizer.getTokenValue());
+                    }
+                    else if(tokenizer.getTokenType() == Tokenizer_J.TokenType.PORT){
+
+                    }
                     String addString = tokenizer.getTokenValue();
                     return new AddInstruction(addString);
                 case SUB:

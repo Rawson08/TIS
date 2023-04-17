@@ -131,7 +131,7 @@ public class GUI_R extends Application {
                 for (int j=0; j<SILO_COL; j++) {
                     for (int k = 0; k < arraylist1[i][j].getListOfInstructions().size(); k++) {
                         String commandFromGUI = arraylist1[i][j].getListOfInstructions().get(k);
-                        interpreterA1.runInstructions(commandFromGUI);
+                        interpreterA1.runInstructions(commandFromGUI, i, j);
                     }
                 }
             }
