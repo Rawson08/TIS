@@ -49,7 +49,23 @@ public class SiloGUI {
 
         //This is the Silo TextArea section
         siloArea = new TextArea(str.toString().replaceAll("[\\[\\]]", "").replaceAll(", ","\n"));
-        siloArea.textProperty().addListener((observable, oldValue, newValue) -> System.out.println(newValue));
+        siloArea.textProperty().addListener((observable, oldValue, newValue) -> {
+            int caretPosition = siloArea.getCaretPosition(); // Get the caret position
+            int lineNumber = 1;
+            for (int i = 0; i < caretPosition; i++) {
+                if (siloArea.getText().charAt(i) == '\n') {
+                    lineNumber++;
+                }
+            }
+            System.out.println("Line number: " + lineNumber + " c: " + caretPosition);
+//            System.out.println(newValue);
+//            for (int i=0; i<15;i++){
+//
+//            }
+//            int lineNumber = siloArea.getCaretPosition();
+//            System.out.println("line number: " + lineNumber);
+
+        });
         siloArea.setEditable(true);
         siloArea.setPrefColumnCount(20);
         siloArea.setPrefRowCount(15);
