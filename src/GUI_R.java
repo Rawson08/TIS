@@ -51,6 +51,9 @@ public class GUI_R extends Application {
 
         Interpreter_A interpreterA1 = new Interpreter_A("");
         interpreterA1.initialStartFromCmd();
+        SILO_ROW = interpreterA1.getNumRows();
+        SILO_COL = interpreterA1.getNumCols();
+        Silo_A[][] arraylist1 = interpreterA1.getArrayOfSilos();
 
         // Create input/output panel
         HBox ioPanel = new HBox(10);
@@ -124,6 +127,14 @@ public class GUI_R extends Application {
             isRunning = true;
 
             //TODO: Execution
+            for (int i=0; i<SILO_ROW; i++){
+                for (int j=0; j<SILO_COL; j++) {
+                    for (int k = 0; k < arraylist1[i][j].getListOfInstructions().size(); k++) {
+                        String commandFromGUI = arraylist1[i][j].getListOfInstructions().get(k);
+                        interpreterA1.runInstructions(commandFromGUI);
+                    }
+                }
+            }
 
 
             startButton.setDisable(true);
@@ -169,9 +180,6 @@ public class GUI_R extends Application {
         siloGrid.setPadding(new Insets(10));
         siloGrid.setStyle("-fx-background-color: #1a1a1a;");
 
-        SILO_ROW = interpreterA1.getNumRows();
-        SILO_COL = interpreterA1.getNumCols();
-        Silo_A[][] arraylist1 = interpreterA1.getArrayOfSilos();
         int currentInstructionIndex = 1;
         // TODO: This has to get the current line of Instruction from Interpreter
 
