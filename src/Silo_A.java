@@ -9,14 +9,20 @@ import java.util.List;
 public class Silo_A {
     private int acc;
     private int bak;
+    private int siloInsCount = 0;
     private Port_A portA;
     // added list of instructions
     private LinkedList<Instruction> instructions;
     private List<String> listOfInstructions;
 
+    public void setSiloInsCount(int siloInsCount) {
+        this.siloInsCount = siloInsCount;
+    }
+
     public Silo_A() {
         this.acc = acc;
         this.bak = bak;
+        this.siloInsCount = siloInsCount;
         this.instructions = new LinkedList<>();
         this.listOfInstructions = new ArrayList<>();
         this.portA = new Port_A();

@@ -48,7 +48,7 @@ public class SiloGUI {
         BorderPane.setMargin(downArrow, new Insets(0, 0, 10, 125));
 
         //This is the Silo TextArea section
-        siloArea = new TextArea(str.toString().replaceAll("[\\[\\]]", "").replaceAll("[,]","\n"));
+        siloArea = new TextArea(str.toString().replaceAll("[\\[\\]]", "").replaceAll(", ","\n"));
         siloArea.textProperty().addListener((observable, oldValue, newValue) -> System.out.println(newValue));
         siloArea.setEditable(true);
         siloArea.setPrefColumnCount(20);

@@ -17,6 +17,7 @@ public class Interpreter_A {
 
     private int numRows;
     private int numCols;
+    private int tempValue = 0;
     public static Silo_A[][] arrayOfSilos;
 
     public List<Integer> getInputValues() {
@@ -46,6 +47,10 @@ public class Interpreter_A {
     }
     public Silo_A[][] getArrayOfSilos() {
         return arrayOfSilos;
+    }
+
+    public void executeGUI(){
+
     }
 
     public void setArrayOfSilos(Silo_A[][] arrayOfSilos) {
@@ -159,6 +164,8 @@ public class Interpreter_A {
             else {
                 currSiloInstruction.add(instruction);
             }
+            tempValue++;
+                currSilo.setSiloInsCount(tempValue);
         }
         // Add last silo
         currSilo.setListOfInstructions(currSiloInstruction);

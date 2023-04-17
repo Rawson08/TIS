@@ -122,7 +122,9 @@ public class GUI_R extends Application {
 
         startButton.setOnAction(event -> {
             isRunning = true;
+
             //TODO: Execution
+
 
             startButton.setDisable(true);
             pauseStepButton.setDisable(false);
