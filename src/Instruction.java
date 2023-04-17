@@ -14,16 +14,43 @@ public abstract class Instruction {
 class MoveInstruction extends Instruction {
     private String src;
     private String dst;
+    private int i, j;
 
-    public MoveInstruction(String src, String dst) {
+    public MoveInstruction(String src, String dst, int i, int j) {
         this.src = src;
         this.dst = dst;
+        this.i = i;
+        this.j = j;
     }
 
     @Override
     public void execute() {
         // execute MOVE instruction
         System.out.println("moving: " + src + " to:" + dst);
+        if(src.equals("UP")){
+            Interpreter_A.arrayOfSilos[i][j].getPortA().getUpPortAccValue();
+        }
+        if(src.equals("DOWN")){
+            Interpreter_A.arrayOfSilos[i][j].getPortA().getDownPortAccValue();
+        }
+        if(src.equals("LEFT")){
+            Interpreter_A.arrayOfSilos[i][j].getPortA().getLeftPortAccValue();
+        }
+        if(src.equals("RIGHT")){
+            Interpreter_A.arrayOfSilos[i][j].getPortA().getRightPortAccValue();
+        }
+        if(dst.equals("UP")){
+            Interpreter_A.arrayOfSilos[i][j].getPortA().getUpPortAccValue();
+        }
+        if(dst.equals("DOWN")){
+            Interpreter_A.arrayOfSilos[i][j].getPortA().getDownPortAccValue();
+        }
+        if(dst.equals("LEFT")){
+            Interpreter_A.arrayOfSilos[i][j].getPortA().getLeftPortAccValue();
+        }
+        if(dst.equals("RIGHT")){
+            Interpreter_A.arrayOfSilos[i][j].getPortA().getRightPortAccValue();
+        }
     }
 }
 
@@ -48,16 +75,17 @@ class NoopInstruction extends Instruction {
 }
 
 class SwapInstruction extends Instruction {
-    private Silo_A silo;
-    public SwapInstruction(Silo_A silo){
-        this.silo = silo;
+int i, j;
+    public SwapInstruction(int i, int j){
+        this.i = i;
+        this.j = j;
     }
     @Override
     public void execute() {
         // execute SWAP instruction
-        int temp = silo.getAcc();
-        silo.setAcc(silo.getBak());
-        silo.setBak(temp);
+        int temp = Interpreter_A.arrayOfSilos[i][j].getAcc();
+        Interpreter_A.arrayOfSilos[i][j].setAcc(Interpreter_A.arrayOfSilos[i][j].getBak());
+        Interpreter_A.arrayOfSilos[i][j].setBak(temp);
     }
 }
 
@@ -71,7 +99,6 @@ class SaveInstruction extends Instruction {
     @Override
     public void execute() {
         // execute SAVE instruction
-        Interpreter_A.arrayOfSilos[i][j].setAcc(5);
         System.out.println("saving: " + Interpreter_A.arrayOfSilos[i][j].getAcc());
         Interpreter_A.arrayOfSilos[i][j].setBak(Interpreter_A.arrayOfSilos[i][j].getAcc());
     }

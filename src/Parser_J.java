@@ -53,17 +53,16 @@ public class Parser_J {
                     tokenizer.nextToken();
                     // TODO: check for proper src and dst tokens
                     // update for src and dst tokens
-                    String src = tokenizer.getTokenValue();
+                    String src = "";
+                    if(tokenizer.getTokenType() == Tokenizer_J.TokenType.PORT){
+                        src = tokenizer.getTokenValue();
+                    }
                     tokenizer.nextToken();
                     String dst = tokenizer.getTokenValue();
-                    return new MoveInstruction(src, dst);
+                    return new MoveInstruction(src, dst, i, j);
                 case SWAP:
-                    //TODO: needs to use an interpreter method to pass the silo here (not a new silo)
-                    Silo_A a = new Silo_A();
-                    return new SwapInstruction(a);
+                    return new SwapInstruction(i, j);
                 case SAVE:
-                    //TODO: needs to use an interpreter method to pass the silo here (not a new silo)
-                    Silo_A b = new Silo_A();
                     return new SaveInstruction(i, j);
                 case ADD:
                     tokenizer.nextToken();

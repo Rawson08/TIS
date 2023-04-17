@@ -60,5 +60,12 @@ public class Silo_A {
     public void setBak(int bak) {
         this.bak = bak;
     }
+    public Port_A getPortA() {
+        return portA;
+    }
+
+    public void setPortA(Port_A portA) {
+        this.portA = portA;
+    }
 
 }
