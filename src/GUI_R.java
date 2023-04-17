@@ -159,10 +159,7 @@ public class GUI_R extends Application {
         buttonBox.getChildren().addAll(startButton, pauseStepButton, stopButton);
         buttonBox.setSpacing(10);
         buttonBox.setPadding(new Insets(10));
-
-
         root.setBottom(buttonBox);
-
 
         // Create silo grid
         GridPane siloGrid = new GridPane();
@@ -172,17 +169,15 @@ public class GUI_R extends Application {
         siloGrid.setPadding(new Insets(10));
         siloGrid.setStyle("-fx-background-color: #1a1a1a;");
 
-
-
         SILO_ROW = interpreterA1.getNumRows();
         SILO_COL = interpreterA1.getNumCols();
         Silo_A[][] arraylist1 = interpreterA1.getArrayOfSilos();
-        int currentInstructionIndex = 1;        //TODO: This has to get the current line of Instruction from Interpreter
+        int currentInstructionIndex = 1;
+        // TODO: This has to get the current line of Instruction from Interpreter
 
         for (int i = 0; i < SILO_ROW; i++) {
             for (int j = 0; j < SILO_COL; j++){
                 SiloGUI silo = new SiloGUI();
-
                 String listString1 = arraylist1[i][j].getListOfInstructions().toString().replaceAll("[\\[\\]]", "");
                 System.out.println("listString1" + listString1);
                 siloGrid.add(silo.drawSilo(Collections.singletonList(listString1), currentInstructionIndex), j, i);
