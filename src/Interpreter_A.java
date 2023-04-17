@@ -30,6 +30,7 @@ public class Interpreter_A {
     private int inputColumn[];
     private int outputFromSiloX;
     private int outputFromSiloY;
+    private String commandFromGUI;
 
     /**
      * This class handles the execution of internal AST. The value of the parameter tokenizer will be
@@ -39,12 +40,24 @@ public class Interpreter_A {
     public Interpreter_A(String aLineInstruction){
         // read from the command line when the program starts
 
+    }
 
+    public void runInstructions(){
         // call tokenizer and parser to work with in the GUI after interpreter is being called
-        Tokenizer_J tokenizer = new Tokenizer_J(aLineInstruction);
+        Tokenizer_J tokenizer = new Tokenizer_J(commandFromGUI);
         Parser_J parser = new Parser_J(tokenizer);
         parser.parse();
     }
+
+    public String getCommandFromGUI() {
+        return commandFromGUI;
+    }
+
+    public void setCommandFromGUI(String commandFromGUI) {
+        this.commandFromGUI = commandFromGUI;
+    }
+
+
     public Silo_A[][] getArrayOfSilos() {
         return arrayOfSilos;
     }

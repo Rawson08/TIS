@@ -7,11 +7,12 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class SiloGUI {
     private static VBox rightOfSilo;
@@ -49,23 +50,19 @@ public class SiloGUI {
 
         //This is the Silo TextArea section
         siloArea = new TextArea(str.toString().replaceAll("[\\[\\]]", "").replaceAll(", ","\n"));
+        final String[] newValue2 = {null};
         siloArea.textProperty().addListener((observable, oldValue, newValue) -> {
-            int caretPosition = siloArea.getCaretPosition(); // Get the caret position
-            int lineNumber = 1;
-            for (int i = 0; i < caretPosition; i++) {
-                if (siloArea.getText().charAt(i) == '\n') {
-                    lineNumber++;
-                }
+            if (newValue.endsWith("\n")) {
+                System.out.println("clicked enter;");
             }
-            System.out.println("Line number: " + lineNumber + " c: " + caretPosition);
-//            System.out.println(newValue);
-//            for (int i=0; i<15;i++){
-//
-//            }
-//            int lineNumber = siloArea.getCaretPosition();
-//            System.out.println("line number: " + lineNumber);
-
+            newValue2[0] = newValue;
+            System.out.println("newVlaue array: " + newValue2[0]);
+            // we want to store this new value into the array of silo individual silos
+            System.out.println("id: " + siloArea);
         });
+
+
+        // TODO: Decided to make the program run from the cmd first and then make it run from the Silo inputs
         siloArea.setEditable(true);
         siloArea.setPrefColumnCount(20);
         siloArea.setPrefRowCount(15);
