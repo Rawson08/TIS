@@ -46,7 +46,7 @@ public class Interpreter_A {
         // call tokenizer and parser to work with in the GUI after interpreter is being called
         Tokenizer_J tokenizer = new Tokenizer_J(commandFromGUI);
         Parser_J parser = new Parser_J(tokenizer);
-        parser.parse();
+        parser.parse().execute();
     }
 
     public String getCommandFromGUI() {
