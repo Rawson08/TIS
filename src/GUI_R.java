@@ -129,8 +129,8 @@ public class GUI_R extends Application {
             //TODO: Execution
             for (int i=0; i<SILO_ROW; i++){
                 for (int j=0; j<SILO_COL; j++) {
-                    for (int k = 0; k < arraylist1[i][j].getListOfInstructions().size(); k++) {
-                        String commandFromGUI = arraylist1[i][j].getListOfInstructions().get(k);
+                    for (int k = 0; k < Interpreter_A.arrayOfSilos[i][j].getListOfInstructions().size(); k++) {
+                        String commandFromGUI = Interpreter_A.arrayOfSilos[i][j].getListOfInstructions().get(k);
                         interpreterA1.runInstructions(commandFromGUI, i, j);
                     }
                 }
@@ -186,15 +186,15 @@ public class GUI_R extends Application {
         for (int i = 0; i < SILO_ROW; i++) {
             for (int j = 0; j < SILO_COL; j++){
                 SiloGUI silo = new SiloGUI();
-                String listString1 = arraylist1[i][j].getListOfInstructions().toString().replaceAll("[\\[\\]]", "");
+                String listString1 = Interpreter_A.arrayOfSilos[i][j].getListOfInstructions().toString().replaceAll("[\\[\\]]", "");
                 System.out.println("listString1" + listString1);
                 siloGrid.add(silo.drawSilo(Collections.singletonList(listString1), currentInstructionIndex), j, i);
 
                 // disable textAreaInputForNewInstructions when the start button is pressed
-                silo.textAreaInputForNewInstructions(arraylist1, i, j);
+                silo.textAreaInputForNewInstructions(Interpreter_A.arrayOfSilos, i, j);
 
                 // TODO: start button if pressed, then disable texts input and start the program by calling another method.
-                interpreterA1.setArrayOfSilos(arraylist1);
+                //interpreterA1.setArrayOfSilos(arraylist1);
                 System.out.println("New Instruc: " + arraylist1[i][j]);
             }
         }

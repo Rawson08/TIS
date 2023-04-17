@@ -106,14 +106,20 @@ class SaveInstruction extends Instruction {
 
 class AddInstruction extends Instruction {
     private String src;
+    int i, j;
 
-    public AddInstruction(String src) {
+    public AddInstruction(String src, int i, int j) {
         this.src = src;
+        this.i = i;
+        this.j = j;
     }
 
     @Override
     public void execute() {
         // execute ADD instruction should get src value and add to acc
+        int number = Integer.parseInt(src);
+        System.out.println("adding: " + number);
+        Interpreter_A.arrayOfSilos[i][j].setAcc(Interpreter_A.arrayOfSilos[i][j].getAcc() + number);
     }
 }
 

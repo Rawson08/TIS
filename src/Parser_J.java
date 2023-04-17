@@ -68,13 +68,24 @@ public class Parser_J {
                     tokenizer.nextToken();
                     // TODO: check for proper follow-up token
                     if(tokenizer.getTokenType() == Tokenizer_J.TokenType.NUMBER){
-                        return new AddInstruction(tokenizer.getTokenValue());
+                        return new AddInstruction(tokenizer.getTokenValue(), i, j);
                     }
                     else if(tokenizer.getTokenType() == Tokenizer_J.TokenType.PORT){
+                        if(tokenizer.getTokenValue().equals("UP")){
 
+                        }
+                        if(tokenizer.getTokenValue().equals("DOWN")){
+
+                        }
+                        if(tokenizer.getTokenValue().equals("LEFT")){
+
+                        }
+                        if(tokenizer.getTokenValue().equals("RIGHT")){
+
+                        }
                     }
                     String addString = tokenizer.getTokenValue();
-                    return new AddInstruction(addString);
+                    return new AddInstruction(addString, i, j);
                 case SUB:
                     tokenizer.nextToken();
                     // TODO: check for proper follow-up token
