@@ -18,6 +18,11 @@ public class Interpreter_A {
     private int numRows;
     private int numCols;
     public static Silo_A[][] arrayOfSilos;
+
+    public List<Integer> getInputValues() {
+        return inputValues;
+    }
+
     private List<Integer> inputValues;
     private List<List<Integer>> inputValuesList;
     private int inputRow[];
