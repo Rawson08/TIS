@@ -18,13 +18,14 @@ import javafx.scene.text.FontWeight;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class GUI_R extends Application {
     Interpreter_A interpreterA = new Interpreter_A("");
 
-    private final int SILO_ROW = 3;
-    private static final int SILO_COL = 4;
+    private  int SILO_ROW;
+    private static int SILO_COL;
     private static final int LINES = 15;
     private static final int CHARS = 20;
     private boolean isRunning = false;
@@ -88,6 +89,7 @@ public class GUI_R extends Application {
         outputArea.setFont(Font.font("Monospaced", 12));
         outputArea.setStyle("-fx-control-inner-background: #222222; -fx-text-fill: #ffffff;");
 
+        //TODO: Put inputLabel with inputArea in one VBox and same for output
         ioLabel.getChildren().addAll(inputLabel, outputLabel);
         ioPanel.getChildren().addAll(inputArea, outputArea);
 
@@ -157,12 +159,18 @@ public class GUI_R extends Application {
         siloGrid.setStyle("-fx-background-color: #1a1a1a;");
 
 
-        for (int i = 0; i < SILO_ROW * SILO_COL; i++) {
-            SiloGUI silo = new SiloGUI();
-            SiloGUI[] silos = new SiloGUI[SILO_ROW*SILO_COL];
-            silos[i] = silo;
-            siloGrid.add(silo.drawSilo(), i % 4, i / 4);
+        Interpreter_A interpreterA1 = new Interpreter_A("");
+        interpreterA1.initialStartFromCmd();
+        SILO_ROW = interpreterA1.getNumRows();
+        SILO_COL = interpreterA1.getNumCols();
+        Silo_A[][] arraylist1 = interpreterA1.getArrayOfSilos();
+        for (int i = 0; i < SILO_ROW; i++) {
+            for (int j = 0; j < SILO_COL; j++){
+                SiloGUI silo = new SiloGUI();
+                siloGrid.add(silo.drawSilo(arraylist1[i][j].getListOfInstructions()), j*SILO_ROW % SILO_COL, j*SILO_COL / SILO_ROW);
+            }
         }
+
 
         siloGrid.prefWidthProperty().bind(root.widthProperty().multiply(0.75));
         root.setCenter(siloGrid);

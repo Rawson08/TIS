@@ -10,6 +10,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
+import java.util.List;
+
 public class SiloGUI {
     private static VBox rightOfSilo;
     private static int accIntValue;
@@ -29,7 +31,7 @@ public class SiloGUI {
 
     }
 
-    public BorderPane drawSilo(){
+    public BorderPane drawSilo(List<String> str){
         drawAccBak();
         drawArrows();
         rightOfSilo = new VBox();
@@ -44,7 +46,7 @@ public class SiloGUI {
         BorderPane.setMargin(downArrow, new Insets(0, 0, 10, 125));
 
         //This is the Silo TextArea section
-        TextArea siloArea = new TextArea();
+        TextArea siloArea = new TextArea(str.toString());
         siloArea.setEditable(true);
         siloArea.setPrefColumnCount(20);
         siloArea.setPrefRowCount(15);
@@ -61,6 +63,7 @@ public class SiloGUI {
 
     public void drawAccBak(){
 
+        //TODO: Get the Acc and Bak from Interpreter
         accIntValue = 0;
         bakIntValue = 0;
 
@@ -102,24 +105,27 @@ public class SiloGUI {
         ImageView [][] imageViewArray = {{upArrowPNG, downArrowPNG, leftArrowPNG, rightArrowPNG},
                 {upArrowOnPNG, downArrowOnPNG, leftArrowOnPNG, rightArrowOnPNG}};
 
-        arrowBox = new HBox();
-        arrowBox.setAlignment(Pos.CENTER);
-        arrowBox.setSpacing(10);
-        upArrow = new Label();
-        upArrow.setGraphic(imageViewArray[0][0]);
-        upArrow.setFont(Font.font("Monospaced", FontWeight.BOLD, 15));
-        upArrow.setTextFill(Color.LIGHTGRAY);
-        downArrow = new Label();
-        downArrow.setGraphic(imageViewArray[0][1]);
-        downArrow.setFont(Font.font("Monospaced", FontWeight.BOLD, 15));
-        downArrow.setTextFill(Color.LIGHTGRAY);
-        leftArrow = new Label();
-        leftArrow.setGraphic(imageViewArray[0][2]);
-        leftArrow.setFont(Font.font("Monospaced", FontWeight.BOLD, 15));
-        leftArrow.setTextFill(Color.LIGHTGRAY);
-        rightArrow = new Label();
-        rightArrow.setGraphic(imageViewArray[0][3]);
-        rightArrow.setFont(Font.font("Monospaced", FontWeight.BOLD, 15));
-        rightArrow.setTextFill(Color.LIGHTGRAY);
+        if (true){
+            int i = 0;
+            arrowBox = new HBox();
+            arrowBox.setAlignment(Pos.CENTER);
+            arrowBox.setSpacing(10);
+            upArrow = new Label();
+            upArrow.setGraphic(imageViewArray[i][0]);
+            upArrow.setFont(Font.font("Monospaced", FontWeight.BOLD, 15));
+            upArrow.setTextFill(Color.LIGHTGRAY);
+            downArrow = new Label();
+            downArrow.setGraphic(imageViewArray[i][1]);
+            downArrow.setFont(Font.font("Monospaced", FontWeight.BOLD, 15));
+            downArrow.setTextFill(Color.LIGHTGRAY);
+            leftArrow = new Label();
+            leftArrow.setGraphic(imageViewArray[i][2]);
+            leftArrow.setFont(Font.font("Monospaced", FontWeight.BOLD, 15));
+            leftArrow.setTextFill(Color.LIGHTGRAY);
+            rightArrow = new Label();
+            rightArrow.setGraphic(imageViewArray[i][3]);
+            rightArrow.setFont(Font.font("Monospaced", FontWeight.BOLD, 15));
+            rightArrow.setTextFill(Color.LIGHTGRAY);
+        }
     }
 }

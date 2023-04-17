@@ -17,7 +17,7 @@ public class Interpreter_A {
 
     private int numRows;
     private int numCols;
-    private Silo_A[][] arrayOfSilos;
+    public static Silo_A[][] arrayOfSilos;
     private List<Integer> inputValues;
     private List<List<Integer>> inputValuesList;
     private int inputRow[];
@@ -32,6 +32,7 @@ public class Interpreter_A {
      */
     public Interpreter_A(String aLineInstruction){
         // read from the command line when the program starts
+
 
         // call tokenizer and parser to work with in the GUI after interpreter is being called
         Tokenizer_J tokenizer = new Tokenizer_J(aLineInstruction);
