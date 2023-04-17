@@ -108,15 +108,15 @@ public class SiloGUI {
         // import the 'in-use' arrows as well which will be used if any arrow is used.
 
         // Importing the Arrows PNGs
-        ImageView upArrowPNG = new ImageView("file:resources/Arrows/up-arrow.png");
-        ImageView downArrowPNG = new ImageView("file:resources/Arrows/down-arrow.png");
-        ImageView leftArrowPNG = new ImageView("file:resources/Arrows/left-arrow.png");
-        ImageView rightArrowPNG = new ImageView("file:resources/Arrows/right-arrow.png");
+        ImageView upArrowPNG = new ImageView("file:resources/up-arrow.png");
+        ImageView downArrowPNG = new ImageView("file:resources/down-arrow.png");
+        ImageView leftArrowPNG = new ImageView("file:resources/left-arrow.png");
+        ImageView rightArrowPNG = new ImageView("file:resources/right-arrow.png");
 
-        ImageView upArrowOnPNG = new ImageView("file:resources/Arrows/up-arrow-on.png");
-        ImageView downArrowOnPNG = new ImageView("file:resources/Arrows/down-arrow-on.png");
-        ImageView leftArrowOnPNG = new ImageView("file:resources/Arrows/left-arrow-on.png");
-        ImageView rightArrowOnPNG = new ImageView("file:resources/Arrows/right-arrow-on.png");
+        ImageView upArrowOnPNG = new ImageView("file:resources/up-arrow-on.png");
+        ImageView downArrowOnPNG = new ImageView("file:resources/down-arrow-on.png");
+        ImageView leftArrowOnPNG = new ImageView("file:resources/left-arrow-on.png");
+        ImageView rightArrowOnPNG = new ImageView("file:resources/right-arrow-on.png");
 
         //2D Array to store the arrows and we can use the arrow giving 0 for unlit, and 1 for lit arrow
         ImageView [][] imageViewArray = {{upArrowPNG, downArrowPNG, leftArrowPNG, rightArrowPNG},
