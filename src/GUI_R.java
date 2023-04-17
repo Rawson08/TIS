@@ -19,10 +19,10 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class GUI_R extends Application {
-    Interpreter_A interpreterA = new Interpreter_A("");
 
     private  int SILO_ROW;
     private static int SILO_COL;
@@ -47,6 +47,10 @@ public class GUI_R extends Application {
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("buttonStyles.css")).toExternalForm());
 //        root.setStyle("-fx-background-color: #222222;");
 
+
+        Interpreter_A interpreterA1 = new Interpreter_A("");
+        interpreterA1.initialStartFromCmd();
+
         // Create input/output panel
         HBox ioPanel = new HBox(10);
         ioPanel.setAlignment(Pos.CENTER);
@@ -65,7 +69,10 @@ public class GUI_R extends Application {
         Label inputLabel = new Label("INPUT");
         inputLabel.setFont(Font.font("Monospaced", 14));
         inputLabel.setTextFill(Color.WHITE);
-        TextArea inputArea = new TextArea();
+
+        String listString = interpreterA1.getInputValues().toString().replaceAll("[ \\[\\],]", "\n");
+        System.out.printf("listString: " + listString);
+        TextArea inputArea = new TextArea(listString);
         inputArea.setPrefHeight(200);
         inputArea.setWrapText(true);
 
@@ -159,15 +166,18 @@ public class GUI_R extends Application {
         siloGrid.setStyle("-fx-background-color: #1a1a1a;");
 
 
-        Interpreter_A interpreterA1 = new Interpreter_A("");
-        interpreterA1.initialStartFromCmd();
+
         SILO_ROW = interpreterA1.getNumRows();
         SILO_COL = interpreterA1.getNumCols();
         Silo_A[][] arraylist1 = interpreterA1.getArrayOfSilos();
+
         for (int i = 0; i < SILO_ROW; i++) {
             for (int j = 0; j < SILO_COL; j++){
                 SiloGUI silo = new SiloGUI();
-                siloGrid.add(silo.drawSilo(arraylist1[i][j].getListOfInstructions()), j*SILO_ROW % SILO_COL, j*SILO_COL / SILO_ROW);
+
+                List<String> listString1 = arraylist1[i][j].getListOfInstructions().toString().replaceAll("[ \\[\\],]", "\n");
+
+                siloGrid.add(silo.drawSilo(listString1), j, i);
             }
         }
 
