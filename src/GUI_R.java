@@ -181,6 +181,13 @@ public class GUI_R extends Application {
                 String listString1 = arraylist1[i][j].getListOfInstructions().toString().replaceAll("[\\[\\]]", "");
                 System.out.println("listString1" + listString1);
                 siloGrid.add(silo.drawSilo(Collections.singletonList(listString1), currentInstructionIndex), j, i);
+
+                // disable textAreaInputForNewInstructions when the start button is pressed
+                silo.textAreaInputForNewInstructions(arraylist1, i, j);
+
+                // TODO: start button if pressed, then disable texts input and start the program by calling another method.
+                interpreterA1.setArrayOfSilos(arraylist1);
+                System.out.println("New Instruc: " + arraylist1[i][j]);
             }
         }
 

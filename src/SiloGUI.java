@@ -9,6 +9,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,17 +51,6 @@ public class SiloGUI {
 
         //This is the Silo TextArea section
         siloArea = new TextArea(str.toString().replaceAll("[\\[\\]]", "").replaceAll(", ","\n"));
-        final String[] newValue2 = {null};
-        siloArea.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue.endsWith("\n")) {
-                System.out.println("clicked enter;");
-            }
-            newValue2[0] = newValue;
-            System.out.println("newVlaue array: " + newValue2[0]);
-            // we want to store this new value into the array of silo individual silos
-            System.out.println("id: " + siloArea);
-        });
-
 
         // TODO: Decided to make the program run from the cmd first and then make it run from the Silo inputs
         siloArea.setEditable(true);
@@ -72,14 +62,22 @@ public class SiloGUI {
         GUI_R.textAreaLimiter(siloArea);
 
         // TODO: Highlight the current instruction
-
-
-
         siloArea.setFont(Font.font("Monospaced", 12));
         siloArea.setStyle("-fx-control-inner-background: #222222; -fx-text-fill: #ffffff;");
         return new BorderPane(siloArea, upArrow, rightOfSilo, downArrow, leftArrow);
     }
 
+    public void textAreaInputForNewInstructions(Silo_A arrayOfSilos[][], int i, int j){
+        final String[] newValue2 = {null};
+        siloArea.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue.endsWith("\n")) {
+                System.out.println("clicked enter;");
+            }
+            newValue2[0] = newValue;
+            System.out.println("newVlaue array: " + newValue2[0]);
+            // we want to store this new value into the array of silo individual silos
+        });
+    }
     public void drawAccBak(){
 
         //TODO: Get the Acc and Bak from Interpreter
