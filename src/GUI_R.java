@@ -19,6 +19,7 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -70,8 +71,7 @@ public class GUI_R extends Application {
         inputLabel.setFont(Font.font("Monospaced", 14));
         inputLabel.setTextFill(Color.WHITE);
 
-        String listString = interpreterA1.getInputValues().toString().replaceAll("[ \\[\\],]", "\n");
-        System.out.printf("listString: " + listString);
+        String listString = interpreterA1.getInputValues().toString().replaceAll(",", "\n").replaceAll("[ \\[\\]]","");
         TextArea inputArea = new TextArea(listString);
         inputArea.setPrefHeight(200);
         inputArea.setWrapText(true);
@@ -84,7 +84,10 @@ public class GUI_R extends Application {
         Label outputLabel = new Label("OUTPUT");
         outputLabel.setFont(Font.font("Monospaced", 14));
         outputLabel.setTextFill(Color.WHITE);
-        TextArea outputArea = new TextArea();
+
+        //Output
+        String listString2 = interpreterA1.getInputValues().toString().replaceAll(",", "\n").replaceAll("[ \\[\\]]","");
+        TextArea outputArea = new TextArea(listString2);
         inputArea.setEditable(false);
         outputArea.setEditable(false);
         outputArea.setPrefHeight(200);
@@ -120,6 +123,7 @@ public class GUI_R extends Application {
         startButton.setOnAction(event -> {
             isRunning = true;
             //TODO: Execution
+
             startButton.setDisable(true);
             pauseStepButton.setDisable(false);
             stopButton.setDisable(false);
@@ -128,6 +132,7 @@ public class GUI_R extends Application {
         pauseStepButton.setOnAction(event -> {
             if (isRunning) {
                 pauseStepButton.setText("Step");
+
                 isRunning = false;
             } else {
                 // TODO: Execute 1 instruction from each silo
@@ -170,14 +175,15 @@ public class GUI_R extends Application {
         SILO_ROW = interpreterA1.getNumRows();
         SILO_COL = interpreterA1.getNumCols();
         Silo_A[][] arraylist1 = interpreterA1.getArrayOfSilos();
+        int currentInstructionIndex = 1;        //TODO: This has to get the current line of Instruction from Interpreter
 
         for (int i = 0; i < SILO_ROW; i++) {
             for (int j = 0; j < SILO_COL; j++){
                 SiloGUI silo = new SiloGUI();
 
-                List<String> listString1 = arraylist1[i][j].getListOfInstructions().toString().replaceAll("[ \\[\\],]", "\n");
-
-                siloGrid.add(silo.drawSilo(listString1), j, i);
+                String listString1 = arraylist1[i][j].getListOfInstructions().toString().replaceAll("[\\[\\]]", "");
+                System.out.println("listString1" + listString1);
+                siloGrid.add(silo.drawSilo(Collections.singletonList(listString1), currentInstructionIndex), j, i);
             }
         }
 
