@@ -101,19 +101,24 @@ public class GUI_R extends Application {
         stopButton = new Button("Stop");
         stopButton.setStyle("-fx-border-color: white; -fx-border-width: 1px;");
 
+
+
         startButton.setOnAction(event -> {
             isRunning = true;
 
             //TODO: Execution
-            for (int i=0; i<SILO_ROW; i++){
-                for (int j=0; j<SILO_COL; j++) {
-                    for (int k = 0; k < Interpreter_A.arrayOfSilos[i][j].getListOfInstructions().size(); k++) {
-                        String commandFromGUI = Interpreter_A.arrayOfSilos[i][j].getListOfInstructions().get(k);
-                        interpreterA1.addInstruction(commandFromGUI,i,j);
-                        interpreterA1.runInstructions(commandFromGUI, i, j);
-                    }
-                }
-            }
+            Run run = new Run(interpreterA1);
+            Thread thread = new Thread(run);
+            thread.start();
+//            for (int i=0; i<SILO_ROW; i++){
+//                for (int j=0; j<SILO_COL; j++) {
+//                    for (int k = 0; k < Interpreter_A.arrayOfSilos[i][j].getListOfInstructions().size(); k++) {
+//                        String commandFromGUI = Interpreter_A.arrayOfSilos[i][j].getListOfInstructions().get(k);
+//                        interpreterA1.addInstruction(commandFromGUI,i,j);
+//                        interpreterA1.runInstructions(commandFromGUI, i, j);
+//                    }
+//                }
+//            }
 
 
             startButton.setDisable(true);

@@ -241,3 +241,6 @@ public void addInstruction(String commandFromGUI, int i, int j){
     }
 }
 
+
+
+
