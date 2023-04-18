@@ -12,7 +12,7 @@ public class Silo_A {
     private int siloInsCount = 0;
     private Port_A portA;
     // added list of instructions
-    private LinkedList<Instruction> instructions;
+    private ArrayList<Instruction> instructions;
     private List<String> listOfInstructions;
 
     public void setSiloInsCount(int siloInsCount) {
@@ -23,16 +23,16 @@ public class Silo_A {
         this.acc = acc;
         this.bak = bak;
         this.siloInsCount = siloInsCount;
-        this.instructions = new LinkedList<>();
+        this.instructions = new ArrayList<>();
         this.listOfInstructions = new ArrayList<>();
         this.portA = new Port_A();
     }
 
-    public LinkedList<Instruction> getInstructions() {
+    public ArrayList<Instruction> getInstructions() {
         return instructions;
     }
 
-    public void setInstructions(LinkedList<Instruction> instructions) {
+    public void setInstructions(ArrayList<Instruction> instructions) {
         this.instructions = instructions;
     }
 
@@ -68,4 +68,13 @@ public class Silo_A {
         this.portA = portA;
     }
 
+    public void addInstruction(Instruction instruction) {
+        instructions.add(instruction);
+    }
+
+    public void execute() {
+        for (Instruction instruction : instructions) {
+            instruction.execute();
+        }
+    }
 }
