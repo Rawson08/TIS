@@ -34,6 +34,8 @@ public class GUI_R extends Application {
     private static Button startButton;
     private static Button pauseStepButton;
     private static Button stopButton;
+    Interpreter_A interpreterA1 = new Interpreter_A("");
+
 
     @Override
     public void start(Stage primaryStage) {
@@ -50,68 +52,42 @@ public class GUI_R extends Application {
 //        root.setStyle("-fx-background-color: #222222;");
 
 
-        Interpreter_A interpreterA1 = new Interpreter_A("");
         interpreterA1.initialStartFromCmd();
         SILO_ROW = interpreterA1.getNumRows();
         SILO_COL = interpreterA1.getNumCols();
         //Silo_A[][] arraylist1 = interpreterA1.getArrayOfSilos();
 
         // Create input/output panel
-        HBox ioPanel = new HBox(10);
-        ioPanel.setAlignment(Pos.CENTER);
-        ioPanel.setPadding(new Insets(10));
-        ioPanel.setPrefWidth(screenWidth/3);
-        ioPanel.setPrefHeight(screenHeight*0.75);
-        ioPanel.setStyle("-fx-background-color: #1a1a1a;");
+//        HBox ioPanel = new HBox(10);
+//        ioPanel.setAlignment(Pos.CENTER);
+//        ioPanel.setPadding(new Insets(10));
+//        ioPanel.setPrefWidth(screenWidth/3);
+//        ioPanel.setPrefHeight(screenHeight*0.75);
+//        ioPanel.setStyle("-fx-background-color: #1a1a1a;");
+//
+//        HBox ioLabel = new HBox(10);
+//        ioLabel.setAlignment(Pos.TOP_CENTER);
+//        ioLabel.setPadding(new Insets(10));
+//        ioLabel.setPrefWidth(200);
+//        ioLabel.setStyle("-fx-background-color: #1a1a1a;");
 
-        HBox ioLabel = new HBox(10);
-        ioLabel.setAlignment(Pos.TOP_CENTER);
-        ioLabel.setPadding(new Insets(10));
-        ioLabel.setPrefWidth(200);
-        ioLabel.setStyle("-fx-background-color: #1a1a1a;");
 
+//        createInput();
+//        createOutput();
 
-        Label inputLabel = new Label("INPUT");
-        inputLabel.setFont(Font.font("Monospaced", 14));
-        inputLabel.setTextFill(Color.WHITE);
-
-        String listString = interpreterA1.getInputValues().toString().replaceAll(",", "\n").replaceAll("[ \\[\\]]","");
-        TextArea inputArea = new TextArea(listString);
-        inputArea.setPrefHeight(200);
-        inputArea.setWrapText(true);
-
-        // Limit the number of lines to 15
-        textAreaLimiter(inputArea);
-
-        inputArea.setFont(Font.font("Monospaced", 12));
-        inputArea.setStyle("-fx-control-inner-background: #222222; -fx-text-fill: #ffffff;");
-        Label outputLabel = new Label("OUTPUT");
-        outputLabel.setFont(Font.font("Monospaced", 14));
-        outputLabel.setTextFill(Color.WHITE);
-
-        //Output
-        String listString2 = interpreterA1.getInputValues().toString().replaceAll(",", "\n").replaceAll("[ \\[\\]]","");
-        TextArea outputArea = new TextArea(listString2);
-        inputArea.setEditable(false);
-        outputArea.setEditable(false);
-        outputArea.setPrefHeight(200);
-        outputArea.setWrapText(true);
-
-        // Limit the number of lines to 15
-        textAreaLimiter(outputArea);
-
-        outputArea.setFont(Font.font("Monospaced", 12));
-        outputArea.setStyle("-fx-control-inner-background: #222222; -fx-text-fill: #ffffff;");
 
         //TODO: Put inputLabel with inputArea in one VBox and same for output
-        ioLabel.getChildren().addAll(inputLabel, outputLabel);
-        ioPanel.getChildren().addAll(inputArea, outputArea);
+//        ioLabel.getChildren().addAll(inputLabel, outputLabel);
+//        ioPanel.getChildren().addAll(inputArea, outputArea);
+        String inputValueStr = interpreterA1.getInputValues().toString().replaceAll(",", "\n").replaceAll("[ \\[\\]]","");
 
-        VBox vBox = new VBox();
-        vBox.getChildren().addAll(ioLabel, ioPanel);
+
+        HBox vBox = new HBox();
+        vBox.getChildren().addAll(createInput(inputValueStr), createOutput(), createInput(inputValueStr), createOutput());
         vBox.setPadding(new Insets(10));
         vBox.prefWidthProperty().bind(root.widthProperty().multiply(0.25));
-
+//        vBox.prefHeightProperty().bind(root.heightProperty().multiply(0.75));
+        vBox.setPrefHeight(200);
         root.setLeft(vBox);
         root.setStyle("-fx-background-color: #222222;");
 
@@ -226,6 +202,48 @@ public class GUI_R extends Application {
         Interpreter_A interpreterA1 = new Interpreter_A("");
         interpreterA1.getArrayOfSilos();
         interpreterA1.getNumCols();
+    }
+
+    public VBox createInput(String str){
+        VBox vBox1 = new VBox();
+        Label inputLabel = new Label("INPUT");
+        inputLabel.setFont(Font.font("Monospaced", 14));
+        inputLabel.setTextFill(Color.WHITE);
+
+        TextArea inputArea = new TextArea(str);
+        inputArea.setPrefHeight(200);
+        inputArea.setWrapText(true);
+
+        // Limit the number of lines to 15
+        textAreaLimiter(inputArea);
+
+        inputArea.setFont(Font.font("Monospaced", 12));
+        inputArea.setStyle("-fx-control-inner-background: #222222; -fx-text-fill: #ffffff;");
+        inputArea.setEditable(false);
+        vBox1.getChildren().addAll(inputLabel, inputArea);
+        return vBox1;
+    }
+
+    public VBox createOutput(){
+        VBox vBox = new VBox();
+        Label outputLabel = new Label("OUTPUT");
+        outputLabel.setFont(Font.font("Monospaced", 14));
+        outputLabel.setTextFill(Color.WHITE);
+
+        //Output
+        String listString2 = interpreterA1.getInputValues().toString().replaceAll(",", "\n").replaceAll("[ \\[\\]]","");
+        TextArea outputArea = new TextArea(listString2);
+        outputArea.setEditable(false);
+        outputArea.setPrefHeight(200);
+        outputArea.setWrapText(true);
+
+        // Limit the number of lines to 15
+        textAreaLimiter(outputArea);
+
+        outputArea.setFont(Font.font("Monospaced", 12));
+        outputArea.setStyle("-fx-control-inner-background: #222222; -fx-text-fill: #ffffff;");
+        vBox.getChildren().addAll(outputLabel, outputArea);
+        return vBox;
     }
 
     public static void main(String[] args) {launch(args);}
