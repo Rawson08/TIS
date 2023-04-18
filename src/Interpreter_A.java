@@ -154,7 +154,7 @@ public class Interpreter_A {
 
         }
 
-        if (inputs.contains("OUTPUT")){
+        while (inputs.contains("OUTPUT")){
             int outputIndex = inputs.indexOf("OUTPUT");
             String outputRowAndColumn = inputs.remove(outputIndex + 1);
             String[] outputRowAndColumnSplit = outputRowAndColumn.split("\\s+");
@@ -164,7 +164,7 @@ public class Interpreter_A {
             inputs.remove(outputIndex);
         }
         inputs.remove(inputs.size()-1);
-
+        System.out.println(inputs);
         // Load instructions into silos
         List<String> currSiloInstruction = new ArrayList<>();
         Silo_A currSilo = new Silo_A();
@@ -184,8 +184,9 @@ public class Interpreter_A {
                     siloCounterX++;
                     siloCounterY = 0;
                 }
-                else {
+                else{
                     siloCounterY++;
+                    System.out.println(siloCounterY);
                 }
             }
             else {
