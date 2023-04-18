@@ -29,6 +29,10 @@ public class SiloGUI {
     private static Label downArrow;
     private static Label leftArrow;
     private static Label rightArrow;
+    private static Label upArrowValueLabel;
+    private static Label downArrowValueLabel;
+    private static Label leftArrowValueLabel;
+    private static Label rightArrowValueLabel;
     private static HBox arrowBox;
     private static TextArea siloArea;
 
@@ -37,8 +41,14 @@ public class SiloGUI {
     }
 
     public BorderPane drawSilo(List<String> str, int currentInstructionIndex){
-        drawAccBak();
-        drawArrows();
+        int accTestValue = 0;
+        int bakTestValue = 0;
+        int arrowLeftValue = 0;
+        int arrowRightValue = 0;
+        int arrowUpValue = 0;
+        int arrowDownValue = 0;
+        drawAccBak(accTestValue, bakTestValue);
+        drawArrows(arrowUpValue, arrowDownValue, arrowLeftValue, arrowRightValue);
         rightOfSilo = new VBox();
         rightOfSilo.getChildren().addAll(accLabel, accValue, bakLabel, bakValue, rightArrow);
         rightOfSilo.setSpacing(5);
@@ -68,26 +78,35 @@ public class SiloGUI {
         return new BorderPane(siloArea, upArrow, rightOfSilo, downArrow, leftArrow);
     }
 
-    public void textAreaInputForNewInstructions(Silo_A arrayOfSilos[][], int i, int j){
-        final String[] newValue2 = {null};
+    public void textAreaInputForNewInstructions(Silo_A[][] arrayOfSilos, int i, int j){
+
+        final List<String> newList = new ArrayList<>();
         siloArea.textProperty().addListener((observable, oldValue, newValue) -> {
-            newValue2[0] = newValue;
-            //System.out.println("newVlaue array: " + newValue2[0]);
-            // we want to store this new value into the array of silo individual silos
-            String[] lines = newValue2[0].split("\\r?\\n"); // split into an array of lines
-            List<String> newList = new ArrayList<>();
-            for (int z=0; z<lines.length; z++) {
-                newList.add(lines[z]); // add each line to the list
+            if (newValue.endsWith("\n")) {
+                System.out.println("clicked enter;");
             }
             Interpreter_A.arrayOfSilos[i][j].setListOfInstructions(newList);
-//            System.out.println(Interpreter_A.arrayOfSilos[i][j].getListOfInstructions().toString());
         });
     }
 
-    public void drawAccBak(){
+//    public void textAreaInputForNewInstructions(Silo_A arrayOfSilos[][], int i, int j){
+//        final String[] newValue2 = {null};
+//        siloArea.textProperty().addListener((observable, oldValue, newValue) -> {
+//            newValue2[0] = newValue;
+//            //System.out.println("newVlaue array: " + newValue2[0]);
+//            // we want to store this new value into the array of silo individual silos
+//            String[] lines = newValue2[0].split("\\r?\\n"); // split into an array of lines
+//            List<String> newList = new ArrayList<>();
+//            for (int z=0; z<lines.length; z++) {
+//                newList.add(lines[z]); // add each line to the list
+//            }
+//            Interpreter_A.arrayOfSilos[i][j].setListOfInstructions(newList);
+////            System.out.println(Interpreter_A.arrayOfSilos[i][j].getListOfInstructions().toString());
+//        });
+//    }
+
+    public void drawAccBak(int accIntValue, int bakIntValue){
         // TODO: Get the Acc and Bak from Interpreter
-        accIntValue = 0;
-        bakIntValue = 0;
 
         // Add the Acc and Bak labels
         accBakBox = new HBox();
@@ -108,7 +127,7 @@ public class SiloGUI {
 
     }
 
-    public void drawArrows(){
+    public void drawArrows(int upValue, int downValue, int leftValue, int rightValue){
         //TODO: Arrows needs more work, as currently we can't be sure if any arrow is in use. I am thinking to
         // import the 'in-use' arrows as well which will be used if any arrow is used.
 
@@ -132,19 +151,19 @@ public class SiloGUI {
             arrowBox = new HBox();
             arrowBox.setAlignment(Pos.CENTER);
             arrowBox.setSpacing(10);
-            upArrow = new Label();
+            upArrow = new Label(String.valueOf(upValue));
             upArrow.setGraphic(imageViewArray[i][0]);
             upArrow.setFont(Font.font("Monospaced", FontWeight.BOLD, 15));
             upArrow.setTextFill(Color.LIGHTGRAY);
-            downArrow = new Label();
+            downArrow = new Label(String.valueOf(downValue));
             downArrow.setGraphic(imageViewArray[i][1]);
             downArrow.setFont(Font.font("Monospaced", FontWeight.BOLD, 15));
             downArrow.setTextFill(Color.LIGHTGRAY);
-            leftArrow = new Label();
+            leftArrow = new Label(String.valueOf(leftValue));
             leftArrow.setGraphic(imageViewArray[i][2]);
             leftArrow.setFont(Font.font("Monospaced", FontWeight.BOLD, 15));
             leftArrow.setTextFill(Color.LIGHTGRAY);
-            rightArrow = new Label();
+            rightArrow = new Label(String.valueOf(rightValue));
             rightArrow.setGraphic(imageViewArray[i][3]);
             rightArrow.setFont(Font.font("Monospaced", FontWeight.BOLD, 15));
             rightArrow.setTextFill(Color.LIGHTGRAY);
