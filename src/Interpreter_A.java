@@ -109,10 +109,11 @@ public class Interpreter_A {
 
         // find input and output values in inputs
         // TODO: Handle if the number of input (inputCounter) is more than 1.
-        this.inputValues = new ArrayList<>();
+
         this.inputValuesList = new ArrayList<>();
 
         for (int j=0; j<inputCounter;j++) {
+            this.inputValues = new ArrayList<>();
                 int endIndex = 0;
                 int inputIndex = inputs.indexOf("INPUT");
                 for (int i=inputIndex; i<inputs.size(); i++){
