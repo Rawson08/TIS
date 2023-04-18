@@ -33,13 +33,14 @@ public class Interpreter_A {
     private List<List<Integer>> inputValuesList;
     private int inputRow[];
     private int inputColumn[];
+    private List<List<Integer>> inputCoordinatesList;
     private List<Integer> outputValues;
 
-    public List<List<Integer>> getOutputValuesList() {
-        return outputValuesList;
+    public List<List<Integer>> getOutputCoordinatesList() {
+        return outputCoordinatesList;
     }
 
-    private List<List<Integer>> outputValuesList;
+    private List<List<Integer>> outputCoordinatesList;
     private int outputFromSiloX;
     private int outputFromSiloY;
     private String commandFromGUI;
@@ -142,18 +143,24 @@ public void addInstruction(String commandFromGUI, int i, int j){
                 // add the input row and input column to the header variable
                 String inputRowAndColumn = inputs.remove(inputIndex);
                 String[] inputRowAndColumnSplit = inputRowAndColumn.split("\\s+");
+                this.inputCoordinatesList = new ArrayList<>();
+            List<Integer> inputCoords;
                 for (int i = 0; i < inputRowAndColumnSplit.length; i++) {
+                    inputCoords = new ArrayList<>();
                     if (inputRowAndColumnSplit[i].equals("-")) {
                         String concatRow = inputRowAndColumnSplit[i] + inputRowAndColumnSplit[i + 1];
                         // concatRow is the input row
                         this.inputRow = new int[inputCounter];
-                        this.inputRow[j] = Integer.parseInt(concatRow);
+                        //this.inputRow[j] = Integer.parseInt(concatRow);
+                        inputCoords.add(Integer.parseInt(concatRow));
                         i++;
                     } else {
                         // otherwise get the input Column
                         this.inputColumn = new int[inputCounter];
-                        this.inputColumn[j] = Integer.parseInt(inputRowAndColumnSplit[i]);
+                        //this.inputColumn[j] = Integer.parseInt(inputRowAndColumnSplit[i]);
+                        inputCoords.add(Integer.parseInt(inputRowAndColumnSplit[i]));
                     }
+                    inputCoordinatesList.add(inputCoords);
                 }
                 // add all the input values for input into inputValues
                 for (int i = inputIndex; i < endIndex - 2; i++) {
@@ -163,9 +170,8 @@ public void addInstruction(String commandFromGUI, int i, int j){
                 this.inputValuesList.add(inputValues);
                 System.out.println("Input values: " + this.inputValuesList);
                 inputs.remove(inputIndex);
-
         }
-        this.outputValuesList = new ArrayList<>();
+        this.outputCoordinatesList = new ArrayList<>();
         while (inputs.contains("OUTPUT")){
             this.outputValues = new ArrayList<>();
             int outputIndex = inputs.indexOf("OUTPUT");
@@ -175,10 +181,10 @@ public void addInstruction(String commandFromGUI, int i, int j){
             outputValues.add(Integer.parseInt(outputRowAndColumnSplit[1]));
             inputs.remove(outputIndex);
             inputs.remove(outputIndex);
-            outputValuesList.add(outputValues);
+            outputCoordinatesList.add(outputValues);
         }
         inputs.remove(inputs.size()-1);
-        System.out.println("outputs: " + outputValuesList);
+        System.out.println("outputs: " + outputCoordinatesList);
         // Load instructions into silos
         List<String> currSiloInstruction = new ArrayList<>();
         Silo_A currSilo = new Silo_A();

@@ -7,21 +7,16 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextFormatter;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
-import javax.swing.plaf.synth.SynthOptionPaneUI;
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 import java.util.Objects;
 
 public class GUI_R extends Application {
@@ -85,7 +80,7 @@ public class GUI_R extends Application {
             String inputValueStr = interpreterA1.getInputValuesList().get(i).toString().replaceAll(",", "\n").replaceAll("[ \\[\\]]","");
             vBox.getChildren().add(createInput(inputValueStr));
         }
-        for (int j=0; j<interpreterA1.getOutputValuesList().size(); j++){
+        for (int j = 0; j<interpreterA1.getOutputCoordinatesList().size(); j++){
             vBox.getChildren().add(createOutput());
         }
 
