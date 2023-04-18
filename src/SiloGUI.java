@@ -29,10 +29,6 @@ public class SiloGUI {
     private static Label downArrow;
     private static Label leftArrow;
     private static Label rightArrow;
-    private static Label upArrowValueLabel;
-    private static Label downArrowValueLabel;
-    private static Label leftArrowValueLabel;
-    private static Label rightArrowValueLabel;
     private static HBox arrowBox;
     private static TextArea siloArea;
 
@@ -41,15 +37,15 @@ public class SiloGUI {
     }
 
     public BorderPane drawSilo(List<String> str, int currentInstructionIndex, int i, int j){
-        int accTestValue = 0;
-        int bakTestValue = 0;
+        accIntValue = Interpreter_A.arrayOfSilos[i][j].getAcc();
+        bakIntValue = Interpreter_A.arrayOfSilos[i][j].getBak();
 
         //Taking values from the Interpreter class of particular silo
         int arrowUpValue = Interpreter_A.arrayOfSilos[i][j].getPortA().getUpPortAccValue();
         int arrowDownValue = Interpreter_A.arrayOfSilos[i][j].getPortA().getDownPortAccValue();
         int arrowLeftValue = Interpreter_A.arrayOfSilos[i][j].getPortA().getLeftPortAccValue();
         int arrowRightValue = Interpreter_A.arrayOfSilos[i][j].getPortA().getRightPortAccValue();
-        drawAccBak(accTestValue, bakTestValue);
+        drawAccBak(accIntValue, bakIntValue);
         drawArrows(arrowUpValue, arrowDownValue, arrowLeftValue, arrowRightValue);
         rightOfSilo = new VBox();
         rightOfSilo.getChildren().addAll(accLabel, accValue, bakLabel, bakValue, rightArrow);
@@ -184,5 +180,4 @@ public class SiloGUI {
         rightArrow.setTextFill(Color.LIGHTGRAY);
 
     }
-
 }

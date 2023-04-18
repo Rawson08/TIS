@@ -245,7 +245,7 @@ public class GUI_R extends Application {
         outputArea.setWrapText(true);
 
         // Limit the number of lines to 15
-        textAreaLimiter(outputArea);
+//        textAreaLimiter(outputArea);
 
         outputArea.setFont(Font.font("Monospaced", 12));
         outputArea.setStyle("-fx-control-inner-background: #222222; -fx-text-fill: #ffffff;");
