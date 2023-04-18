@@ -43,6 +43,10 @@ public class Tokenizer_J {
             tokenValue = "";
             return false;
         }
+        if(input == null){
+            tokenType = TokenType.NOOP;
+            tokenValue = "";
+        }
         //skips white spaces
         char c = input.charAt(pos);
         if (Character.isWhitespace(c)) {
