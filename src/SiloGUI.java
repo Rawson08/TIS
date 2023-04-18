@@ -11,6 +11,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
@@ -74,8 +75,14 @@ public class SiloGUI {
                 System.out.println("clicked enter;");
             }
             newValue2[0] = newValue;
-            System.out.println("newVlaue array: " + newValue2[0]);
+            //System.out.println("newVlaue array: " + newValue2[0]);
             // we want to store this new value into the array of silo individual silos
+            List<String> newList = new ArrayList<>();
+            for(int l = 0; l < newValue2.length; l++){
+               newList.add(newValue2[l]);
+            }
+            Interpreter_A.arrayOfSilos[i][j].setListOfInstructions(newList);
+            //System.out.println(Interpreter_A.arrayOfSilos[i][j].getListOfInstructions().toString());
         });
     }
 
