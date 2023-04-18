@@ -108,6 +108,7 @@ public class GUI_R extends Application {
                 for (int j=0; j<SILO_COL; j++) {
                     for (int k = 0; k < Interpreter_A.arrayOfSilos[i][j].getListOfInstructions().size(); k++) {
                         String commandFromGUI = Interpreter_A.arrayOfSilos[i][j].getListOfInstructions().get(k);
+                        interpreterA1.addInstruction(commandFromGUI,i,j);
                         interpreterA1.runInstructions(commandFromGUI, i, j);
                     }
                 }
