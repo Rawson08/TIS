@@ -163,7 +163,6 @@ public class Interpreter_A {
             inputs.remove(outputIndex);
         }
         inputs.remove(inputs.size()-1);
-        System.out.println(inputs);
 
         // Load instructions into silos
         List<String> currSiloInstruction = new ArrayList<>();
