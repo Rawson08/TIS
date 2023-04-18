@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Interpreter_A {
+
+
     public int getNumRows() {
         return numRows;
     }
@@ -20,27 +22,36 @@ public class Interpreter_A {
     private int tempValue = 0;
     public static Silo_A[][] arrayOfSilos;
 
-    public List<Integer> getInputValues() {
+    public static List<Integer> getInputValues() {
         return inputValues;
     }
 
-    private List<Integer> inputValues;
+    private static List<Integer> inputValues;
 
-    public List<List<Integer>> getInputValuesList() {
+    public static List<List<Integer>> getInputValuesList() {
         return inputValuesList;
     }
 
-    private List<List<Integer>> inputValuesList;
+    private static List<List<Integer>> inputValuesList;
     private int inputRow[];
     private int inputColumn[];
-    private List<List<Integer>> inputCoordinatesList;
-    private List<Integer> outputValues;
 
-    public List<List<Integer>> getOutputCoordinatesList() {
+    public static List<List<Integer>> getInputCoordinatesList() {
+        return inputCoordinatesList;
+    }
+
+    private static List<List<Integer>> inputCoordinatesList;
+    private static List<Integer> outputValues;
+
+    public static void setOutputValue(int valueToMove) {
+        outputValues.add(valueToMove);
+    }
+
+    public static List<List<Integer>> getOutputCoordinatesList() {
         return outputCoordinatesList;
     }
 
-    private List<List<Integer>> outputCoordinatesList;
+    private static List<List<Integer>> outputCoordinatesList;
     private int outputFromSiloX;
     private int outputFromSiloY;
     private String commandFromGUI;
@@ -144,9 +155,8 @@ public void addInstruction(String commandFromGUI, int i, int j){
                 String inputRowAndColumn = inputs.remove(inputIndex);
                 String[] inputRowAndColumnSplit = inputRowAndColumn.split("\\s+");
                 this.inputCoordinatesList = new ArrayList<>();
-            List<Integer> inputCoords;
+            List<Integer> inputCoords = new ArrayList<>();;
                 for (int i = 0; i < inputRowAndColumnSplit.length; i++) {
-                    inputCoords = new ArrayList<>();
                     if (inputRowAndColumnSplit[i].equals("-")) {
                         String concatRow = inputRowAndColumnSplit[i] + inputRowAndColumnSplit[i + 1];
                         // concatRow is the input row
@@ -171,6 +181,7 @@ public void addInstruction(String commandFromGUI, int i, int j){
                 System.out.println("Input values: " + this.inputValuesList);
                 inputs.remove(inputIndex);
         }
+        System.out.println("input coords: " +inputCoordinatesList);
         this.outputCoordinatesList = new ArrayList<>();
         while (inputs.contains("OUTPUT")){
             this.outputValues = new ArrayList<>();
@@ -240,4 +251,7 @@ public void addInstruction(String commandFromGUI, int i, int j){
         }
     }
 }
+
+
+
 
