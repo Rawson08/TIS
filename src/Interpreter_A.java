@@ -144,9 +144,8 @@ public void addInstruction(String commandFromGUI, int i, int j){
                 String inputRowAndColumn = inputs.remove(inputIndex);
                 String[] inputRowAndColumnSplit = inputRowAndColumn.split("\\s+");
                 this.inputCoordinatesList = new ArrayList<>();
-            List<Integer> inputCoords;
+            List<Integer> inputCoords = new ArrayList<>();;
                 for (int i = 0; i < inputRowAndColumnSplit.length; i++) {
-                    inputCoords = new ArrayList<>();
                     if (inputRowAndColumnSplit[i].equals("-")) {
                         String concatRow = inputRowAndColumnSplit[i] + inputRowAndColumnSplit[i + 1];
                         // concatRow is the input row
@@ -171,6 +170,7 @@ public void addInstruction(String commandFromGUI, int i, int j){
                 System.out.println("Input values: " + this.inputValuesList);
                 inputs.remove(inputIndex);
         }
+        System.out.println("input coords: " +inputCoordinatesList);
         this.outputCoordinatesList = new ArrayList<>();
         while (inputs.contains("OUTPUT")){
             this.outputValues = new ArrayList<>();
