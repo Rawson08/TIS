@@ -43,7 +43,11 @@ public class Interpreter_A {
         // read from the command line when the program starts
 
     }
-
+public void addInstruction(String commandFromGUI, int i, int j){
+    Tokenizer_J tokenizer = new Tokenizer_J(commandFromGUI);
+    Parser_J parser = new Parser_J(tokenizer);
+    arrayOfSilos[i][j].addInstruction(parser.parse(i, j));
+}
     public void runInstructions(String commandFromGUI, int i, int j){
         // call tokenizer and parser to work with in the GUI after interpreter is being called
         Tokenizer_J tokenizer = new Tokenizer_J(commandFromGUI);
