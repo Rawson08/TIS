@@ -18,6 +18,7 @@ import javafx.scene.text.FontWeight;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
+import javax.swing.plaf.synth.SynthOptionPaneUI;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -183,9 +184,10 @@ public class GUI_R extends Application {
         int currentInstructionIndex = 1;
         // TODO: This has to get the current line of Instruction from Interpreter
 
+        SiloGUI silo;
         for (int i = 0; i < SILO_ROW; i++) {
             for (int j = 0; j < SILO_COL; j++){
-                SiloGUI silo = new SiloGUI();
+                silo = new SiloGUI();
                 String listString1 = Interpreter_A.arrayOfSilos[i][j].getListOfInstructions().toString().replaceAll("[\\[\\]]", "");
                 System.out.println("listString1" + listString1);
                 siloGrid.add(silo.drawSilo(Collections.singletonList(listString1), currentInstructionIndex), j, i);
