@@ -151,13 +151,13 @@ public void addInstruction(String commandFromGUI, int i, int j){
                         String concatRow = inputRowAndColumnSplit[i] + inputRowAndColumnSplit[i + 1];
                         // concatRow is the input row
                         this.inputRow = new int[inputCounter];
-                        //this.inputRow[j] = Integer.parseInt(concatRow);
+                        this.inputRow[j] = Integer.parseInt(concatRow);
                         inputCoords.add(Integer.parseInt(concatRow));
                         i++;
                     } else {
                         // otherwise get the input Column
                         this.inputColumn = new int[inputCounter];
-                        //this.inputColumn[j] = Integer.parseInt(inputRowAndColumnSplit[i]);
+                        this.inputColumn[j] = Integer.parseInt(inputRowAndColumnSplit[i]);
                         inputCoords.add(Integer.parseInt(inputRowAndColumnSplit[i]));
                     }
                     inputCoordinatesList.add(inputCoords);
@@ -218,6 +218,7 @@ public void addInstruction(String commandFromGUI, int i, int j){
         currSilo.setListOfInstructions(currSiloInstruction);
         //arrayOfSilos[siloCounterX][siloCounterY] = currSilo;
 
+
         //test print
 //        for (int i=0; i<numRows; i++){
 //            for (int j=0; j<numCols; j++){
@@ -227,6 +228,16 @@ public void addInstruction(String commandFromGUI, int i, int j){
 //                }
 //            }
 //        }
+    }
+    public void giveInputValue(){
+        int xCoord;
+        int yCoord;
+        List<Integer> inputValues = inputValuesList.get(0);
+        xCoord = inputColumn[0];
+        yCoord = inputRow[0];
+        if(inputValues.size() > 0) {
+            arrayOfSilos[xCoord + 1][yCoord].getPortA().setUpPortAccValue(inputValues.remove(0));
+        }
     }
 }
 
