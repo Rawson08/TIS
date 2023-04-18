@@ -7,16 +7,21 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextFormatter;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
+import javax.swing.plaf.synth.SynthOptionPaneUI;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 
 public class GUI_R extends Application {
@@ -179,15 +184,16 @@ public class GUI_R extends Application {
         int currentInstructionIndex = 1;
         // TODO: This has to get the current line of Instruction from Interpreter
 
+        SiloGUI silo;
         for (int i = 0; i < SILO_ROW; i++) {
             for (int j = 0; j < SILO_COL; j++){
-                SiloGUI silo = new SiloGUI();
+                silo = new SiloGUI();
                 String listString1 = Interpreter_A.arrayOfSilos[i][j].getListOfInstructions().toString().replaceAll("[\\[\\]]", "");
                 System.out.println("listString1" + listString1);
                 siloGrid.add(silo.drawSilo(Collections.singletonList(listString1), currentInstructionIndex), j, i);
 
                 // disable textAreaInputForNewInstructions when the start button is pressed
-                silo.textAreaInputForNewInstructions(i, j);
+                silo.textAreaInputForNewInstructions(Interpreter_A.arrayOfSilos, i, j);
 
                 // TODO: start button if pressed, then disable texts input and start the program by calling another method.
                 //interpreterA1.setArrayOfSilos(arraylist1);

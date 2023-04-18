@@ -68,36 +68,21 @@ public class SiloGUI {
         return new BorderPane(siloArea, upArrow, rightOfSilo, downArrow, leftArrow);
     }
 
-
-    public void textAreaInputForNewInstructions(int i, int j){
-
-        final List<String> newList = new ArrayList<>();
+    public void textAreaInputForNewInstructions(Silo_A arrayOfSilos[][], int i, int j){
+        final String[] newValue2 = {null};
         siloArea.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue.endsWith("\n")) {
-                System.out.println("clicked enter;");
+            newValue2[0] = newValue;
+            //System.out.println("newVlaue array: " + newValue2[0]);
+            // we want to store this new value into the array of silo individual silos
+            String[] lines = newValue2[0].split("\\r?\\n"); // split into an array of lines
+            List<String> newList = new ArrayList<>();
+            for (int z=0; z<lines.length; z++) {
+                newList.add(lines[z]); // add each line to the list
             }
             Interpreter_A.arrayOfSilos[i][j].setListOfInstructions(newList);
+//            System.out.println(Interpreter_A.arrayOfSilos[i][j].getListOfInstructions().toString());
         });
     }
-
-//    public void textAreaInputForNewInstructions(Silo_A arrayOfSilos[][], int i, int j){
-//
-//        final String[] newValue2 = {null};
-//        siloArea.textProperty().addListener((observable, oldValue, newValue) -> {
-//            if (newValue.endsWith("\n")) {
-//                System.out.println("clicked enter;");
-//            }
-//            newValue2[0] = newValue;
-//            //System.out.println("newVlaue array: " + newValue2[0]);
-//            // we want to store this new value into the array of silo individual silos
-//            List<String> newList = new ArrayList<>();
-//            for(int l = 0; l < newValue2.length; l++){
-//               newList.add(newValue2[l]);
-//            }
-//            Interpreter_A.arrayOfSilos[i][j].setListOfInstructions(newList);
-//            //System.out.println(Interpreter_A.arrayOfSilos[i][j].getListOfInstructions().toString());
-//        });
-//    }
 
     public void drawAccBak(){
         // TODO: Get the Acc and Bak from Interpreter
