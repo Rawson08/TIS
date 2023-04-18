@@ -36,11 +36,11 @@ public class Interpreter_A {
     private List<List<Integer>> inputCoordinatesList;
     private List<Integer> outputValues;
 
-    public List<List<Integer>> getOutputValuesList() {
-        return outputValuesList;
+    public List<List<Integer>> getOutputCoordinatesList() {
+        return outputCoordinatesList;
     }
 
-    private List<List<Integer>> outputValuesList;
+    private List<List<Integer>> outputCoordinatesList;
     private int outputFromSiloX;
     private int outputFromSiloY;
     private String commandFromGUI;
@@ -171,7 +171,7 @@ public void addInstruction(String commandFromGUI, int i, int j){
                 System.out.println("Input values: " + this.inputValuesList);
                 inputs.remove(inputIndex);
         }
-        this.outputValuesList = new ArrayList<>();
+        this.outputCoordinatesList = new ArrayList<>();
         while (inputs.contains("OUTPUT")){
             this.outputValues = new ArrayList<>();
             int outputIndex = inputs.indexOf("OUTPUT");
@@ -181,10 +181,10 @@ public void addInstruction(String commandFromGUI, int i, int j){
             outputValues.add(Integer.parseInt(outputRowAndColumnSplit[1]));
             inputs.remove(outputIndex);
             inputs.remove(outputIndex);
-            outputValuesList.add(outputValues);
+            outputCoordinatesList.add(outputValues);
         }
         inputs.remove(inputs.size()-1);
-        System.out.println("outputs: " + outputValuesList);
+        System.out.println("outputs: " + outputCoordinatesList);
         // Load instructions into silos
         List<String> currSiloInstruction = new ArrayList<>();
         Silo_A currSilo = new Silo_A();
