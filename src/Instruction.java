@@ -26,31 +26,39 @@ class MoveInstruction extends Instruction {
     @Override
     public void execute() {
         // execute MOVE instruction
+        int valueToMove = 0;
         System.out.println("moving: " + src + " to:" + dst);
         if(src.equals("UP")){
-            Interpreter_A.arrayOfSilos[i][j].getPortA().getUpPortAccValue();
+            valueToMove = Interpreter_A.arrayOfSilos[i][j].getPortA().getUpPortAccValue();
         }
-        if(src.equals("DOWN")){
-            Interpreter_A.arrayOfSilos[i][j].getPortA().getDownPortAccValue();
+        else if(src.equals("DOWN")){
+            valueToMove = Interpreter_A.arrayOfSilos[i][j].getPortA().getDownPortAccValue();
         }
-        if(src.equals("LEFT")){
-            Interpreter_A.arrayOfSilos[i][j].getPortA().getLeftPortAccValue();
+        else if(src.equals("LEFT")){
+            valueToMove = Interpreter_A.arrayOfSilos[i][j].getPortA().getLeftPortAccValue();
         }
-        if(src.equals("RIGHT")){
-            Interpreter_A.arrayOfSilos[i][j].getPortA().getRightPortAccValue();
+        else if(src.equals("RIGHT")){
+            valueToMove = Interpreter_A.arrayOfSilos[i][j].getPortA().getRightPortAccValue();
+        }
+        else if(src.equals("ACC")){
+            valueToMove = Interpreter_A.arrayOfSilos[i][j].getAcc();
         }
         if(dst.equals("UP")){
-            Interpreter_A.arrayOfSilos[i][j].getPortA().getUpPortAccValue();
+            Interpreter_A.arrayOfSilos[i][j].getPortA().setUpPortAccValue(valueToMove);
         }
-        if(dst.equals("DOWN")){
-            Interpreter_A.arrayOfSilos[i][j].getPortA().getDownPortAccValue();
+        else if(dst.equals("DOWN")){
+            Interpreter_A.arrayOfSilos[i][j].getPortA().setDownPortAccValue(valueToMove);
         }
-        if(dst.equals("LEFT")){
-            Interpreter_A.arrayOfSilos[i][j].getPortA().getLeftPortAccValue();
+        else if(dst.equals("LEFT")){
+            Interpreter_A.arrayOfSilos[i][j].getPortA().setLeftPortAccValue(valueToMove);
         }
-        if(dst.equals("RIGHT")){
-            Interpreter_A.arrayOfSilos[i][j].getPortA().getRightPortAccValue();
+        else if(dst.equals("RIGHT")){
+            Interpreter_A.arrayOfSilos[i][j].getPortA().setRightPortAccValue(valueToMove);
         }
+        else if(dst.equals("ACC")){
+            Interpreter_A.arrayOfSilos[i][j].setAcc(valueToMove);
+        }
+
     }
 }
 
