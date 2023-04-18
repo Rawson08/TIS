@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Interpreter_A {
+
+
     public int getNumRows() {
         return numRows;
     }
@@ -39,13 +41,17 @@ public class Interpreter_A {
     }
 
     private static List<List<Integer>> inputCoordinatesList;
-    private List<Integer> outputValues;
+    private static List<Integer> outputValues;
 
-    public List<List<Integer>> getOutputCoordinatesList() {
+    public static void setOutputValue(int valueToMove) {
+        outputValues.add(valueToMove);
+    }
+
+    public static List<List<Integer>> getOutputCoordinatesList() {
         return outputCoordinatesList;
     }
 
-    private List<List<Integer>> outputCoordinatesList;
+    private static List<List<Integer>> outputCoordinatesList;
     private int outputFromSiloX;
     private int outputFromSiloY;
     private String commandFromGUI;

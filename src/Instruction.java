@@ -31,8 +31,10 @@ class MoveInstruction extends Instruction {
         if(src.equals("UP")){
             if(i == Interpreter_A.getInputCoordinatesList().get(0).get(0) + 1
                && j == Interpreter_A.getInputCoordinatesList().get(0).get(1)){
-                System.out.println("moving from input:  i coord: " + i + " j coord:" + j);
-                valueToMove = Interpreter_A.getInputValues().remove(0);
+                if(Interpreter_A.getInputCoordinatesList().get(0).size() > 0) {
+                    valueToMove = Interpreter_A.getInputValues().remove(0);
+                }
+                System.out.println("moving value: " + valueToMove);
             }
             else valueToMove = Interpreter_A.arrayOfSilos[i][j].getPortA().getUpPortAccValue();
         }
@@ -52,6 +54,10 @@ class MoveInstruction extends Instruction {
             Interpreter_A.arrayOfSilos[i][j].getPortA().setUpPortAccValue(valueToMove);
         }
         else if(dst.equals("DOWN")){
+            if(i == Interpreter_A.getOutputCoordinatesList().get(0).get(0) - 1
+                    && j == Interpreter_A.getOutputCoordinatesList().get(0).get(1)){
+                Interpreter_A.setOutputValue(valueToMove);
+            }
             Interpreter_A.arrayOfSilos[i][j].getPortA().setDownPortAccValue(valueToMove);
         }
         else if(dst.equals("LEFT")){
