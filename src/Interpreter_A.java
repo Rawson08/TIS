@@ -115,11 +115,12 @@ public class Interpreter_A {
         int outputIndex = inputs.indexOf("OUTPUT");
         for (int j=0; j<inputCounter;j++) {
             if (inputs.contains("INPUT")) {
-                int endIndex = inputs.indexOf("END");
+                int endIndex = 0;
                 int inputIndex = inputs.indexOf("INPUT");
-                for (int i=0; i<inputs.size(); i++){
-                    if (inputs.get(i).equals("END") && (inputs.get(i).indexOf("END") >= inputIndex)){
-                        endIndex = inputs.get(i).indexOf("END");
+                for (int i=inputIndex; i<inputs.size(); i++){
+                        if(inputs.get(i).equals("END")){
+                            endIndex = i;
+                            break;
                     }
                 }
                 System.out.println("end in: " + endIndex + " input index: " + inputIndex);
