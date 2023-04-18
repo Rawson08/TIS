@@ -81,9 +81,17 @@ public class GUI_R extends Application {
 //        ioPanel.getChildren().addAll(inputArea, outputArea);
         String inputValueStr = interpreterA1.getInputValues().toString().replaceAll(",", "\n").replaceAll("[ \\[\\]]","");
 
-
+        int inputCount = 2;
+        int outputCount = 2;
         HBox vBox = new HBox();
-        vBox.getChildren().addAll(createInput(inputValueStr), createOutput(), createInput(inputValueStr), createOutput());
+        for (int i = 0; i < inputCount; i++){
+            vBox.getChildren().add(createInput(inputValueStr));
+        }
+        for (int i = 0; i < outputCount; i++){
+            vBox.getChildren().add(createOutput());
+        }
+
+//        vBox.getChildren().addAll(createInput(inputValueStr), createOutput(), createInput(inputValueStr), createOutput());
         vBox.setPadding(new Insets(10));
         vBox.prefWidthProperty().bind(root.widthProperty().multiply(0.25));
 //        vBox.prefHeightProperty().bind(root.heightProperty().multiply(0.75));
@@ -231,8 +239,8 @@ public class GUI_R extends Application {
         outputLabel.setTextFill(Color.WHITE);
 
         //Output
-        String listString2 = interpreterA1.getInputValues().toString().replaceAll(",", "\n").replaceAll("[ \\[\\]]","");
-        TextArea outputArea = new TextArea(listString2);
+//        String listString2 = interpreterA1.getInputValues().toString().replaceAll(",", "\n").replaceAll("[ \\[\\]]","");
+        TextArea outputArea = new TextArea();
         outputArea.setEditable(false);
         outputArea.setPrefHeight(200);
         outputArea.setWrapText(true);
