@@ -29,7 +29,12 @@ class MoveInstruction extends Instruction {
         int valueToMove = 0;
         System.out.println("moving: " + src + " to:" + dst);
         if(src.equals("UP")){
-            valueToMove = Interpreter_A.arrayOfSilos[i][j].getPortA().getUpPortAccValue();
+            if(i == Interpreter_A.getInputCoordinatesList().get(0).get(0) + 1
+               && j == Interpreter_A.getInputCoordinatesList().get(0).get(1)){
+                System.out.println("moving from input:  i coord: " + i + " j coord:" + j);
+                valueToMove = Interpreter_A.getInputValues().remove(0);
+            }
+            else valueToMove = Interpreter_A.arrayOfSilos[i][j].getPortA().getUpPortAccValue();
         }
         else if(src.equals("DOWN")){
             valueToMove = Interpreter_A.arrayOfSilos[i][j].getPortA().getDownPortAccValue();
