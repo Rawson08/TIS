@@ -66,26 +66,29 @@ public class Parser_J {
                     return new SaveInstruction(i, j);
                 case ADD:
                     tokenizer.nextToken();
+                    int addNumber = 0;
                     // TODO: check for proper follow-up token
                     if(tokenizer.getTokenType() == Tokenizer_J.TokenType.NUMBER){
-                        return new AddInstruction(tokenizer.getTokenValue(), i, j);
+                        return new AddInstruction(Integer.parseInt(tokenizer.getTokenValue()), i, j);
                     }
                     else if(tokenizer.getTokenType() == Tokenizer_J.TokenType.PORT){
                         if(tokenizer.getTokenValue().equals("UP")){
-
+                            Interpreter_A.arrayOfSilos[i][j].getPortA().getUpPortAccValue();
                         }
-                        if(tokenizer.getTokenValue().equals("DOWN")){
-
+                        else if(tokenizer.getTokenValue().equals("DOWN")){
+                            Interpreter_A.arrayOfSilos[i][j].getPortA().getDownPortAccValue();
                         }
-                        if(tokenizer.getTokenValue().equals("LEFT")){
-
+                        else if(tokenizer.getTokenValue().equals("LEFT")){
+                            Interpreter_A.arrayOfSilos[i][j].getPortA().getLeftPortAccValue();
                         }
-                        if(tokenizer.getTokenValue().equals("RIGHT")){
-
+                        else if(tokenizer.getTokenValue().equals("RIGHT")){
+                            Interpreter_A.arrayOfSilos[i][j].getPortA().getRightPortAccValue();
                         }
+                    } else if (tokenizer.getTokenType() == Tokenizer_J.TokenType.REGISTER) {
+                        addNumber = Interpreter_A.arrayOfSilos[i][j].getAcc();
                     }
-                    String addString = tokenizer.getTokenValue();
-                    return new AddInstruction(addString, i, j);
+
+                    return new AddInstruction(addNumber, i, j);
                 case SUB:
                     tokenizer.nextToken();
                     // TODO: check for proper follow-up token

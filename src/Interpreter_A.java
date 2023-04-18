@@ -28,6 +28,8 @@ public class Interpreter_A {
     private List<List<Integer>> inputValuesList;
     private int inputRow[];
     private int inputColumn[];
+    private List<Integer> outputValues;
+    private List<List<Integer>> outputValuesList;
     private int outputFromSiloX;
     private int outputFromSiloY;
     private String commandFromGUI;
@@ -94,11 +96,10 @@ public class Interpreter_A {
         this.numRows = Integer.parseInt(gridValues[0]);
         this.numCols = Integer.parseInt(gridValues[1]);
         this.arrayOfSilos = new Silo_A[numRows][numCols];
-
         // only prints the statement before the input values
         int inputCounter = 0;
         int outputCounter = 0;
-        for (int i=0; i<inputs.size(); i++){
+        for (int i=0; i < inputs.size(); i++){
             if (inputs.get(i).equals("INPUT")){
                 inputCounter++;
             }
@@ -110,21 +111,22 @@ public class Interpreter_A {
 
         // find input and output values in inputs
         // TODO: Handle if the number of input (inputCounter) is more than 1.
-        this.inputValues = new ArrayList<>();
+
         this.inputValuesList = new ArrayList<>();
-        int outputIndex = inputs.indexOf("OUTPUT");
+
         for (int j=0; j<inputCounter;j++) {
-            if (inputs.contains("INPUT")) {
-                int endIndex = inputs.indexOf("END");
+            this.inputValues = new ArrayList<>();
+                int endIndex = 0;
                 int inputIndex = inputs.indexOf("INPUT");
-                for (int i=0; i<inputs.size(); i++){
-                    if (inputs.get(i).equals("END") && (inputs.get(i).indexOf("END") >= inputIndex)){
-                        endIndex = inputs.get(i).indexOf("END");
+                for (int i=inputIndex; i<inputs.size(); i++){
+                        if(inputs.get(i).equals("END")){
+                            endIndex = i;
+                            break;
                     }
                 }
-                System.out.println("end in: " + endIndex + " input index: " + inputIndex);
+                inputs.remove(inputIndex);
                 // add the input row and input column to the header variable
-                String inputRowAndColumn = inputs.remove(inputIndex + 1);
+                String inputRowAndColumn = inputs.remove(inputIndex);
                 String[] inputRowAndColumnSplit = inputRowAndColumn.split("\\s+");
                 for (int i = 0; i < inputRowAndColumnSplit.length; i++) {
                     if (inputRowAndColumnSplit[i].equals("-")) {
@@ -132,31 +134,37 @@ public class Interpreter_A {
                         // concatRow is the input row
                         this.inputRow = new int[inputCounter];
                         this.inputRow[j] = Integer.parseInt(concatRow);
-                        System.out.println(inputRow[j]);
                         i++;
                     } else {
                         // otherwise get the input Column
                         this.inputColumn = new int[inputCounter];
                         this.inputColumn[j] = Integer.parseInt(inputRowAndColumnSplit[i]);
-                        System.out.println(inputColumn[j]);
                     }
                 }
                 // add all the input values for input into inputValues
-                for (int i = inputIndex + 1; i < endIndex; i++) {
-                    this.inputValues.add(Integer.parseInt(inputs.get(i)));
-                    this.inputValuesList.add(inputValues);
-                    System.out.println("Input Value: " + this.inputValues);
+                for (int i = inputIndex; i < endIndex - 2; i++) {
+                    this.inputValues.add(Integer.parseInt(inputs.get(inputIndex)));
+                    inputs.remove(inputIndex);
                 }
-            }
+                this.inputValuesList.add(inputValues);
+                System.out.println("Input values: " + this.inputValuesList);
+                inputs.remove(inputIndex);
+
         }
-        if (inputs.contains("OUTPUT")){
-            String outputRowAndColumn = inputs.remove(outputIndex);
+        this.outputValuesList = new ArrayList<>();
+        while (inputs.contains("OUTPUT")){
+            this.outputValues = new ArrayList<>();
+            int outputIndex = inputs.indexOf("OUTPUT");
+            String outputRowAndColumn = inputs.remove(outputIndex + 1);
             String[] outputRowAndColumnSplit = outputRowAndColumn.split("\\s+");
-            outputFromSiloX = Integer.parseInt(outputRowAndColumnSplit[0]);
-            outputFromSiloY = Integer.parseInt(outputRowAndColumnSplit[1]);
+            outputValues.add(Integer.parseInt(outputRowAndColumnSplit[0]));
+            outputValues.add(Integer.parseInt(outputRowAndColumnSplit[1]));
+            inputs.remove(outputIndex);
+            inputs.remove(outputIndex);
+            outputValuesList.add(outputValues);
         }
-
-
+        inputs.remove(inputs.size()-1);
+        System.out.println("outputs: " + outputValuesList);
         // Load instructions into silos
         List<String> currSiloInstruction = new ArrayList<>();
         Silo_A currSilo = new Silo_A();
@@ -176,7 +184,7 @@ public class Interpreter_A {
                     siloCounterX++;
                     siloCounterY = 0;
                 }
-                else {
+                else{
                     siloCounterY++;
                 }
             }
@@ -190,14 +198,15 @@ public class Interpreter_A {
         currSilo.setListOfInstructions(currSiloInstruction);
         //arrayOfSilos[siloCounterX][siloCounterY] = currSilo;
 
-        for (int i=0; i<numRows; i++){
-            for (int j=0; j<numCols; j++){
-                System.out.println("silo[" + i + "]["+ j +"]");
-                for (int k=0; k<arrayOfSilos[i][j].getListOfInstructions().size();k++) {
-                    System.out.println("inp: " + arrayOfSilos[i][j].getListOfInstructions().get(k));
-                }
-            }
-        }
+        //test print
+//        for (int i=0; i<numRows; i++){
+//            for (int j=0; j<numCols; j++){
+//                System.out.println("silo[" + i + "]["+ j +"]");
+//                for (int k=0; k<arrayOfSilos[i][j].getListOfInstructions().size();k++) {
+//                    System.out.println("inp: " + arrayOfSilos[i][j].getListOfInstructions().get(k));
+//                }
+//            }
+//        }
     }
 }
 
