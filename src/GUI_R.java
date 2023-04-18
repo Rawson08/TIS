@@ -53,7 +53,7 @@ public class GUI_R extends Application {
         interpreterA1.initialStartFromCmd();
         SILO_ROW = interpreterA1.getNumRows();
         SILO_COL = interpreterA1.getNumCols();
-        Silo_A[][] arraylist1 = interpreterA1.getArrayOfSilos();
+        //Silo_A[][] arraylist1 = interpreterA1.getArrayOfSilos();
 
         // Create input/output panel
         HBox ioPanel = new HBox(10);
@@ -195,7 +195,7 @@ public class GUI_R extends Application {
 
                 // TODO: start button if pressed, then disable texts input and start the program by calling another method.
                 //interpreterA1.setArrayOfSilos(arraylist1);
-                System.out.println("New Instruc: " + arraylist1[i][j]);
+                System.out.println("New Instruc: " + Interpreter_A.arrayOfSilos[i][j]);
             }
         }
 
