@@ -101,11 +101,9 @@ public class Interpreter_A {
         for (int i=0; i<inputs.size(); i++){
             if (inputs.get(i).equals("INPUT")){
                 inputCounter++;
-                break;
             }
             else if (inputs.get(i).equals("OUTPUT")){
                 outputCounter++;
-                break;
             }
         }
         System.out.println("Input count is: " + inputCounter);
@@ -113,11 +111,18 @@ public class Interpreter_A {
         // find input and output values in inputs
         // TODO: Handle if the number of input (inputCounter) is more than 1.
         this.inputValues = new ArrayList<>();
+        this.inputValuesList = new ArrayList<>();
         int outputIndex = inputs.indexOf("OUTPUT");
         for (int j=0; j<inputCounter;j++) {
-            int endIndex = inputs.indexOf("END");
             if (inputs.contains("INPUT")) {
+                int endIndex = inputs.indexOf("END");
                 int inputIndex = inputs.indexOf("INPUT");
+                for (int i=0; i<inputs.size(); i++){
+                    if (inputs.get(i).equals("END") && (inputs.get(i).indexOf("END") >= inputIndex)){
+                        endIndex = inputs.get(i).indexOf("END");
+                    }
+                }
+                System.out.println("end in: " + endIndex + " input index: " + inputIndex);
                 // add the input row and input column to the header variable
                 String inputRowAndColumn = inputs.remove(inputIndex + 1);
                 String[] inputRowAndColumnSplit = inputRowAndColumn.split("\\s+");
@@ -137,8 +142,9 @@ public class Interpreter_A {
                     }
                 }
                 // add all the input values for input into inputValues
-                for (int i = inputIndex + 1; i < outputIndex - 2; i++) {
+                for (int i = inputIndex + 1; i < endIndex; i++) {
                     this.inputValues.add(Integer.parseInt(inputs.get(i)));
+                    this.inputValuesList.add(inputValues);
                     System.out.println("Input Value: " + this.inputValues);
                 }
             }
