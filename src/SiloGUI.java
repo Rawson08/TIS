@@ -2,11 +2,13 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.skin.TextAreaSkin;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
@@ -30,6 +32,9 @@ public class SiloGUI {
     private static Label leftArrow;
     private static Label rightArrow;
     private static HBox arrowBox;
+    private static final Color HIGHLIGHT_COLOR = Color.GRAY;
+    private static int lineNumber = 2;
+
     private static TextArea siloArea;
 
     public SiloGUI(){
@@ -60,6 +65,12 @@ public class SiloGUI {
 
         //This is the Silo TextArea section
         siloArea = new TextArea(str.toString().replaceAll("[\\[\\]]", "").replaceAll(", ","\n"));
+
+        Rectangle highlight = new Rectangle(0, 0, siloArea.getWidth(), siloArea.getFont().getSize() + 2);
+        highlight.setFill(HIGHLIGHT_COLOR);
+        highlight.setMouseTransparent(true);
+        TextAreaSkin skin = (TextAreaSkin) siloArea.getSkin();
+
 
         // TODO: Decided to make the program run from the cmd first and then make it run from the Silo inputs
         siloArea.setEditable(true);
