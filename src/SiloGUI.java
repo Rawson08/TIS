@@ -43,12 +43,14 @@ public class SiloGUI {
     public BorderPane drawSilo(List<String> str, int currentInstructionIndex, int i, int j){
         int accTestValue = 0;
         int bakTestValue = 0;
-        int arrowLeftValue = 0;
-        int arrowRightValue = 0;
-        int arrowUpValue = 0;
-        int arrowDownValue = 0;
+
+        //Taking values from the Interpreter class of particular silo
+        int arrowUpValue = Interpreter_A.arrayOfSilos[i][j].getPortA().getUpPortAccValue();
+        int arrowDownValue = Interpreter_A.arrayOfSilos[i][j].getPortA().getDownPortAccValue();
+        int arrowLeftValue = Interpreter_A.arrayOfSilos[i][j].getPortA().getLeftPortAccValue();
+        int arrowRightValue = Interpreter_A.arrayOfSilos[i][j].getPortA().getRightPortAccValue();
         drawAccBak(accTestValue, bakTestValue);
-        drawArrows(arrowUpValue, arrowDownValue, arrowLeftValue, arrowRightValue, i, j);
+        drawArrows(arrowUpValue, arrowDownValue, arrowLeftValue, arrowRightValue);
         rightOfSilo = new VBox();
         rightOfSilo.getChildren().addAll(accLabel, accValue, bakLabel, bakValue, rightArrow);
         rightOfSilo.setSpacing(5);
@@ -127,7 +129,7 @@ public class SiloGUI {
 
     }
 
-    public void drawArrows(int upValue, int downValue, int leftValue, int rightValue, int i, int j){
+    public void drawArrows(int upValue, int downValue, int leftValue, int rightValue){
         //TODO: Arrows needs more work, as currently we can't be sure if any arrow is in use. I am thinking to
         // import the 'in-use' arrows as well which will be used if any arrow is used.
 
@@ -150,10 +152,6 @@ public class SiloGUI {
         int down = 0;
         int left = 0;
         int right = 0;
-        upValue = Interpreter_A.arrayOfSilos[i][j].getPortA().getUpPortAccValue();
-        downValue = Interpreter_A.arrayOfSilos[i][j].getPortA().getDownPortAccValue();
-        leftValue = Interpreter_A.arrayOfSilos[i][j].getPortA().getLeftPortAccValue();
-        rightValue = Interpreter_A.arrayOfSilos[i][j].getPortA().getRightPortAccValue();
 
         if (upValue != 0){
             up = 1;
@@ -164,7 +162,6 @@ public class SiloGUI {
         } else if (rightValue != 0) {
             right = 1;
         }
-
 
         arrowBox = new HBox();
         arrowBox.setAlignment(Pos.CENTER);
