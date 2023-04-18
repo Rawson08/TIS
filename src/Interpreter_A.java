@@ -98,7 +98,7 @@ public class Interpreter_A {
         // only prints the statement before the input values
         int inputCounter = 0;
         int outputCounter = 0;
-        for (int i=0; i<inputs.size(); i++){
+        for (int i=0; i < inputs.size(); i++){
             if (inputs.get(i).equals("INPUT")){
                 inputCounter++;
             }
@@ -114,7 +114,6 @@ public class Interpreter_A {
         this.inputValuesList = new ArrayList<>();
         int outputIndex = inputs.indexOf("OUTPUT");
         for (int j=0; j<inputCounter;j++) {
-            if (inputs.contains("INPUT")) {
                 int endIndex = 0;
                 int inputIndex = inputs.indexOf("INPUT");
                 for (int i=inputIndex; i<inputs.size(); i++){
@@ -143,13 +142,14 @@ public class Interpreter_A {
                     }
                 }
                 // add all the input values for input into inputValues
-                for (int i = inputIndex + 1; i < endIndex; i++) {
+                for (int i = inputIndex + 1; i < endIndex - 1; i++) {
                     this.inputValues.add(Integer.parseInt(inputs.get(i)));
-                    this.inputValuesList.add(inputValues);
                     System.out.println("Input Value: " + this.inputValues);
                 }
-            }
+                this.inputValuesList.add(inputValues);
+                System.out.println("Input values: " + this.inputValuesList);
         }
+
         if (inputs.contains("OUTPUT")){
             String outputRowAndColumn = inputs.remove(outputIndex);
             String[] outputRowAndColumnSplit = outputRowAndColumn.split("\\s+");
