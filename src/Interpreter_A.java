@@ -94,7 +94,6 @@ public class Interpreter_A {
         this.numRows = Integer.parseInt(gridValues[0]);
         this.numCols = Integer.parseInt(gridValues[1]);
         this.arrayOfSilos = new Silo_A[numRows][numCols];
-
         // only prints the statement before the input values
         int inputCounter = 0;
         int outputCounter = 0;
@@ -112,7 +111,7 @@ public class Interpreter_A {
         // TODO: Handle if the number of input (inputCounter) is more than 1.
         this.inputValues = new ArrayList<>();
         this.inputValuesList = new ArrayList<>();
-        int outputIndex = inputs.indexOf("OUTPUT");
+
         for (int j=0; j<inputCounter;j++) {
                 int endIndex = 0;
                 int inputIndex = inputs.indexOf("INPUT");
@@ -122,9 +121,10 @@ public class Interpreter_A {
                             break;
                     }
                 }
+                inputs.remove(inputIndex);
                 System.out.println("end in: " + endIndex + " input index: " + inputIndex);
                 // add the input row and input column to the header variable
-                String inputRowAndColumn = inputs.remove(inputIndex + 1);
+                String inputRowAndColumn = inputs.remove(inputIndex);
                 String[] inputRowAndColumnSplit = inputRowAndColumn.split("\\s+");
                 for (int i = 0; i < inputRowAndColumnSplit.length; i++) {
                     if (inputRowAndColumnSplit[i].equals("-")) {
@@ -142,21 +142,28 @@ public class Interpreter_A {
                     }
                 }
                 // add all the input values for input into inputValues
-                for (int i = inputIndex + 1; i < endIndex - 1; i++) {
-                    this.inputValues.add(Integer.parseInt(inputs.get(i)));
-                    System.out.println("Input Value: " + this.inputValues);
+                for (int i = inputIndex; i < endIndex - 2; i++) {
+                    this.inputValues.add(Integer.parseInt(inputs.get(inputIndex)));
+                    inputs.remove(inputIndex);
+                    //System.out.println("Input Value: " + this.inputValues);
                 }
                 this.inputValuesList.add(inputValues);
                 System.out.println("Input values: " + this.inputValuesList);
+                inputs.remove(inputIndex);
+
         }
 
         if (inputs.contains("OUTPUT")){
-            String outputRowAndColumn = inputs.remove(outputIndex);
+            int outputIndex = inputs.indexOf("OUTPUT");
+            String outputRowAndColumn = inputs.remove(outputIndex + 1);
             String[] outputRowAndColumnSplit = outputRowAndColumn.split("\\s+");
             outputFromSiloX = Integer.parseInt(outputRowAndColumnSplit[0]);
             outputFromSiloY = Integer.parseInt(outputRowAndColumnSplit[1]);
+            inputs.remove(outputIndex);
+            inputs.remove(outputIndex);
         }
-
+        inputs.remove(inputs.size()-1);
+        System.out.println(inputs);
 
         // Load instructions into silos
         List<String> currSiloInstruction = new ArrayList<>();
