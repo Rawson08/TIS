@@ -173,7 +173,7 @@ public class GUI_R extends Application {
                 silo = new SiloGUI();
                 String listString1 = Interpreter_A.arrayOfSilos[i][j].getListOfInstructions().toString().replaceAll("[\\[\\]]", "");
                 System.out.println("listString1" + listString1);
-                siloGrid.add(silo.drawSilo(Collections.singletonList(listString1), currentInstructionIndex), j, i);
+                siloGrid.add(silo.drawSilo(Collections.singletonList(listString1), currentInstructionIndex, i, j), j, i);
 
                 // disable textAreaInputForNewInstructions when the start button is pressed
                 silo.textAreaInputForNewInstructions(Interpreter_A.arrayOfSilos, i, j);
@@ -239,7 +239,7 @@ public class GUI_R extends Application {
 
         //Output
         String listString2 = interpreterA1.getInputValues().toString().replaceAll(",", "\n").replaceAll("[ \\[\\]]","");
-        TextArea outputArea = new TextArea(listString2);
+        TextArea outputArea = new TextArea();
         outputArea.setEditable(false);
         outputArea.setPrefHeight(200);
         outputArea.setWrapText(true);

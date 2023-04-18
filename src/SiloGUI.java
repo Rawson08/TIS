@@ -40,7 +40,7 @@ public class SiloGUI {
 
     }
 
-    public BorderPane drawSilo(List<String> str, int currentInstructionIndex){
+    public BorderPane drawSilo(List<String> str, int currentInstructionIndex, int i, int j){
         int accTestValue = 0;
         int bakTestValue = 0;
         int arrowLeftValue = 0;
@@ -48,7 +48,7 @@ public class SiloGUI {
         int arrowUpValue = 0;
         int arrowDownValue = 0;
         drawAccBak(accTestValue, bakTestValue);
-        drawArrows(arrowUpValue, arrowDownValue, arrowLeftValue, arrowRightValue);
+        drawArrows(arrowUpValue, arrowDownValue, arrowLeftValue, arrowRightValue, i, j);
         rightOfSilo = new VBox();
         rightOfSilo.getChildren().addAll(accLabel, accValue, bakLabel, bakValue, rightArrow);
         rightOfSilo.setSpacing(5);
@@ -127,7 +127,7 @@ public class SiloGUI {
 
     }
 
-    public void drawArrows(int upValue, int downValue, int leftValue, int rightValue){
+    public void drawArrows(int upValue, int downValue, int leftValue, int rightValue, int i, int j){
         //TODO: Arrows needs more work, as currently we can't be sure if any arrow is in use. I am thinking to
         // import the 'in-use' arrows as well which will be used if any arrow is used.
 
@@ -146,28 +146,46 @@ public class SiloGUI {
         ImageView [][] imageViewArray = {{upArrowPNG, downArrowPNG, leftArrowPNG, rightArrowPNG},
                 {upArrowOnPNG, downArrowOnPNG, leftArrowOnPNG, rightArrowOnPNG}};
 
-        if (true){
-            int i = 0;
-            arrowBox = new HBox();
-            arrowBox.setAlignment(Pos.CENTER);
-            arrowBox.setSpacing(10);
-            upArrow = new Label(String.valueOf(upValue));
-            upArrow.setGraphic(imageViewArray[i][0]);
-            upArrow.setFont(Font.font("Monospaced", FontWeight.BOLD, 15));
-            upArrow.setTextFill(Color.LIGHTGRAY);
-            downArrow = new Label(String.valueOf(downValue));
-            downArrow.setGraphic(imageViewArray[i][1]);
-            downArrow.setFont(Font.font("Monospaced", FontWeight.BOLD, 15));
-            downArrow.setTextFill(Color.LIGHTGRAY);
-            leftArrow = new Label(String.valueOf(leftValue));
-            leftArrow.setGraphic(imageViewArray[i][2]);
-            leftArrow.setFont(Font.font("Monospaced", FontWeight.BOLD, 15));
-            leftArrow.setTextFill(Color.LIGHTGRAY);
-            rightArrow = new Label(String.valueOf(rightValue));
-            rightArrow.setGraphic(imageViewArray[i][3]);
-            rightArrow.setFont(Font.font("Monospaced", FontWeight.BOLD, 15));
-            rightArrow.setTextFill(Color.LIGHTGRAY);
+        int up = 0;
+        int down = 0;
+        int left = 0;
+        int right = 0;
+        upValue = Interpreter_A.arrayOfSilos[i][j].getPortA().getUpPortAccValue();
+        downValue = Interpreter_A.arrayOfSilos[i][j].getPortA().getDownPortAccValue();
+        leftValue = Interpreter_A.arrayOfSilos[i][j].getPortA().getLeftPortAccValue();
+        rightValue = Interpreter_A.arrayOfSilos[i][j].getPortA().getRightPortAccValue();
+
+        if (upValue != 0){
+            up = 1;
+        } else if (downValue != 0) {
+            down = 1;
+        } else if (leftValue != 0) {
+            left = 1;
+        } else if (rightValue != 0) {
+            right = 1;
         }
+
+
+        arrowBox = new HBox();
+        arrowBox.setAlignment(Pos.CENTER);
+        arrowBox.setSpacing(10);
+        upArrow = new Label(String.valueOf(upValue));
+        upArrow.setGraphic(imageViewArray[up][0]);
+        upArrow.setFont(Font.font("Monospaced", FontWeight.BOLD, 15));
+        upArrow.setTextFill(Color.LIGHTGRAY);
+        downArrow = new Label(String.valueOf(downValue));
+        downArrow.setGraphic(imageViewArray[down][1]);
+        downArrow.setFont(Font.font("Monospaced", FontWeight.BOLD, 15));
+        downArrow.setTextFill(Color.LIGHTGRAY);
+        leftArrow = new Label(String.valueOf(leftValue));
+        leftArrow.setGraphic(imageViewArray[left][2]);
+        leftArrow.setFont(Font.font("Monospaced", FontWeight.BOLD, 15));
+        leftArrow.setTextFill(Color.LIGHTGRAY);
+        rightArrow = new Label(String.valueOf(rightValue));
+        rightArrow.setGraphic(imageViewArray[right][3]);
+        rightArrow.setFont(Font.font("Monospaced", FontWeight.BOLD, 15));
+        rightArrow.setTextFill(Color.LIGHTGRAY);
+
     }
 
 }
