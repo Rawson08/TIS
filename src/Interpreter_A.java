@@ -20,20 +20,25 @@ public class Interpreter_A {
     private int tempValue = 0;
     public static Silo_A[][] arrayOfSilos;
 
-    public List<Integer> getInputValues() {
+    public static List<Integer> getInputValues() {
         return inputValues;
     }
 
-    private List<Integer> inputValues;
+    private static List<Integer> inputValues;
 
-    public List<List<Integer>> getInputValuesList() {
+    public static List<List<Integer>> getInputValuesList() {
         return inputValuesList;
     }
 
-    private List<List<Integer>> inputValuesList;
+    private static List<List<Integer>> inputValuesList;
     private int inputRow[];
     private int inputColumn[];
-    private List<List<Integer>> inputCoordinatesList;
+
+    public static List<List<Integer>> getInputCoordinatesList() {
+        return inputCoordinatesList;
+    }
+
+    private static List<List<Integer>> inputCoordinatesList;
     private List<Integer> outputValues;
 
     public List<List<Integer>> getOutputCoordinatesList() {
