@@ -25,10 +25,20 @@ public class Interpreter_A {
     }
 
     private List<Integer> inputValues;
+
+    public List<List<Integer>> getInputValuesList() {
+        return inputValuesList;
+    }
+
     private List<List<Integer>> inputValuesList;
     private int inputRow[];
     private int inputColumn[];
     private List<Integer> outputValues;
+
+    public List<List<Integer>> getOutputValuesList() {
+        return outputValuesList;
+    }
+
     private List<List<Integer>> outputValuesList;
     private int outputFromSiloX;
     private int outputFromSiloY;

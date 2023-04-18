@@ -79,19 +79,17 @@ public class GUI_R extends Application {
         //TODO: Put inputLabel with inputArea in one VBox and same for output
 //        ioLabel.getChildren().addAll(inputLabel, outputLabel);
 //        ioPanel.getChildren().addAll(inputArea, outputArea);
-        String inputValueStr = interpreterA1.getInputValues().toString().replaceAll(",", "\n").replaceAll("[ \\[\\]]","");
-
-        int inputCount = 2;
-        int outputCount = 2;
         HBox vBox = new HBox();
-        for (int i = 0; i < inputCount; i++){
+        for (int i=0; i<interpreterA1.getInputValuesList().size(); i++){
+            System.out.println("list contains: " + interpreterA1.getInputValuesList().get(i));
+            String inputValueStr = interpreterA1.getInputValuesList().get(i).toString().replaceAll(",", "\n").replaceAll("[ \\[\\]]","");
             vBox.getChildren().add(createInput(inputValueStr));
         }
-        for (int i = 0; i < outputCount; i++){
+        for (int j=0; j<interpreterA1.getOutputValuesList().size(); j++){
             vBox.getChildren().add(createOutput());
         }
 
-//        vBox.getChildren().addAll(createInput(inputValueStr), createOutput(), createInput(inputValueStr), createOutput());
+
         vBox.setPadding(new Insets(10));
         vBox.prefWidthProperty().bind(root.widthProperty().multiply(0.25));
 //        vBox.prefHeightProperty().bind(root.heightProperty().multiply(0.75));
@@ -116,6 +114,7 @@ public class GUI_R extends Application {
                 for (int j=0; j<SILO_COL; j++) {
                     for (int k = 0; k < Interpreter_A.arrayOfSilos[i][j].getListOfInstructions().size(); k++) {
                         String commandFromGUI = Interpreter_A.arrayOfSilos[i][j].getListOfInstructions().get(k);
+                        interpreterA1.addInstruction(commandFromGUI,i,j);
                         interpreterA1.runInstructions(commandFromGUI, i, j);
                     }
                 }
@@ -239,8 +238,8 @@ public class GUI_R extends Application {
         outputLabel.setTextFill(Color.WHITE);
 
         //Output
-//        String listString2 = interpreterA1.getInputValues().toString().replaceAll(",", "\n").replaceAll("[ \\[\\]]","");
-        TextArea outputArea = new TextArea();
+        String listString2 = interpreterA1.getInputValues().toString().replaceAll(",", "\n").replaceAll("[ \\[\\]]","");
+        TextArea outputArea = new TextArea(listString2);
         outputArea.setEditable(false);
         outputArea.setPrefHeight(200);
         outputArea.setWrapText(true);
