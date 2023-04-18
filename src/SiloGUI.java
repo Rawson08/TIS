@@ -1,9 +1,15 @@
+import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.skin.TextAreaSkin;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -36,6 +42,8 @@ public class SiloGUI {
     private static int lineNumber = 2;
 
     private static TextArea siloArea;
+    private ListView<String> siloList;
+
 
     public SiloGUI(){
 
@@ -44,6 +52,7 @@ public class SiloGUI {
     public BorderPane drawSilo(List<String> str, int currentInstructionIndex, int i, int j){
         accIntValue = Interpreter_A.arrayOfSilos[i][j].getAcc();
         bakIntValue = Interpreter_A.arrayOfSilos[i][j].getBak();
+        siloList = new ListView<>();
 
         //Taking values from the Interpreter class of particular silo
         int arrowUpValue = Interpreter_A.arrayOfSilos[i][j].getPortA().getUpPortAccValue();
@@ -82,9 +91,16 @@ public class SiloGUI {
         GUI_R.textAreaLimiter(siloArea);
 
         // TODO: Highlight the current instruction
+        siloArea.setStyle("-fx-highlight-fill: lightgray; -fx-highlight-text-fill: firebrick; -fx-font-size: 20px;");
+        siloArea.addEventFilter(MouseEvent.ANY, Event::consume);
+        Platform.runLater(() -> siloArea.selectRange(13, 18));
+
+
         siloArea.setFont(Font.font("Monospaced", 12));
-        siloArea.setStyle("-fx-control-inner-background: #222222; -fx-text-fill: #ffffff;");
-        return new BorderPane(siloArea, upArrow, rightOfSilo, downArrow, leftArrow);
+//        siloArea.setStyle("-fx-control-inner-background: #222222; -fx-text-fill: #ffffff;");
+        BorderPane borderPane = new BorderPane(siloList, upArrow, rightOfSilo, downArrow, leftArrow);
+        borderPane.setStyle("-fx-control-inner-background: #222222; -fx-text-fill: #ffffff;");
+        return borderPane;
     }
 
     public void textAreaInputForNewInstructions(Silo_A[][] arrayOfSilos, int i, int j){
