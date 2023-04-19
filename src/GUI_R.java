@@ -7,10 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextFormatter;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Screen;
@@ -235,6 +232,8 @@ public class GUI_R extends Application {
         TextArea inputArea = new TextArea(str);
         inputArea.setPrefHeight(200);
         inputArea.setWrapText(true);
+        inputArea.setMaxHeight(Double.MAX_VALUE); // Set the maximum height to Double.MAX_VALUE
+        VBox.setVgrow(inputArea, Priority.ALWAYS); // Set VBox.vgrow to Priority.ALWAYS
 
         // Limit the number of lines to 15
         textAreaLimiter(inputArea);
@@ -245,6 +244,7 @@ public class GUI_R extends Application {
         vBox1.getChildren().addAll(inputLabel, inputArea);
         return vBox1;
     }
+
 
     public VBox createOutput(){
         VBox vBox = new VBox();
@@ -258,15 +258,18 @@ public class GUI_R extends Application {
         outputArea.setEditable(false);
         outputArea.setPrefHeight(200);
         outputArea.setWrapText(true);
+        outputArea.setMaxHeight(Double.MAX_VALUE); // Set the maximum height to Double.MAX_VALUE
+        VBox.setVgrow(outputArea, Priority.ALWAYS); // Set VBox.vgrow to Priority.ALWAYS
 
         // Limit the number of lines to 15
-//        textAreaLimiter(outputArea);
+        textAreaLimiter(outputArea);
 
         outputArea.setFont(Font.font("Monospaced", 12));
         outputArea.setStyle("-fx-control-inner-background: #222222; -fx-text-fill: #ffffff;");
         vBox.getChildren().addAll(outputLabel, outputArea);
         return vBox;
     }
+
 
     public static void main(String[] args) {launch(args);}
 }
