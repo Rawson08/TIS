@@ -154,6 +154,7 @@ public class SiloGUI {
         arrowBox = new HBox();
         arrowBox.setAlignment(Pos.CENTER);
         arrowBox.setSpacing(10);
+
         upArrow = new Label(String.valueOf(upValue));
         upArrow.setGraphic(imageViewArray[up][0]);
         upArrow.setFont(Font.font("Monospaced", FontWeight.BOLD, 15));
