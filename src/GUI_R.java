@@ -25,7 +25,12 @@ public class GUI_R extends Application {
     private static int SILO_COL;
     private static final int LINES = 15;
     private static final int CHARS = 20;
-    private boolean isRunning = false;
+
+    public static boolean isRunning() {
+        return isRunning;
+    }
+
+    private static boolean isRunning = false;
     private static Button startButton;
     private static Button pauseStepButton;
     private static Button stopButton;
@@ -114,18 +119,18 @@ public class GUI_R extends Application {
             isRunning = true;
 
             //TODO: Execution
-            Run run = new Run(interpreterA1);
-            Thread thread = new Thread(run);
-            thread.start();
-            for (int i=0; i<SILO_ROW; i++){
-                for (int j=0; j<SILO_COL; j++) {
-                    for (int k = 0; k < Interpreter_A.arrayOfSilos[i][j].getListOfInstructions().size(); k++) {
-                        String commandFromGUI = Interpreter_A.arrayOfSilos[i][j].getListOfInstructions().get(k);
-                        interpreterA1.addInstruction(commandFromGUI,i,j);
-                        interpreterA1.runInstructions(commandFromGUI, i, j);
-                    }
-                }
-            }
+                Run run = new Run(interpreterA1);
+                Thread thread = new Thread(run);
+                thread.start();
+//            for (int i=0; i<SILO_ROW; i++){
+//                for (int j=0; j<SILO_COL; j++) {
+//                    for (int k = 0; k < Interpreter_A.arrayOfSilos[i][j].getListOfInstructions().size(); k++) {
+//                        String commandFromGUI = Interpreter_A.arrayOfSilos[i][j].getListOfInstructions().get(k);
+//                        interpreterA1.addInstruction(commandFromGUI,i,j);
+//                        interpreterA1.runInstructions(commandFromGUI, i, j);
+//                    }
+//                }
+//            }
             startButton.setDisable(true);
             pauseStepButton.setDisable(false);
             stopButton.setDisable(false);
