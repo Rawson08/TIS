@@ -40,7 +40,7 @@ public class Interpreter_A {
         return inputCoordinatesList;
     }
 
-    private static List<List<Integer>> inputCoordinatesList;
+    private static List<List<Integer>> inputCoordinatesList = new ArrayList<>();
     private static List<Integer> outputValues;
 
     public static void setOutputValue(int valueToMove) {
@@ -143,19 +143,20 @@ public void addInstruction(String commandFromGUI, int i, int j){
         for (int j=0; j<inputCounter;j++) {
             this.inputValues = new ArrayList<>();
                 int endIndex = 0;
+            while (inputs.contains("INPUT")) {
                 int inputIndex = inputs.indexOf("INPUT");
-                for (int i=inputIndex; i<inputs.size(); i++){
-                        if(inputs.get(i).equals("END")){
-                            endIndex = i;
-                            break;
+                for (int i = inputIndex; i < inputs.size(); i++) {
+                    if (inputs.get(i).equals("END")) {
+                        endIndex = i;
+                        break;
                     }
                 }
                 inputs.remove(inputIndex);
                 // add the input row and input column to the header variable
                 String inputRowAndColumn = inputs.remove(inputIndex);
                 String[] inputRowAndColumnSplit = inputRowAndColumn.split("\\s+");
-                this.inputCoordinatesList = new ArrayList<>();
-            List<Integer> inputCoords = new ArrayList<>();;
+                //this.inputCoordinatesList = new ArrayList<>();
+                List<Integer> inputCoords = new ArrayList<>();
                 for (int i = 0; i < inputRowAndColumnSplit.length; i++) {
                     if (inputRowAndColumnSplit[i].equals("-")) {
                         String concatRow = inputRowAndColumnSplit[i] + inputRowAndColumnSplit[i + 1];
@@ -170,8 +171,8 @@ public void addInstruction(String commandFromGUI, int i, int j){
                         this.inputColumn[j] = Integer.parseInt(inputRowAndColumnSplit[i]);
                         inputCoords.add(Integer.parseInt(inputRowAndColumnSplit[i]));
                     }
-                    inputCoordinatesList.add(inputCoords);
                 }
+                    inputCoordinatesList.add(inputCoords);
                 // add all the input values for input into inputValues
                 for (int i = inputIndex; i < endIndex - 2; i++) {
                     this.inputValues.add(Integer.parseInt(inputs.get(inputIndex)));
@@ -180,8 +181,8 @@ public void addInstruction(String commandFromGUI, int i, int j){
                 this.inputValuesList.add(inputValues);
                 System.out.println("Input values: " + this.inputValuesList);
                 inputs.remove(inputIndex);
+            }
         }
-        System.out.println("input coords: " +inputCoordinatesList);
         this.outputCoordinatesList = new ArrayList<>();
         while (inputs.contains("OUTPUT")){
             this.outputValues = new ArrayList<>();
