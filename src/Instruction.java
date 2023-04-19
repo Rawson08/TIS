@@ -29,14 +29,21 @@ class MoveInstruction extends Instruction {
         int valueToMove = 0;
         System.out.println("moving: " + src + " to:" + dst);
         if(src.equals("UP")){
-            if(i == Interpreter_A.getInputCoordinatesList().get(0).get(0) + 1
-               && j == Interpreter_A.getInputCoordinatesList().get(0).get(1)){
-                if(Interpreter_A.getInputCoordinatesList().get(0).size() > 0) {
-                    valueToMove = Interpreter_A.getInputValues().remove(0);
+            int k = 0;
+            while(k < Interpreter_A.getInputCoordinatesList().size()) {
+                if (i == Interpreter_A.getInputCoordinatesList().get(k).get(0) + 1
+                        && j == Interpreter_A.getInputCoordinatesList().get(k).get(1)) {
+                    if (Interpreter_A.getInputCoordinatesList().get(k).size() > 0) {
+                        valueToMove = Interpreter_A.getInputValuesList().get(k).remove(0);
+                    }
+                    break;
                 }
-                System.out.println("moving value: " + valueToMove);
+                else if(i > 0) valueToMove = Interpreter_A.arrayOfSilos[i - 1][j].getPortA().getDownPortAccValue();
+                k++;
             }
-            else valueToMove = Interpreter_A.arrayOfSilos[i][j].getPortA().getUpPortAccValue();
+            //else if(i > 0) valueToMove = Interpreter_A.arrayOfSilos[i - 1][j].getPortA().getDownPortAccValue();
+            //else valueToMove = 0;
+            System.out.println("moving value: " + valueToMove);
         }
         else if(src.equals("DOWN")){
             valueToMove = Interpreter_A.arrayOfSilos[i][j].getPortA().getDownPortAccValue();
@@ -50,6 +57,7 @@ class MoveInstruction extends Instruction {
         else if(src.equals("ACC")){
             valueToMove = Interpreter_A.arrayOfSilos[i][j].getAcc();
         }
+
         if(dst.equals("UP")){
             Interpreter_A.arrayOfSilos[i][j].getPortA().setUpPortAccValue(valueToMove);
         }
@@ -57,8 +65,9 @@ class MoveInstruction extends Instruction {
             if(i == Interpreter_A.getOutputCoordinatesList().get(0).get(0) - 1
                     && j == Interpreter_A.getOutputCoordinatesList().get(0).get(1)){
                 Interpreter_A.setOutputValue(valueToMove);
+                System.out.println("added: " + valueToMove + " to output");
             }
-            Interpreter_A.arrayOfSilos[i][j].getPortA().setDownPortAccValue(valueToMove);
+            else Interpreter_A.arrayOfSilos[i][j].getPortA().setDownPortAccValue(valueToMove);
         }
         else if(dst.equals("LEFT")){
             Interpreter_A.arrayOfSilos[i][j].getPortA().setLeftPortAccValue(valueToMove);
@@ -137,8 +146,8 @@ class AddInstruction extends Instruction {
     public void execute() {
         // execute ADD instruction should get src value and add to acc
         int number = src;
-        System.out.println("adding: " + number);
         Interpreter_A.arrayOfSilos[i][j].setAcc(Interpreter_A.arrayOfSilos[i][j].getAcc() + number);
+        System.out.println("adding: " + number);
     }
 }
 
