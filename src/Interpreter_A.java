@@ -41,6 +41,11 @@ public class Interpreter_A {
     }
 
     private static List<List<Integer>> inputCoordinatesList = new ArrayList<>();
+
+    public static List<Integer> getOutputValues() {
+        return outputValues;
+    }
+
     private static List<Integer> outputValues;
 
     public static void setOutputValue(int valueToMove) {

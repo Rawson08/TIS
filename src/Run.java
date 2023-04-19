@@ -25,6 +25,7 @@ public class Run implements Runnable {
                     }
                 }
             }
+            System.out.println("output:" + Interpreter_A.getOutputValues());
         }
     }
 }
