@@ -1,12 +1,11 @@
 import javafx.application.Platform;
-import javafx.collections.FXCollections;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextFormatter;
 import javafx.scene.control.skin.TextAreaSkin;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -42,7 +41,6 @@ public class SiloGUI {
     private static int lineNumber = 2;
 
     private static TextArea siloArea;
-    private ListView<String> siloList;
 
 
     public SiloGUI(){
@@ -52,7 +50,6 @@ public class SiloGUI {
     public BorderPane drawSilo(List<String> str, int currentInstructionIndex, int i, int j){
         accIntValue = Interpreter_A.arrayOfSilos[i][j].getAcc();
         bakIntValue = Interpreter_A.arrayOfSilos[i][j].getBak();
-        siloList = new ListView<>();
 
         //Taking values from the Interpreter class of particular silo
         int arrowUpValue = Interpreter_A.arrayOfSilos[i][j].getPortA().getUpPortAccValue();
@@ -75,32 +72,25 @@ public class SiloGUI {
         //This is the Silo TextArea section
         siloArea = new TextArea(str.toString().replaceAll("[\\[\\]]", "").replaceAll(", ","\n"));
 
-        Rectangle highlight = new Rectangle(0, 0, siloArea.getWidth(), siloArea.getFont().getSize() + 2);
-        highlight.setFill(HIGHLIGHT_COLOR);
-        highlight.setMouseTransparent(true);
-        TextAreaSkin skin = (TextAreaSkin) siloArea.getSkin();
+
+        // TODO: Highlight the current instruction
+
 
 
         // TODO: Decided to make the program run from the cmd first and then make it run from the Silo inputs
         siloArea.setEditable(true);
         siloArea.setPrefColumnCount(20);
-        siloArea.setPrefRowCount(15);
+        siloArea.setPrefRowCount(20);
         siloArea.setWrapText(true);
 
         // Limit the number of lines to 15
         GUI_R.textAreaLimiter(siloArea);
 
-        // TODO: Highlight the current instruction
-        siloArea.setStyle("-fx-highlight-fill: lightgray; -fx-highlight-text-fill: firebrick; -fx-font-size: 20px;");
-        siloArea.addEventFilter(MouseEvent.ANY, Event::consume);
-        Platform.runLater(() -> siloArea.selectRange(13, 18));
 
 
         siloArea.setFont(Font.font("Monospaced", 12));
-//        siloArea.setStyle("-fx-control-inner-background: #222222; -fx-text-fill: #ffffff;");
-        BorderPane borderPane = new BorderPane(siloList, upArrow, rightOfSilo, downArrow, leftArrow);
-        borderPane.setStyle("-fx-control-inner-background: #222222; -fx-text-fill: #ffffff;");
-        return borderPane;
+        siloArea.setStyle("-fx-control-inner-background: #222222; -fx-text-fill: #ffffff;");
+        return new BorderPane(siloArea, upArrow, rightOfSilo, downArrow, leftArrow);
     }
 
     public void textAreaInputForNewInstructions(Silo_A[][] arrayOfSilos, int i, int j){
@@ -171,20 +161,13 @@ public class SiloGUI {
         ImageView [][] imageViewArray = {{upArrowPNG, downArrowPNG, leftArrowPNG, rightArrowPNG},
                 {upArrowOnPNG, downArrowOnPNG, leftArrowOnPNG, rightArrowOnPNG}};
 
-        int up = 0;
-        int down = 0;
-        int left = 0;
-        int right = 0;
+        int up, down, left, right;
 
-        if (upValue != 0){
-            up = 1;
-        } else if (downValue != 0) {
-            down = 1;
-        } else if (leftValue != 0) {
-            left = 1;
-        } else if (rightValue != 0) {
-            right = 1;
-        }
+        up = (upValue != 0) ? 1 : 0;
+        down = (downValue != 0) ? 1 : 0;
+        left = (leftValue != 0) ? 1 : 0;
+        right = (rightValue != 0) ? 1 : 0;
+
 
         arrowBox = new HBox();
         arrowBox.setAlignment(Pos.CENTER);
