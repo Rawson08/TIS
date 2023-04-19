@@ -29,14 +29,20 @@ class MoveInstruction extends Instruction {
         int valueToMove = 0;
         System.out.println("moving: " + src + " to:" + dst);
         if(src.equals("UP")){
-            if(i == Interpreter_A.getInputCoordinatesList().get(0).get(0) + 1
-               && j == Interpreter_A.getInputCoordinatesList().get(0).get(1)){
-                if(Interpreter_A.getInputCoordinatesList().get(0).size() > 0) {
-                    valueToMove = Interpreter_A.getInputValues().remove(0);
+            int k = 0;
+            while(k < Interpreter_A.getInputCoordinatesList().size()) {
+                if (i == Interpreter_A.getInputCoordinatesList().get(k).get(0) + 1
+                        && j == Interpreter_A.getInputCoordinatesList().get(k).get(1)) {
+                    if (Interpreter_A.getInputCoordinatesList().get(k).size() > 0) {
+                        valueToMove = Interpreter_A.getInputValuesList().get(k).remove(0);
+                    }
+                    break;
                 }
+                else if(i > 0) valueToMove = Interpreter_A.arrayOfSilos[i - 1][j].getPortA().getDownPortAccValue();
+                k++;
             }
-            else if(i > 0) valueToMove = Interpreter_A.arrayOfSilos[i - 1][j].getPortA().getDownPortAccValue();
-            else valueToMove = 0;
+            //else if(i > 0) valueToMove = Interpreter_A.arrayOfSilos[i - 1][j].getPortA().getDownPortAccValue();
+            //else valueToMove = 0;
             System.out.println("moving value: " + valueToMove);
         }
         else if(src.equals("DOWN")){
