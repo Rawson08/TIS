@@ -50,10 +50,13 @@ public class Parser_J {
                 case NOOP:
                     return new NoopInstruction();
                 case MOVE:
+                    String src = "";
                     tokenizer.nextToken();
                     // TODO: check for proper src and dst tokens
                     // update for src and dst tokens
-                    String src = "";
+                    if(tokenizer.getTokenType() == Tokenizer_J.TokenType.REGISTER) {
+                        src = tokenizer.getTokenValue();
+                    }
                     if(tokenizer.getTokenType() == Tokenizer_J.TokenType.PORT){
                         src = tokenizer.getTokenValue();
                     }
