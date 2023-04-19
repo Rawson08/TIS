@@ -77,7 +77,6 @@ public class SiloGUI {
     }
 
     public void textAreaInputForNewInstructions(Silo_A[][] arrayOfSilos, int i, int j){
-
         final List<String> newList = new ArrayList<>();
         siloArea.textProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue.endsWith("\n")) {

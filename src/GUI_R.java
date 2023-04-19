@@ -43,7 +43,14 @@ public class GUI_R extends Application {
 
         BorderPane root = new BorderPane();
         Scene scene = new Scene(root, screenWidth, screenHeight);
-        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("buttonStyles.css")).toExternalForm());
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("buttonStyles.css")).toExternalForm());        // Create silo grid
+        GridPane siloGrid = new GridPane();
+        siloGrid.setAlignment(Pos.CENTER);
+        siloGrid.setHgap(10);
+        siloGrid.setVgap(10);
+        siloGrid.setPadding(new Insets(10));
+        siloGrid.setStyle("-fx-background-color: #1a1a1a;");
+
 //        root.setStyle("-fx-background-color: #222222;");
 
 
@@ -110,20 +117,19 @@ public class GUI_R extends Application {
             Run run = new Run(interpreterA1);
             Thread thread = new Thread(run);
             thread.start();
-//            for (int i=0; i<SILO_ROW; i++){
-//                for (int j=0; j<SILO_COL; j++) {
-//                    for (int k = 0; k < Interpreter_A.arrayOfSilos[i][j].getListOfInstructions().size(); k++) {
-//                        String commandFromGUI = Interpreter_A.arrayOfSilos[i][j].getListOfInstructions().get(k);
-//                        interpreterA1.addInstruction(commandFromGUI,i,j);
-//                        interpreterA1.runInstructions(commandFromGUI, i, j);
-//                    }
-//                }
-//            }
-
-
+            for (int i=0; i<SILO_ROW; i++){
+                for (int j=0; j<SILO_COL; j++) {
+                    for (int k = 0; k < Interpreter_A.arrayOfSilos[i][j].getListOfInstructions().size(); k++) {
+                        String commandFromGUI = Interpreter_A.arrayOfSilos[i][j].getListOfInstructions().get(k);
+                        interpreterA1.addInstruction(commandFromGUI,i,j);
+                        interpreterA1.runInstructions(commandFromGUI, i, j);
+                    }
+                }
+            }
             startButton.setDisable(true);
             pauseStepButton.setDisable(false);
             stopButton.setDisable(false);
+            siloGrid.setDisable(true);
         });
 
         pauseStepButton.setOnAction(event -> {
@@ -142,6 +148,9 @@ public class GUI_R extends Application {
             pauseStepButton.setDisable(true);
             pauseStepButton.setText("Pause");
             stopButton.setDisable(true);
+            siloGrid.setDisable(false);
+
+
             // TODO: Reset all of the silos
         });
 
@@ -156,14 +165,6 @@ public class GUI_R extends Application {
         buttonBox.setPadding(new Insets(10));
         root.setBottom(buttonBox);
 
-        // Create silo grid
-        GridPane siloGrid = new GridPane();
-        siloGrid.setAlignment(Pos.CENTER);
-        siloGrid.setHgap(10);
-        siloGrid.setVgap(10);
-        siloGrid.setPadding(new Insets(10));
-        siloGrid.setStyle("-fx-background-color: #1a1a1a;");
-
         int currentInstructionIndex = 1;
         // TODO: This has to get the current line of Instruction from Interpreter
 
@@ -171,16 +172,14 @@ public class GUI_R extends Application {
         for (int i = 0; i < SILO_ROW; i++) {
             for (int j = 0; j < SILO_COL; j++){
                 silo = new SiloGUI();
-                String listString1 = Interpreter_A.arrayOfSilos[i][j].getListOfInstructions().toString().replaceAll("[\\[\\]]", "");
-                System.out.println("listString1" + listString1);
-                siloGrid.add(silo.drawSilo(Collections.singletonList(listString1), currentInstructionIndex, i, j), j, i);
+                String cmdCommands = Interpreter_A.arrayOfSilos[i][j].getListOfInstructions().toString().replaceAll("[\\[\\]]", "");
+                siloGrid.add(silo.drawSilo(Collections.singletonList(cmdCommands), currentInstructionIndex, i, j), j, i);
 
                 // disable textAreaInputForNewInstructions when the start button is pressed
                 silo.textAreaInputForNewInstructions(Interpreter_A.arrayOfSilos, i, j);
 
                 // TODO: start button if pressed, then disable texts input and start the program by calling another method.
                 //interpreterA1.setArrayOfSilos(arraylist1);
-                System.out.println("New Instruc: " + Interpreter_A.arrayOfSilos[i][j]);
             }
         }
 
@@ -192,7 +191,6 @@ public class GUI_R extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
     }
-
 
     public static void textAreaLimiter(TextArea textArea){
         int maxLines = 15;
