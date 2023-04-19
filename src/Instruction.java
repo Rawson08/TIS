@@ -33,7 +33,7 @@ class MoveInstruction extends Instruction {
             while(k < Interpreter_A.getInputCoordinatesList().size()) {
                 if (i == Interpreter_A.getInputCoordinatesList().get(k).get(0) + 1
                         && j == Interpreter_A.getInputCoordinatesList().get(k).get(1)) {
-                    if (Interpreter_A.getInputCoordinatesList().get(k).size() > 0) {
+                    if (Interpreter_A.getInputValuesList().get(k).size() > 0) {
                         valueToMove = Interpreter_A.getInputValuesList().get(k).remove(0);
                     }
                     break;
