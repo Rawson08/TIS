@@ -194,11 +194,15 @@ public void addInstruction(String commandFromGUI, int i, int j){
                     inputs.remove(inputIndex);
                 }
                 this.inputValuesList.add(inputValues);
-                System.out.println("Input values: " + this.inputValuesList);
+
                 inputValues = new ArrayList<>();
                 inputs.remove(inputIndex);
             }
+
         }
+        System.out.println("Input values: " + this.inputValuesList);
+        System.out.println("input coordinates: " +inputCoordinatesList);
+
         this.outputCoordinatesList = new ArrayList<>();
         while (inputs.contains("OUTPUT")){
             this.outputCoordinates = new ArrayList<>();
