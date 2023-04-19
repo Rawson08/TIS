@@ -68,7 +68,7 @@ class MoveInstruction extends Instruction {
             Interpreter_A.arrayOfSilos[i][j].getPortA().setUpPortAccValue(valueToMove);
         }
         else if(dst.equals("DOWN")){
-            for(int k = 0; k < Interpreter_A.getOutputValuesList().size(); k++) {
+            for(int k = 0; k < Interpreter_A.getOutputCoordinatesList().size(); k++) {
                 if (i == Interpreter_A.getOutputCoordinatesList().get(k).get(0) - 1
                         && j == Interpreter_A.getOutputCoordinatesList().get(k).get(1)) {
                     Interpreter_A.getOutputValuesList().get(k).add(valueToMove);

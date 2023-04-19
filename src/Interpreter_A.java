@@ -195,6 +195,7 @@ public void addInstruction(String commandFromGUI, int i, int j){
                 }
                 this.inputValuesList.add(inputValues);
                 System.out.println("Input values: " + this.inputValuesList);
+                inputValues = new ArrayList<>();
                 inputs.remove(inputIndex);
             }
         }
