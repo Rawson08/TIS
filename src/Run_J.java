@@ -14,13 +14,14 @@ public class Run_J implements Runnable {
                     while(index < length && GUI_R.isRunning()) {
                         Interpreter_A.arrayOfSilos[i][j].getInstructions().get(index).execute();
                         index++;
-                        if(index == length - 1) index = 0;
-                    }
+                        if(index == length) index = 0;
                         try {
                             Thread.sleep(1000); // pause the thread for 1 second
                         } catch (InterruptedException e) {
                             // handle the exception if the thread is interrupted
                         }
+                    }
+
         }
         System.out.println("outputs:" + Interpreter_A.getOutputValuesList());
     }
