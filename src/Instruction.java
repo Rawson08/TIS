@@ -8,7 +8,7 @@
 // TODO: implement the logic for each execute function
 
 public abstract class Instruction {
-    public abstract void execute();
+    public abstract boolean execute();
 }
 
 class MoveInstruction extends Instruction {
@@ -24,7 +24,7 @@ class MoveInstruction extends Instruction {
     }
 
     @Override
-    public void execute() {
+    public boolean execute() {
         // execute MOVE instruction
         int valueToMove = 0;
         if(src.equals("UP")){
@@ -47,7 +47,7 @@ class MoveInstruction extends Instruction {
                 valueToMove = 0;
                 k++;
             }
-            if(valueToMove == 0) return;
+            if(valueToMove == 0) return false;
             //else if(i > 0) valueToMove = Interpreter_A.arrayOfSilos[i - 1][j].getPortA().getDownPortAccValue();
             //else valueToMove = 0;
             //System.out.println("moving value: " + valueToMove);
@@ -55,14 +55,14 @@ class MoveInstruction extends Instruction {
         else if(src.equals("DOWN")){
             valueToMove = Interpreter_A.arrayOfSilos[i][j].getPortA().getUpPortAccValue();
             Interpreter_A.arrayOfSilos[i][j].getPortA().setUpPortAccValue(0);
-            if(valueToMove == 0) return;
+            if(valueToMove == 0) return false;
         }
         else if(src.equals("LEFT")){
             if(j > 0) {
                 valueToMove = Interpreter_A.arrayOfSilos[i][j].getPortA().getLeftPortAccValue();
                 Interpreter_A.arrayOfSilos[i][j].getPortA().setLeftPortAccValue(0);
                 //System.out.println("moving value: " + valueToMove);
-                if(valueToMove == 0) return;
+                if(valueToMove == 0) return false;
             }
         }
         else if(src.equals("RIGHT")){
@@ -70,12 +70,12 @@ class MoveInstruction extends Instruction {
                 valueToMove = Interpreter_A.arrayOfSilos[i][j].getPortA().getRightPortAccValue();
                 Interpreter_A.arrayOfSilos[i][j].getPortA().setRightPortAccValue(0);
                 //System.out.println("moving value: " + valueToMove);
-                if(valueToMove == 0) return;
+                if(valueToMove == 0) return false;
             }
         }
         else if(src.equals("ACC")){
             valueToMove = Interpreter_A.arrayOfSilos[i][j].getAcc();
-            if(valueToMove == 0) return;
+            if(valueToMove == 0) return false;
         }
 
         if(dst.equals("UP")){
@@ -106,6 +106,7 @@ class MoveInstruction extends Instruction {
         }
         System.out.println("moving: " + src + " to:" + dst);
         System.out.println("moving value: " + valueToMove);
+        return true;
     }
 }
 
@@ -117,15 +118,17 @@ class LabelInstruction extends Instruction {
     }
 
     @Override
-    public void execute() {
+    public boolean execute() {
         // execute LABEL instruction (does nothing)
+        return true;
     }
 }
 
 class NoopInstruction extends Instruction {
     @Override
-    public void execute() {
+    public boolean execute() {
         // execute NOOP instruction (does nothing)
+        return true;
     }
 }
 
@@ -136,11 +139,12 @@ int i, j;
         this.j = j;
     }
     @Override
-    public void execute() {
+    public boolean execute() {
         // execute SWAP instruction
         int temp = Interpreter_A.arrayOfSilos[i][j].getAcc();
         Interpreter_A.arrayOfSilos[i][j].setAcc(Interpreter_A.arrayOfSilos[i][j].getBak());
         Interpreter_A.arrayOfSilos[i][j].setBak(temp);
+        return true;
     }
 }
 
@@ -152,10 +156,11 @@ class SaveInstruction extends Instruction {
     }
 
     @Override
-    public void execute() {
+    public boolean execute() {
         // execute SAVE instruction
         System.out.println("saving: " + Interpreter_A.arrayOfSilos[i][j].getAcc());
         Interpreter_A.arrayOfSilos[i][j].setBak(Interpreter_A.arrayOfSilos[i][j].getAcc());
+        return true;
     }
 }
 
@@ -170,11 +175,12 @@ class AddInstruction extends Instruction {
     }
 
     @Override
-    public void execute() {
+    public boolean execute() {
         // execute ADD instruction should get src value and add to acc
         int number = src;
         Interpreter_A.arrayOfSilos[i][j].setAcc(Interpreter_A.arrayOfSilos[i][j].getAcc() + number);
         System.out.println("adding: " + number);
+        return true;
     }
 }
 
@@ -186,8 +192,9 @@ class SubInstruction extends Instruction {
     }
 
     @Override
-    public void execute() {
+    public boolean execute() {
         // execute SUB instruction will subtract src value from acc
+        return true;
     }
 }
 
@@ -198,9 +205,10 @@ class NegateInstruction extends Instruction {
         this.j = j;
     }
     @Override
-    public void execute() {
+    public boolean execute() {
         // execute NEGATE instruction
         Interpreter_A.arrayOfSilos[i][j].setAcc((-1) * Interpreter_A.arrayOfSilos[i][j].getAcc());
+        return true;
     }
 }
 
@@ -212,8 +220,9 @@ class JumpInstruction extends Instruction {
     }
 
     @Override
-    public void execute() {
+    public boolean execute() {
         // execute JUMP instruction
+        return true;
     }
 }
 
@@ -225,11 +234,12 @@ class JezInstruction extends Instruction {
     }
 
     @Override
-    public void execute() {
+    public boolean execute() {
         // execute JEZ instruction
         if(TestMain.acc == 0){
             //goto label somehow
         }
+        return true;
     }
 }
 
@@ -241,11 +251,12 @@ class JnzInstruction extends Instruction {
     }
 
     @Override
-    public void execute() {
+    public boolean execute() {
         // execute JNZ instruction
         if(TestMain.acc != 0){
             //goto label somehow
         }
+        return true;
     }
 }
 
@@ -257,12 +268,12 @@ class JgzInstruction extends Instruction {
     }
 
     @Override
-    public void execute() {
+    public boolean execute() {
         // execute JGZ instruction
         if(TestMain.acc > 0){
             //goto label somehow
         }
-
+        return true;
     }
 }
 
@@ -274,11 +285,12 @@ class JlzInstruction extends Instruction {
     }
 
     @Override
-    public void execute() {
+    public boolean execute() {
         // execute JLZ instruction
         if(TestMain.acc < 0){
             //goto label somehow
         }
+        return true;
     }
 }
 
@@ -290,8 +302,9 @@ class JroInstruction extends Instruction {
     }
 
     @Override
-    public void execute() {
+    public boolean execute() {
         // execute JRO instruction (move offset number of Instructions somehow)
+        return true;
     }
 }
 
