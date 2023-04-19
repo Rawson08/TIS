@@ -27,42 +27,55 @@ class MoveInstruction extends Instruction {
     public void execute() {
         // execute MOVE instruction
         int valueToMove = 0;
-        System.out.println("moving: " + src + " to:" + dst);
         if(src.equals("UP")){
             int k = 0;
             while(k < Interpreter_A.getInputCoordinatesList().size()) {
-                if (i == (Interpreter_A.getInputCoordinatesList().get(k).get(0) + 1)
+                if(i > 0) {
+                    valueToMove = Interpreter_A.arrayOfSilos[i - 1][j].getPortA().getDownPortAccValue();
+                    Interpreter_A.arrayOfSilos[i - 1][j].getPortA().setDownPortAccValue(0);
+                    break;
+                    //Interpreter_A.arrayOfSilos[i - 1][j].getPortA().setDownPortAccValue(0);
+                }
+                else if (i == (Interpreter_A.getInputCoordinatesList().get(k).get(0) + 1)
                         && (j == Interpreter_A.getInputCoordinatesList().get(k).get(1))) {
                     if (Interpreter_A.getInputValuesList().get(k).size() > 0) {
                         valueToMove = Interpreter_A.getInputValuesList().get(k).remove(0);
+                        break;
                     }
-                    System.out.println("input" + k);
-                    break;
+
                 }
-                else if(i > 0) valueToMove = Interpreter_A.arrayOfSilos[i - 1][j].getPortA().getDownPortAccValue();
+                valueToMove = 0;
                 k++;
             }
+            if(valueToMove == 0) return;
             //else if(i > 0) valueToMove = Interpreter_A.arrayOfSilos[i - 1][j].getPortA().getDownPortAccValue();
             //else valueToMove = 0;
             //System.out.println("moving value: " + valueToMove);
         }
         else if(src.equals("DOWN")){
             valueToMove = Interpreter_A.arrayOfSilos[i][j].getPortA().getUpPortAccValue();
+            Interpreter_A.arrayOfSilos[i][j].getPortA().setUpPortAccValue(0);
+            if(valueToMove == 0) return;
         }
         else if(src.equals("LEFT")){
             if(j > 0) {
-                valueToMove = Interpreter_A.arrayOfSilos[i][j-1].getPortA().getRightPortAccValue();
+                valueToMove = Interpreter_A.arrayOfSilos[i][j].getPortA().getLeftPortAccValue();
+                Interpreter_A.arrayOfSilos[i][j].getPortA().setLeftPortAccValue(0);
                 //System.out.println("moving value: " + valueToMove);
+                if(valueToMove == 0) return;
             }
         }
         else if(src.equals("RIGHT")){
             if(j < Interpreter_A.arrayOfSilos[0].length) {
-                valueToMove = Interpreter_A.arrayOfSilos[i][j + 1].getPortA().getLeftPortAccValue();
+                valueToMove = Interpreter_A.arrayOfSilos[i][j].getPortA().getRightPortAccValue();
+                Interpreter_A.arrayOfSilos[i][j].getPortA().setRightPortAccValue(0);
                 //System.out.println("moving value: " + valueToMove);
+                if(valueToMove == 0) return;
             }
         }
         else if(src.equals("ACC")){
             valueToMove = Interpreter_A.arrayOfSilos[i][j].getAcc();
+            if(valueToMove == 0) return;
         }
 
         if(dst.equals("UP")){
@@ -80,17 +93,18 @@ class MoveInstruction extends Instruction {
         }
         else if(dst.equals("LEFT")){
             if(j > 0) {
-                Interpreter_A.arrayOfSilos[i][j].getPortA().setRightPortAccValue(valueToMove);
+                Interpreter_A.arrayOfSilos[i][j - 1].getPortA().setRightPortAccValue(valueToMove);
             }
         }
         else if(dst.equals("RIGHT")){
             if(j < Interpreter_A.arrayOfSilos[0].length) {
-                Interpreter_A.arrayOfSilos[i][j].getPortA().setLeftPortAccValue(valueToMove);
+                Interpreter_A.arrayOfSilos[i][j + 1].getPortA().setLeftPortAccValue(valueToMove);
             }
         }
         else if(dst.equals("ACC")){
             Interpreter_A.arrayOfSilos[i][j].setAcc(valueToMove);
         }
+        System.out.println("moving: " + src + " to:" + dst);
         System.out.println("moving value: " + valueToMove);
     }
 }
@@ -178,10 +192,15 @@ class SubInstruction extends Instruction {
 }
 
 class NegateInstruction extends Instruction {
+    int i,j;
+    public NegateInstruction(int i, int j){
+        this.i = i;
+        this.j = j;
+    }
     @Override
     public void execute() {
         // execute NEGATE instruction
-        TestMain.acc = (-1) * TestMain.acc;
+        Interpreter_A.arrayOfSilos[i][j].setAcc((-1) * Interpreter_A.arrayOfSilos[i][j].getAcc());
     }
 }
 

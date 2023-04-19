@@ -98,7 +98,7 @@ public class Parser_J {
                     String subString = tokenizer.getTokenValue();
                     return new SubInstruction(subString);
                 case NEGATE:
-                    return new NegateInstruction();
+                    return new NegateInstruction(i,j);
                 case JUMP:
                     tokenizer.nextToken();
                     String jumpString = tokenizer.getTokenValue();
