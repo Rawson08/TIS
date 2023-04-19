@@ -119,18 +119,30 @@ public class GUI_R extends Application {
             isRunning = true;
 
             //TODO: Execution
-                Run run = new Run(interpreterA1);
-                Thread thread = new Thread(run);
-                thread.start();
-//            for (int i=0; i<SILO_ROW; i++){
-//                for (int j=0; j<SILO_COL; j++) {
-//                    for (int k = 0; k < Interpreter_A.arrayOfSilos[i][j].getListOfInstructions().size(); k++) {
-//                        String commandFromGUI = Interpreter_A.arrayOfSilos[i][j].getListOfInstructions().get(k);
-//                        interpreterA1.addInstruction(commandFromGUI,i,j);
-//                        interpreterA1.runInstructions(commandFromGUI, i, j);
-//                    }
-//                }
-//            }
+//                Run run = new Run(interpreterA1);
+//                Thread thread = new Thread(run);
+//                thread.start();
+
+            for (int i=0; i<SILO_ROW; i++){
+                for (int j=0; j<SILO_COL; j++) {
+                    for (int k = 0; k < Interpreter_A.arrayOfSilos[i][j].getListOfInstructions().size(); k++) {
+                        String commandFromGUI = Interpreter_A.arrayOfSilos[i][j].getListOfInstructions().get(k);
+                        interpreterA1.addInstruction(commandFromGUI,i,j);
+                        //interpreterA1.runInstructions(commandFromGUI, i, j);
+                    }
+                }
+            }
+            for (int i=0; i<SILO_ROW; i++){
+                for (int j=0; j<SILO_COL; j++) {
+                    for (int k = 0; k < Interpreter_A.arrayOfSilos[i][j].getListOfInstructions().size(); k++) {
+                        String commandFromGUI = Interpreter_A.arrayOfSilos[i][j].getListOfInstructions().get(k);
+                        Run_J run = new Run_J(i,j);
+                        Thread thread = new Thread(run);
+                        thread.start();
+                        //interpreterA1.runInstructions(commandFromGUI, i, j);
+                    }
+                }
+            }
             startButton.setDisable(true);
             pauseStepButton.setDisable(false);
             stopButton.setDisable(false);
