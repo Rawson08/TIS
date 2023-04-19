@@ -41,7 +41,12 @@ public class Interpreter_A {
     }
 
     private static List<List<Integer>> inputCoordinatesList = new ArrayList<>();
-    private static List<Integer> outputValues;
+
+    public static List<Integer> getOutputValues() {
+        return outputValues;
+    }
+
+    private static List<Integer> outputValues = new ArrayList<>();
 
     public static void setOutputValue(int valueToMove) {
         outputValues.add(valueToMove);
@@ -50,7 +55,7 @@ public class Interpreter_A {
     public static List<List<Integer>> getOutputCoordinatesList() {
         return outputCoordinatesList;
     }
-
+private static List<Integer> outputCoordinates;
     private static List<List<Integer>> outputCoordinatesList;
     private int outputFromSiloX;
     private int outputFromSiloY;
@@ -185,15 +190,15 @@ public void addInstruction(String commandFromGUI, int i, int j){
         }
         this.outputCoordinatesList = new ArrayList<>();
         while (inputs.contains("OUTPUT")){
-            this.outputValues = new ArrayList<>();
+            this.outputCoordinates = new ArrayList<>();
             int outputIndex = inputs.indexOf("OUTPUT");
             String outputRowAndColumn = inputs.remove(outputIndex + 1);
             String[] outputRowAndColumnSplit = outputRowAndColumn.split("\\s+");
-            outputValues.add(Integer.parseInt(outputRowAndColumnSplit[0]));
-            outputValues.add(Integer.parseInt(outputRowAndColumnSplit[1]));
+            outputCoordinates.add(Integer.parseInt(outputRowAndColumnSplit[0]));
+            outputCoordinates.add(Integer.parseInt(outputRowAndColumnSplit[1]));
             inputs.remove(outputIndex);
             inputs.remove(outputIndex);
-            outputCoordinatesList.add(outputValues);
+            outputCoordinatesList.add(outputCoordinates);
         }
         inputs.remove(inputs.size()-1);
         System.out.println("outputs: " + outputCoordinatesList);
