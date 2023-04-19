@@ -68,12 +68,14 @@ class MoveInstruction extends Instruction {
             Interpreter_A.arrayOfSilos[i][j].getPortA().setUpPortAccValue(valueToMove);
         }
         else if(dst.equals("DOWN")){
-            if(i == Interpreter_A.getOutputCoordinatesList().get(0).get(0) - 1
-                    && j == Interpreter_A.getOutputCoordinatesList().get(0).get(1)){
-                Interpreter_A.setOutputValue(valueToMove);
-                System.out.println("added: " + valueToMove + " to output");
+            for(int k = 0; k < Interpreter_A.getOutputValuesList().size(); k++) {
+                if (i == Interpreter_A.getOutputCoordinatesList().get(k).get(0) - 1
+                        && j == Interpreter_A.getOutputCoordinatesList().get(k).get(1)) {
+                    Interpreter_A.getOutputValuesList().get(k).add(valueToMove);
+                    System.out.println("added: " + valueToMove + " to output" +k);
+                }
+                else Interpreter_A.arrayOfSilos[i][j].getPortA().setDownPortAccValue(valueToMove);
             }
-            else Interpreter_A.arrayOfSilos[i][j].getPortA().setDownPortAccValue(valueToMove);
         }
         else if(dst.equals("LEFT")){
             Interpreter_A.arrayOfSilos[i][j].getPortA().setLeftPortAccValue(valueToMove);

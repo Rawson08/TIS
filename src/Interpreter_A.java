@@ -47,6 +47,12 @@ public class Interpreter_A {
     }
 
     private static List<Integer> outputValues = new ArrayList<>();
+
+    public static List<List<Integer>> getOutputValuesList() {
+        return outputValuesList;
+    }
+
+    private static List<List<Integer>> outputValuesList = new ArrayList<>();
 private static List<Integer> outputCoordinates;
     public static void setOutputValue(int valueToMove) {
         outputValues.add(valueToMove);
@@ -137,6 +143,10 @@ public void addInstruction(String commandFromGUI, int i, int j){
             else if (inputs.get(i).equals("OUTPUT")){
                 outputCounter++;
             }
+        }
+        for(int counter = 0; counter < outputCounter; counter++){
+            outputValuesList.add(outputValues);
+            outputValues = new ArrayList<>();
         }
         System.out.println("Input count is: " + inputCounter);
 
