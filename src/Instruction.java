@@ -47,7 +47,7 @@ class MoveInstruction extends Instruction {
             //System.out.println("moving value: " + valueToMove);
         }
         else if(src.equals("DOWN")){
-            valueToMove = Interpreter_A.arrayOfSilos[i][j].getPortA().getDownPortAccValue();
+            valueToMove = Interpreter_A.arrayOfSilos[i][j].getPortA().getUpPortAccValue();
         }
         else if(src.equals("LEFT")){
             if(j > 0) {
@@ -57,7 +57,7 @@ class MoveInstruction extends Instruction {
         }
         else if(src.equals("RIGHT")){
             if(j < Interpreter_A.arrayOfSilos[0].length) {
-                valueToMove = Interpreter_A.arrayOfSilos[i][j + 1].getPortA().getRightPortAccValue();
+                valueToMove = Interpreter_A.arrayOfSilos[i][j + 1].getPortA().getLeftPortAccValue();
                 //System.out.println("moving value: " + valueToMove);
             }
         }
@@ -80,12 +80,12 @@ class MoveInstruction extends Instruction {
         }
         else if(dst.equals("LEFT")){
             if(j > 0) {
-                Interpreter_A.arrayOfSilos[i][j - 1].getPortA().setLeftPortAccValue(valueToMove);
+                Interpreter_A.arrayOfSilos[i][j].getPortA().setRightPortAccValue(valueToMove);
             }
         }
         else if(dst.equals("RIGHT")){
             if(j < Interpreter_A.arrayOfSilos[0].length) {
-                Interpreter_A.arrayOfSilos[i][j + 1].getPortA().setRightPortAccValue(valueToMove);
+                Interpreter_A.arrayOfSilos[i][j].getPortA().setLeftPortAccValue(valueToMove);
             }
         }
         else if(dst.equals("ACC")){
