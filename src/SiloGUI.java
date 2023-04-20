@@ -11,6 +11,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -18,6 +19,8 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -130,15 +133,15 @@ public class SiloGUI {
         // import the 'in-use' arrows as well which will be used if any arrow is used.
 
         // Importing the Arrows PNGs
-        ImageView upArrowPNG = new ImageView("file:resources/up-arrow.png");
-        ImageView downArrowPNG = new ImageView("file:resources/down-arrow.png");
-        ImageView leftArrowPNG = new ImageView("file:resources/left-arrow.png");
-        ImageView rightArrowPNG = new ImageView("file:resources/right-arrow.png");
+        ImageView upArrowPNG = makeArrows("up-arrow.png");
+        ImageView downArrowPNG = makeArrows("down-arrow.png");
+        ImageView leftArrowPNG = makeArrows("left-arrow.png");
+        ImageView rightArrowPNG = makeArrows("right-arrow.png");
 
-        ImageView upArrowOnPNG = new ImageView("file:resources/up-arrow-on.png");
-        ImageView downArrowOnPNG = new ImageView("file:resources/down-arrow-on.png");
-        ImageView leftArrowOnPNG = new ImageView("file:resources/left-arrow-on.png");
-        ImageView rightArrowOnPNG = new ImageView("file:resources/right-arrow-on.png");
+        ImageView upArrowOnPNG = makeArrows("up-arrow-on.png");
+        ImageView downArrowOnPNG = makeArrows("down-arrow-on.png");
+        ImageView leftArrowOnPNG = makeArrows("left-arrow-on.png");
+        ImageView rightArrowOnPNG = makeArrows("right-arrow-on.png");
 
         //2D Array to store the arrows and we can use the arrow giving 0 for unlit, and 1 for lit arrow
         ImageView [][] imageViewArray = {{upArrowPNG, downArrowPNG, leftArrowPNG, rightArrowPNG},
@@ -172,5 +175,12 @@ public class SiloGUI {
         rightArrow.setGraphic(imageViewArray[right][3]);
         rightArrow.setFont(Font.font("Monospaced", FontWeight.BOLD, 15));
         rightArrow.setTextFill(Color.LIGHTGRAY);
+    }
+
+    public ImageView makeArrows (String inputStream){
+        InputStream inputStream1 = SiloGUI.class.getClassLoader().getResourceAsStream(inputStream);
+        Image image = new Image(inputStream1);
+        ImageView tempImageView = new ImageView(image);
+        return tempImageView;
     }
 }
