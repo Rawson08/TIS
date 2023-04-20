@@ -18,12 +18,8 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
-
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicReference;
 
 public class SiloGUI {
     private static VBox rightOfSilo;
@@ -107,22 +103,6 @@ public class SiloGUI {
         });
     }
 
-//    public void textAreaInputForNewInstructions(Silo_A arrayOfSilos[][], int i, int j){
-//        final String[] newValue2 = {null};
-//        siloArea.textProperty().addListener((observable, oldValue, newValue) -> {
-//            newValue2[0] = newValue;
-//            //System.out.println("newVlaue array: " + newValue2[0]);
-//            // we want to store this new value into the array of silo individual silos
-//            String[] lines = newValue2[0].split("\\r?\\n"); // split into an array of lines
-//            List<String> newList = new ArrayList<>();
-//            for (int z=0; z<lines.length; z++) {
-//                newList.add(lines[z]); // add each line to the list
-//            }
-//            Interpreter_A.arrayOfSilos[i][j].setListOfInstructions(newList);
-////            System.out.println(Interpreter_A.arrayOfSilos[i][j].getListOfInstructions().toString());
-//        });
-//    }
-
     public void drawAccBak(int accIntValue, int bakIntValue){
         // TODO: Get the Acc and Bak from Interpreter
 
@@ -192,6 +172,5 @@ public class SiloGUI {
         rightArrow.setGraphic(imageViewArray[right][3]);
         rightArrow.setFont(Font.font("Monospaced", FontWeight.BOLD, 15));
         rightArrow.setTextFill(Color.LIGHTGRAY);
-
     }
 }

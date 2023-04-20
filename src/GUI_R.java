@@ -9,10 +9,7 @@
  * */
 
 import javafx.animation.AnimationTimer;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
@@ -26,14 +23,11 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-import javafx.util.Duration;
-
 import java.util.Collections;
 import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 public class GUI_R extends Application {
 
@@ -74,36 +68,13 @@ public class GUI_R extends Application {
         siloGrid.setPadding(new Insets(10));
         siloGrid.setStyle("-fx-background-color: #1a1a1a;");
 
-//        root.setStyle("-fx-background-color: #222222;");
 
 
         interpreterA1.initialStartFromCmd();
         SILO_ROW = interpreterA1.getNumRows();
         SILO_COL = interpreterA1.getNumCols();
-        //Silo_A[][] arraylist1 = interpreterA1.getArrayOfSilos();
 
-        // Create input/output panel
-//        HBox ioPanel = new HBox(10);
-//        ioPanel.setAlignment(Pos.CENTER);
-//        ioPanel.setPadding(new Insets(10));
-//        ioPanel.setPrefWidth(screenWidth/3);
-//        ioPanel.setPrefHeight(screenHeight*0.75);
-//        ioPanel.setStyle("-fx-background-color: #1a1a1a;");
-//
-//        HBox ioLabel = new HBox(10);
-//        ioLabel.setAlignment(Pos.TOP_CENTER);
-//        ioLabel.setPadding(new Insets(10));
-//        ioLabel.setPrefWidth(200);
-//        ioLabel.setStyle("-fx-background-color: #1a1a1a;");
-
-
-//        createInput();
-//        createOutput();
-
-
-        //TODO: Put inputLabel with inputArea in one VBox and same for output
-//        ioLabel.getChildren().addAll(inputLabel, outputLabel);
-//        ioPanel.getChildren().addAll(inputArea, outputArea);
+        //Input and Output labels creation and initialization in the vBox
         vBox = new HBox();
         for (int i=0; i<interpreterA1.getInputValuesList().size(); i++){
             System.out.println("list contains: " + interpreterA1.getInputValuesList().get(i));
@@ -117,7 +88,6 @@ public class GUI_R extends Application {
 
         vBox.setPadding(new Insets(10));
         vBox.prefWidthProperty().bind(root.widthProperty().multiply(0.25));
-//        vBox.prefHeightProperty().bind(root.heightProperty().multiply(0.75));
         vBox.setPrefHeight(200);
         root.setLeft(vBox);
         root.setStyle("-fx-background-color: #222222;");
@@ -136,52 +106,17 @@ public class GUI_R extends Application {
         startButton.setOnAction(event -> {
             isRunning = true;
 
-            //TODO: Execution
-//                Run run = new Run(interpreterA1);
-//                Thread thread = new Thread(run);
-//                thread.start();
 
             for (int i=0; i<SILO_ROW; i++){
                 for (int j=0; j<SILO_COL; j++) {
                     for (int k = 0; k < Interpreter_A.arrayOfSilos[i][j].getListOfInstructions().size(); k++) {
                         String commandFromGUI = Interpreter_A.arrayOfSilos[i][j].getListOfInstructions().get(k);
                         interpreterA1.addInstruction(commandFromGUI,i,j);
-                        //interpreterA1.runInstructions(commandFromGUI, i, j);
                     }
                 }
             }
 
-//            for (int i=0; i<SILO_ROW; i++){
-//                for (int j=0; j<SILO_COL; j++) {
-//                    Run_J run = new Run_J(i,j);
-//                    Thread thread = new Thread(run);
-//                    thread.start();
-//                }
-//            }
-//
-//            TextArea textArea = SiloGUI.getSiloArea();
-//            textArea.selectRange(1, 15);
-//            SiloGUI.setSiloArea(textArea);
-
-//            animationTimer = new AnimationTimer() {
-//                @Override
-//                public void handle(long now) {
-//                    if (!isRunning) {
-//                        animationTimer.stop();
-//                    }
-//                    else if (isRunning){
-//                        printOutputValues();
-//                    }
-//                    try {
-//                        Thread.sleep(1000); // pause the thread for 1 second
-//                    } catch (InterruptedException e) {
-//                        // handle the exception if the thread is interrupted
-//                    }
-//
-//                }
-//            };
-//            animationTimer.start();
-
+            //Running the game from the method runGame
             runGame();
 
 
@@ -200,11 +135,6 @@ public class GUI_R extends Application {
                 stepButtonExecute();
                 // TODO: Execute 1 instruction from each silo
             }
-//            if (Objects.equals(pauseStepButton.getText(), "Step")){
-//
-//                stepButtonExecute();
-//            }
-
         });
 
 
@@ -221,7 +151,7 @@ public class GUI_R extends Application {
             // TODO: Reset all of the silos
         });
 
-        // Disable the pause/step and stop buttons initially
+        // Disable the stop buttons initially
         pauseStepButton.setDisable(false);
         stopButton.setDisable(true);
 
@@ -246,7 +176,6 @@ public class GUI_R extends Application {
                 silo.textAreaInputForNewInstructions(Interpreter_A.arrayOfSilos, i, j);
 
                 // TODO: start button if pressed, then disable texts input and start the program by calling another method.
-                //interpreterA1.setArrayOfSilos(arraylist1);
             }
         }
 
@@ -262,9 +191,6 @@ public class GUI_R extends Application {
     private void stepButtonExecute() {
         pauseStepButton.setOnAction(event1 -> {
             isRunning = true;
-            // Call your method here
-//            executor.schedule(this::runGame, 1000, TimeUnit.MILLISECONDS);
-
             runGame();
             isRunning = false;
             executor.shutdownNow();
@@ -338,13 +264,11 @@ public class GUI_R extends Application {
     }
 
     public void printOutputValues(){
-//        System.out.println("Interpreter_A.getOutputValuesList().size(): " + Interpreter_A.getOutputValuesList().size());
         int temp = Interpreter_A.getOutputValuesList().size();
         for (int s = 0; s < temp; s++){
             String outputValueStr = Interpreter_A.getOutputValuesList().get(s).toString().replaceAll(",", "\n").replaceAll("[ \\[\\]]","");
             GUI_R.drawOutput(outputValueStr);
         }
-//        String outputValueStr = Interpreter_A.getOutputValuesList().get(Interpreter_A.getOutputValuesList().size()).toString().replaceAll(",", "\n").replaceAll("[ \\[\\]]","");
     }
 
     public static void drawOutput(String str){
@@ -361,8 +285,6 @@ public class GUI_R extends Application {
         outputLabel.setFont(Font.font("Monospaced", 14));
         outputLabel.setTextFill(Color.WHITE);
 
-        //Output
-//        String listString2 = interpreterA1.getInputValues().toString().replaceAll(",", "\n").replaceAll("[ \\[\\]]","");
         TextArea outputArea = new TextArea(str);
         outputArea.setEditable(false);
         outputArea.setPrefHeight(200);
@@ -378,8 +300,6 @@ public class GUI_R extends Application {
         vBox.getChildren().addAll(outputLabel, outputArea);
         return vBox;
     }
-
-
 
     public static void main(String[] args) {launch(args);}
 }
