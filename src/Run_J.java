@@ -16,11 +16,7 @@ public class Run_J implements Runnable {
                     if(!GUI_R.isRunning()) break;
                     while(index < length && GUI_R.isRunning()) {
                         Interpreter_A.arrayOfSilos[i][j].getInstructions().get(index).execute();
-//                        SiloGUI.(i, j);
                         index++;
-                        int indexHigh = 1;
-//                        GUI_R.highlightLine(indexHigh);
-
                         if(index == length) index = 0;
                         try {
                             Thread.sleep(1000); // pause the thread for 1 second
