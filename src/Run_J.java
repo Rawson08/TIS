@@ -20,7 +20,7 @@ public class Run_J implements Runnable {
                         }
                         if(index == length) index = 0;
                         try {
-                            Thread.sleep(10); // pause the thread for 1 second
+                            Thread.sleep(1000); // pause the thread for 1 second
                         } catch (InterruptedException e) {
                             // handle the exception if the thread is interrupted
                         }
