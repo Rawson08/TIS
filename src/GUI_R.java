@@ -1,7 +1,9 @@
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -10,10 +12,13 @@ import javafx.scene.control.TextFormatter;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 
 public class GUI_R extends Application {
@@ -31,7 +36,51 @@ public class GUI_R extends Application {
     private static Button startButton;
     private static Button pauseStepButton;
     private static Button stopButton;
-    Interpreter_A interpreterA1 = new Interpreter_A("");
+    Interpreter_A interpreterA1;
+    private SiloGUI siloGUI;
+    private static TextArea siloArea;
+    static Silo_A siloA;
+
+
+    public GUI_R(){
+        siloGUI = new SiloGUI();
+        siloArea = SiloGUI.getSiloArea();
+        siloA = new Silo_A();
+        interpreterA1 = new Interpreter_A("");
+    }
+
+
+//    public static void highlightLine(final int lineIndex) {
+//        // Run the update on the GUI thread
+//        Platform.runLater(() -> {
+//            // Get the list of instructions from the SiloGUI instance
+//            List<String> listOfInstructions = siloA.getListOfInstructions();
+//
+//            // Get the line of text to highlight
+//
+////            String lineText = listOfInstructions.get(0);
+//
+//            // Get the TextFlow node from the TextArea
+//            TextFlow textFlow = (TextFlow) siloArea.lookup(".text");
+//
+//            // Clear any previous highlighting
+//            textFlow.getChildren().forEach(node -> {
+//                if (node instanceof Text) {
+//                    ((Text) node).setFill(Color.BLACK);
+//                }
+//            });
+//
+//            // Iterate through the nodes in the TextFlow to find the node
+//            // representing the line of text to highlight
+//            for (int i = 0; i < textFlow.getChildren().size(); i++) {
+//                Node node = textFlow.getChildren().get(i);
+//                if (node instanceof Text && ((Text) node).getText().equals(textFlow)) {
+//                    // Highlight the line by setting its fill color to red
+//                    ((Text) node).setFill(Color.RED);
+//                }
+//            }
+//        });
+//    }
 
 
     @Override
@@ -90,7 +139,8 @@ public class GUI_R extends Application {
             vBox.getChildren().add(createInput(inputValueStr));
         }
         for (int j = 0; j<interpreterA1.getOutputCoordinatesList().size(); j++){
-            vBox.getChildren().add(createOutput());
+            String outputValueStr = "";
+            vBox.getChildren().add(createOutput(outputValueStr));
         }
 
 
@@ -140,10 +190,11 @@ public class GUI_R extends Application {
                     }
                 }
             }
+//            siloGUI.disableText(siloArea);
             startButton.setDisable(true);
             pauseStepButton.setDisable(false);
             stopButton.setDisable(false);
-            siloGrid.setDisable(true);
+//            siloGrid.setDisable(true);
         });
 
         pauseStepButton.setOnAction(event -> {
@@ -217,11 +268,6 @@ public class GUI_R extends Application {
         textArea.setTextFormatter(textFormatterIn);
     }
 
-    public void createSilos(){
-        Interpreter_A interpreterA1 = new Interpreter_A("");
-        interpreterA1.getArrayOfSilos();
-        interpreterA1.getNumCols();
-    }
 
     public VBox createInput(String str){
         VBox vBox1 = new VBox();
@@ -246,14 +292,13 @@ public class GUI_R extends Application {
     }
 
 
-    public VBox createOutput(){
+    public VBox createOutput(String output){
         VBox vBox = new VBox();
         Label outputLabel = new Label("OUTPUT");
         outputLabel.setFont(Font.font("Monospaced", 14));
         outputLabel.setTextFill(Color.WHITE);
 
         //Output
-        String listString2 = interpreterA1.getInputValues().toString().replaceAll(",", "\n").replaceAll("[ \\[\\]]","");
         TextArea outputArea = new TextArea();
         outputArea.setEditable(false);
         outputArea.setPrefHeight(200);

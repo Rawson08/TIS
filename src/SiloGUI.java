@@ -30,23 +30,28 @@ public class SiloGUI {
     private static Label leftArrow;
     private static Label rightArrow;
     private static HBox arrowBox;
+
+    public static TextArea getSiloArea() {
+        return siloArea;
+    }
+
     private static TextArea siloArea;
 
     public SiloGUI(){
 
     }
 
-    public BorderPane drawSilo(List<String> str, int currentInstructionIndex, int i, int j){
+    public void disableText(TextArea textArea){
+        textArea.setEditable(false);
+    }
+
+    public static BorderPane drawSilo(List<String> str, int currentInstructionIndex, int i, int j){
         accIntValue = Interpreter_A.arrayOfSilos[i][j].getAcc();
         bakIntValue = Interpreter_A.arrayOfSilos[i][j].getBak();
 
-        //Taking values from the Interpreter class of particular silo
-        int arrowUpValue = Interpreter_A.arrayOfSilos[i][j].getPortA().getUpPortAccValue();
-        int arrowDownValue = Interpreter_A.arrayOfSilos[i][j].getPortA().getDownPortAccValue();
-        int arrowLeftValue = Interpreter_A.arrayOfSilos[i][j].getPortA().getLeftPortAccValue();
-        int arrowRightValue = Interpreter_A.arrayOfSilos[i][j].getPortA().getRightPortAccValue();
+
         drawAccBak(accIntValue, bakIntValue);
-        drawArrows(arrowUpValue, arrowDownValue, arrowLeftValue, arrowRightValue);
+        drawArrows(i, j);
         rightOfSilo = new VBox();
         rightOfSilo.getChildren().addAll(accLabel, accValue, bakLabel, bakValue, rightArrow);
         rightOfSilo.setSpacing(5);
@@ -71,6 +76,12 @@ public class SiloGUI {
         GUI_R.textAreaLimiter(siloArea);
 
         // TODO: Highlight the current instruction
+        int startIndex = 0; // The starting position of the text to be highlighted
+        int endIndex = 2; // The ending position of the text to be highlighted
+        siloArea.selectRange(startIndex, endIndex);
+
+
+
         siloArea.setFont(Font.font("Monospaced", 12));
         siloArea.setStyle("-fx-control-inner-background: #222222; -fx-text-fill: #ffffff;");
         return new BorderPane(siloArea, upArrow, rightOfSilo, downArrow, leftArrow);
@@ -102,7 +113,7 @@ public class SiloGUI {
 //        });
 //    }
 
-    public void drawAccBak(int accIntValue, int bakIntValue){
+    public static void drawAccBak(int accIntValue, int bakIntValue){
         // TODO: Get the Acc and Bak from Interpreter
 
         // Add the Acc and Bak labels
@@ -124,7 +135,14 @@ public class SiloGUI {
 
     }
 
-    public void drawArrows(int upValue, int downValue, int leftValue, int rightValue){
+    public static void drawArrows(int i, int j){
+        //Taking values from the Interpreter class of particular silo
+        int arrowUpValue = Interpreter_A.arrayOfSilos[i][j].getPortA().getUpPortAccValue();
+        int arrowDownValue = Interpreter_A.arrayOfSilos[i][j].getPortA().getDownPortAccValue();
+        int arrowLeftValue = Interpreter_A.arrayOfSilos[i][j].getPortA().getLeftPortAccValue();
+        int arrowRightValue = Interpreter_A.arrayOfSilos[i][j].getPortA().getRightPortAccValue();
+        System.out.println("UpPortValue: " + arrowUpValue + "arrowDownValue: " + arrowDownValue + "arrowLeftValue: " + arrowLeftValue + "arrowRightValue: " + arrowRightValue);
+
         //TODO: Arrows needs more work, as currently we can't be sure if any arrow is in use. I am thinking to
         // import the 'in-use' arrows as well which will be used if any arrow is used.
 
@@ -145,29 +163,29 @@ public class SiloGUI {
 
         int up, down, left, right;
 
-        up = (upValue != 0) ? 1 : 0;
-        down = (downValue != 0) ? 1 : 0;
-        left = (leftValue != 0) ? 1 : 0;
-        right = (rightValue != 0) ? 1 : 0;
+        up = (arrowUpValue != 0) ? 1 : 0;
+        down = (arrowDownValue != 0) ? 1 : 0;
+        left = (arrowLeftValue != 0) ? 1 : 0;
+        right = (arrowRightValue != 0) ? 1 : 0;
 
 
         arrowBox = new HBox();
         arrowBox.setAlignment(Pos.CENTER);
         arrowBox.setSpacing(10);
 
-        upArrow = new Label(String.valueOf(upValue));
+        upArrow = new Label(String.valueOf(arrowUpValue));
         upArrow.setGraphic(imageViewArray[up][0]);
         upArrow.setFont(Font.font("Monospaced", FontWeight.BOLD, 15));
         upArrow.setTextFill(Color.LIGHTGRAY);
-        downArrow = new Label(String.valueOf(downValue));
+        downArrow = new Label(String.valueOf(arrowDownValue));
         downArrow.setGraphic(imageViewArray[down][1]);
         downArrow.setFont(Font.font("Monospaced", FontWeight.BOLD, 15));
         downArrow.setTextFill(Color.LIGHTGRAY);
-        leftArrow = new Label(String.valueOf(leftValue));
+        leftArrow = new Label(String.valueOf(arrowLeftValue));
         leftArrow.setGraphic(imageViewArray[left][2]);
         leftArrow.setFont(Font.font("Monospaced", FontWeight.BOLD, 15));
         leftArrow.setTextFill(Color.LIGHTGRAY);
-        rightArrow = new Label(String.valueOf(rightValue));
+        rightArrow = new Label(String.valueOf(arrowRightValue));
         rightArrow.setGraphic(imageViewArray[right][3]);
         rightArrow.setFont(Font.font("Monospaced", FontWeight.BOLD, 15));
         rightArrow.setTextFill(Color.LIGHTGRAY);
