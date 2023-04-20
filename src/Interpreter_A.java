@@ -7,61 +7,18 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Interpreter_A {
-
-
-    public int getNumRows() {
-        return numRows;
-    }
-
-    public int getNumCols() {
-        return numCols;
-    }
-
     private int numRows;
     private int numCols;
     private int tempValue = 0;
     public static Silo_A[][] arrayOfSilos;
-
-    public static List<Integer> getInputValues() {
-        return inputValues;
-    }
-
     private static List<Integer> inputValues;
-
-    public static List<List<Integer>> getInputValuesList() {
-        return inputValuesList;
-    }
-
     private static List<List<Integer>> inputValuesList;
     private int inputRow[];
     private int inputColumn[];
-
-    public static List<List<Integer>> getInputCoordinatesList() {
-        return inputCoordinatesList;
-    }
-
     private static List<List<Integer>> inputCoordinatesList = new ArrayList<>();
-
-    public static List<Integer> getOutputValues() {
-        return outputValues;
-    }
-
     private static List<Integer> outputValues = new ArrayList<>();
-
-    public static List<List<Integer>> getOutputValuesList() {
-        return outputValuesList;
-    }
-
     private static List<List<Integer>> outputValuesList = new ArrayList<>();
-private static List<Integer> outputCoordinates;
-    public static void setOutputValue(int valueToMove) {
-        outputValues.add(valueToMove);
-    }
-
-    public static List<List<Integer>> getOutputCoordinatesList() {
-        return outputCoordinatesList;
-    }
-
+    private static List<Integer> outputCoordinates;
     private static List<List<Integer>> outputCoordinatesList;
     private int outputFromSiloX;
     private int outputFromSiloY;
@@ -270,6 +227,34 @@ public void addInstruction(String commandFromGUI, int i, int j){
         if(inputValues.size() > 0) {
             arrayOfSilos[xCoord + 1][yCoord].getPortA().setUpPortAccValue(inputValues.remove(0));
         }
+    }
+    public static List<List<Integer>> getOutputCoordinatesList() {
+        return outputCoordinatesList;
+    }
+    public static void setOutputValue(int valueToMove) {
+        outputValues.add(valueToMove);
+    }
+    public static List<List<Integer>> getOutputValuesList() {
+        return outputValuesList;
+    }
+    public static List<Integer> getOutputValues() {
+        return outputValues;
+    }
+    public static List<List<Integer>> getInputCoordinatesList() {
+        return inputCoordinatesList;
+    }
+    public static List<List<Integer>> getInputValuesList() {
+        return inputValuesList;
+    }
+    public static List<Integer> getInputValues() {
+        return inputValues;
+    }
+    public int getNumRows() {
+        return numRows;
+    }
+
+    public int getNumCols() {
+        return numCols;
     }
 }
 

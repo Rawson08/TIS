@@ -1,8 +1,8 @@
 public class Run_J implements Runnable {
     private int i,j;
-
     private int index = 0;
-    public Run_J(int i, int j) {
+
+    public Run_J(int i, int j, int index) {
         this.i= i;
         this.j=j;
         this.index = index;
