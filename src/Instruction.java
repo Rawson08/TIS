@@ -88,16 +88,22 @@ class MoveInstruction extends Instruction {
                     Interpreter_A.getOutputValuesList().get(k).add(valueToMove);
                     System.out.println("added: " + valueToMove + " to output" +k);
                 }
-                else Interpreter_A.arrayOfSilos[i][j].getPortA().setDownPortAccValue(valueToMove);
+
             }
+            //(i < Interpreter_A.arrayOfSilos.length - 1) {
+                if (Interpreter_A.arrayOfSilos[i][j].getPortA().getDownPortAccValue() != 0) return false;
+            //}
+            Interpreter_A.arrayOfSilos[i][j].getPortA().setDownPortAccValue(valueToMove);
         }
         else if(dst.equals("LEFT")){
             if(j > 0) {
+                if(Interpreter_A.arrayOfSilos[i][j - 1].getPortA().getRightPortAccValue() != 0) return false;
                 Interpreter_A.arrayOfSilos[i][j - 1].getPortA().setRightPortAccValue(valueToMove);
             }
         }
         else if(dst.equals("RIGHT")){
             if(j < Interpreter_A.arrayOfSilos[0].length) {
+                if(Interpreter_A.arrayOfSilos[i][j + 1].getPortA().getLeftPortAccValue() != 0) return false;
                 Interpreter_A.arrayOfSilos[i][j + 1].getPortA().setLeftPortAccValue(valueToMove);
             }
         }

@@ -8,7 +8,7 @@ public class Run_J implements Runnable {
         this.index = index;
     }
 
-    public void run() {
+    public synchronized void run() {
         // code to be executed in this thread
         while(GUI_R.isRunning()) {
                     int index = 0;
