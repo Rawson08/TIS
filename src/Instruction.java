@@ -165,42 +165,21 @@ class SaveInstruction extends Instruction {
 }
 
 class AddInstruction extends Instruction {
-    private String src;
+    private int src;
     int i, j;
-    private Tokenizer_J.TokenType tokenizer;
 
-    public AddInstruction(Tokenizer_J.TokenType tokenizer,String src, int i, int j) {
+    public AddInstruction(int src, int i, int j) {
         this.src = src;
         this.i = i;
         this.j = j;
-        this.tokenizer = tokenizer;
     }
 
     @Override
     public boolean execute() {
         // execute ADD instruction should get src value and add to acc
-        int addNumber = 0;
-        if(tokenizer == Tokenizer_J.TokenType.NUMBER){
-            addNumber = Integer.parseInt(src);
-        }
-        else if(tokenizer == Tokenizer_J.TokenType.PORT){
-            if(src.equals("UP")){
-                addNumber = Interpreter_A.arrayOfSilos[i][j].getPortA().getUpPortAccValue();
-            }
-            else if(src.equals("DOWN")){
-                addNumber = Interpreter_A.arrayOfSilos[i][j].getPortA().getDownPortAccValue();
-            }
-            else if(src.equals("LEFT")){
-                addNumber = Interpreter_A.arrayOfSilos[i][j].getPortA().getLeftPortAccValue();
-            }
-            else if(src.equals("RIGHT")){
-                addNumber = Interpreter_A.arrayOfSilos[i][j].getPortA().getRightPortAccValue();
-            }
-        } else if (tokenizer == Tokenizer_J.TokenType.REGISTER) {
-            addNumber = Interpreter_A.arrayOfSilos[i][j].getAcc();
-        }
-        Interpreter_A.arrayOfSilos[i][j].setAcc(addNumber + Interpreter_A.arrayOfSilos[i][j].getAcc());
-        System.out.println("adding: " + addNumber);
+        int number = src;
+        Interpreter_A.arrayOfSilos[i][j].setAcc(number + Interpreter_A.arrayOfSilos[i][j].getAcc());
+        System.out.println("adding: " + number);
         return true;
     }
 }
