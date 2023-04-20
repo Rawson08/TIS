@@ -138,14 +138,14 @@ public class GUI_R extends Application {
                 }
             }
 
-//            for (int i=0; i<SILO_ROW; i++){
-//                for (int j=0; j<SILO_COL; j++) {
-//                    Run_J run = new Run_J(i,j);
-//                    Thread thread = new Thread(run);
-//                    thread.start();
-//
-//                }
-//            }
+            for (int i=0; i<SILO_ROW; i++){
+                for (int j=0; j<SILO_COL; j++) {
+                    Run_J run = new Run_J(i,j);
+                    Thread thread = new Thread(run);
+                    thread.start();
+                }
+            }
+
 //            animationTimer = new AnimationTimer() {
 //                @Override
 //                public void handle(long now) {
@@ -165,29 +165,29 @@ public class GUI_R extends Application {
 //            };
 //            animationTimer.start();
 
-            ExecutorService executor = Executors.newFixedThreadPool(SILO_ROW * SILO_COL);
-            for (int i = 0; i < SILO_ROW; i++) {
-                for (int j = 0; j < SILO_COL; j++) {
-                    final int row = i;
-                    final int col = j;
-                    executor.submit(() -> {
-                        Run_J run = new Run_J(row, col);
-                        run.run();
-                    });
-                }
-            }
-
-            animationTimer = new AnimationTimer() {
-                @Override
-                public void handle(long now) {
-                    if (!isRunning) {
-                        animationTimer.stop();
-                    } else {
-                        printOutputValues();
-                    }
-                }
-            };
-            animationTimer.start();
+//            ExecutorService executor = Executors.newFixedThreadPool(SILO_ROW * SILO_COL);
+//            for (int i = 0; i < SILO_ROW; i++) {
+//                for (int j = 0; j < SILO_COL; j++) {
+//                    final int row = i;
+//                    final int col = j;
+//                    executor.submit(() -> {
+//                        Run_J run = new Run_J(row, col);
+//                        run.run();
+//                    });
+//                }
+//            }
+//
+//            animationTimer = new AnimationTimer() {
+//                @Override
+//                public void handle(long now) {
+//                    if (!isRunning) {
+//                        animationTimer.stop();
+//                    } else {
+//                        printOutputValues();
+//                    }
+//                }
+//            };
+//            animationTimer.start();
 
 
             startButton.setDisable(true);
@@ -297,7 +297,7 @@ public class GUI_R extends Application {
     }
 
     public void printOutputValues(){
-        System.out.println("Interpreter_A.getOutputValuesList().size(): " + Interpreter_A.getOutputValuesList().size());
+//        System.out.println("Interpreter_A.getOutputValuesList().size(): " + Interpreter_A.getOutputValuesList().size());
         int temp = Interpreter_A.getOutputValuesList().size();
         for (int s = 0; s < temp; s++){
             String outputValueStr = Interpreter_A.getOutputValuesList().get(s).toString().replaceAll(",", "\n").replaceAll("[ \\[\\]]","");
