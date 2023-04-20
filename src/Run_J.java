@@ -37,9 +37,7 @@ public class Run_J implements Runnable {
                     // handle the exception if the thread is interrupted
                 }
             }
-
         }
-
     }
 
     public int getIndex() {
