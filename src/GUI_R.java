@@ -31,7 +31,8 @@ public class GUI_R extends Application {
     private static Button startButton;
     private static Button pauseStepButton;
     private static Button stopButton;
-    Interpreter_A interpreterA1 = new Interpreter_A("");
+    static HBox hBox;
+    static Interpreter_A interpreterA1 = new Interpreter_A("");
 
 
     @Override
@@ -83,22 +84,24 @@ public class GUI_R extends Application {
         //TODO: Put inputLabel with inputArea in one VBox and same for output
 //        ioLabel.getChildren().addAll(inputLabel, outputLabel);
 //        ioPanel.getChildren().addAll(inputArea, outputArea);
-        HBox vBox = new HBox();
+        hBox = new HBox();
         for (int i=0; i<interpreterA1.getInputValuesList().size(); i++){
             System.out.println("list contains: " + interpreterA1.getInputValuesList().get(i));
             String inputValueStr = interpreterA1.getInputValuesList().get(i).toString().replaceAll(",", "\n").replaceAll("[ \\[\\]]","");
-            vBox.getChildren().add(createInput(inputValueStr));
+            hBox.getChildren().add(createInput(inputValueStr));
         }
         for (int j = 0; j<interpreterA1.getOutputCoordinatesList().size(); j++){
-            vBox.getChildren().add(createOutput());
+            String outputValueStr = interpreterA1.getOutputValuesList().get(j).toString().replaceAll(",", "\n").replaceAll("[ \\[\\]]","");
+            System.out.println("Output in GUI: " + outputValueStr);
+            hBox.getChildren().add(createOutput(outputValueStr));
         }
 
 
-        vBox.setPadding(new Insets(10));
-        vBox.prefWidthProperty().bind(root.widthProperty().multiply(0.25));
+        hBox.setPadding(new Insets(10));
+        hBox.prefWidthProperty().bind(root.widthProperty().multiply(0.25));
 //        vBox.prefHeightProperty().bind(root.heightProperty().multiply(0.75));
-        vBox.setPrefHeight(200);
-        root.setLeft(vBox);
+        hBox.setPrefHeight(200);
+        root.setLeft(hBox);
         root.setStyle("-fx-background-color: #222222;");
 
 
@@ -136,6 +139,7 @@ public class GUI_R extends Application {
                         Run_J run = new Run_J(i,j);
                         Thread thread = new Thread(run);
                         thread.start();
+
                         //interpreterA1.runInstructions(commandFromGUI, i, j);
                     }
                 }
@@ -217,6 +221,16 @@ public class GUI_R extends Application {
         textArea.setTextFormatter(textFormatterIn);
     }
 
+    public static void drawOutput(){
+        for (int j = 0; j<interpreterA1.getOutputCoordinatesList().size(); j++){
+            String outputValueStr = interpreterA1.getOutputValuesList().get(j).toString().replaceAll(",", "\n").replaceAll("[ \\[\\]]","");
+            System.out.println("Output in GUI: " + outputValueStr);
+            hBox.getChildren().remove(1);
+            hBox.getChildren().add(createOutput(outputValueStr));
+        }
+
+    }
+
     public void createSilos(){
         Interpreter_A interpreterA1 = new Interpreter_A("");
         interpreterA1.getArrayOfSilos();
@@ -246,15 +260,13 @@ public class GUI_R extends Application {
     }
 
 
-    public VBox createOutput(){
+    public static VBox createOutput(String str){
         VBox vBox = new VBox();
         Label outputLabel = new Label("OUTPUT");
         outputLabel.setFont(Font.font("Monospaced", 14));
         outputLabel.setTextFill(Color.WHITE);
 
-        //Output
-        String listString2 = interpreterA1.getInputValues().toString().replaceAll(",", "\n").replaceAll("[ \\[\\]]","");
-        TextArea outputArea = new TextArea();
+        TextArea outputArea = new TextArea(str);
         outputArea.setEditable(false);
         outputArea.setPrefHeight(200);
         outputArea.setWrapText(true);
