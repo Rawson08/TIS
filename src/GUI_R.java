@@ -146,7 +146,7 @@ public class GUI_R extends Application {
             pauseStepButton.setText("Pause");
             stopButton.setDisable(true);
             siloGrid.setDisable(false);
-
+            System.out.println("outputs:" + Interpreter_A.getOutputValuesList());
 
             // TODO: Reset all of the silos
         });

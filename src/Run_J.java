@@ -39,7 +39,7 @@ public class Run_J implements Runnable {
             }
 
         }
-        System.out.println("outputs:" + Interpreter_A.getOutputValuesList());
+
     }
 
     public int getIndex() {
