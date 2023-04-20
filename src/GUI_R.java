@@ -40,7 +40,7 @@ public class GUI_R extends Application {
     private SiloGUI siloGUI;
     private static TextArea siloArea;
     static Silo_A siloA;
-
+    static Run_J run;
 
     public GUI_R(){
         siloGUI = new SiloGUI();
@@ -50,37 +50,38 @@ public class GUI_R extends Application {
     }
 
 
-//    public static void highlightLine(final int lineIndex) {
-//        // Run the update on the GUI thread
-//        Platform.runLater(() -> {
-//            // Get the list of instructions from the SiloGUI instance
-//            List<String> listOfInstructions = siloA.getListOfInstructions();
-//
-//            // Get the line of text to highlight
-//
-////            String lineText = listOfInstructions.get(0);
-//
-//            // Get the TextFlow node from the TextArea
-//            TextFlow textFlow = (TextFlow) siloArea.lookup(".text");
-//
-//            // Clear any previous highlighting
-//            textFlow.getChildren().forEach(node -> {
-//                if (node instanceof Text) {
-//                    ((Text) node).setFill(Color.BLACK);
-//                }
-//            });
-//
-//            // Iterate through the nodes in the TextFlow to find the node
-//            // representing the line of text to highlight
-//            for (int i = 0; i < textFlow.getChildren().size(); i++) {
-//                Node node = textFlow.getChildren().get(i);
-//                if (node instanceof Text && ((Text) node).getText().equals(textFlow)) {
-//                    // Highlight the line by setting its fill color to red
-//                    ((Text) node).setFill(Color.RED);
-//                }
-//            }
-//        });
-//    }
+    public static void highlightLine() {
+        // Run the update on the GUI thread
+        Platform.runLater(() -> {
+            // Get the list of instructions from the SiloGUI instance
+            List<String> listOfInstructions = siloA.getListOfInstructions();
+
+            // Get the line of text to highlight
+
+            String lineText = listOfInstructions.get(run.getIndex());
+            System.out.println("run.getIndex(): " + run.getIndex());
+
+            // Get the TextFlow node from the TextArea
+            TextFlow textFlow = (TextFlow) siloArea.lookup(".text");
+
+            // Clear any previous highlighting
+            textFlow.getChildren().forEach(node -> {
+                if (node instanceof Text) {
+                    ((Text) node).setFill(Color.BLACK);
+                }
+            });
+
+            // Iterate through the nodes in the TextFlow to find the node
+            // representing the line of text to highlight
+            for (int i = 0; i < textFlow.getChildren().size(); i++) {
+                Node node = textFlow.getChildren().get(i);
+                if (node instanceof Text && ((Text) node).getText().equals(lineText)) {
+                    // Highlight the line by setting its fill color to red
+                    ((Text) node).setFill(Color.RED);
+                }
+            }
+        });
+    }
 
 
     @Override
@@ -183,14 +184,14 @@ public class GUI_R extends Application {
                 for (int j=0; j<SILO_COL; j++) {
                     for (int k = 0; k < Interpreter_A.arrayOfSilos[i][j].getListOfInstructions().size(); k++) {
                         String commandFromGUI = Interpreter_A.arrayOfSilos[i][j].getListOfInstructions().get(k);
-                        Run_J run = new Run_J(i,j);
+                        run = new Run_J(i,j);
                         Thread thread = new Thread(run);
                         thread.start();
                         //interpreterA1.runInstructions(commandFromGUI, i, j);
                     }
                 }
             }
-//            siloGUI.disableText(siloArea);
+            siloGUI.disableText(siloArea);
             startButton.setDisable(true);
             pauseStepButton.setDisable(false);
             stopButton.setDisable(false);

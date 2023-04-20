@@ -35,6 +35,10 @@ public class SiloGUI {
         return siloArea;
     }
 
+    public static void setSiloArea(TextArea siloArea) {
+        SiloGUI.siloArea = siloArea;
+    }
+
     private static TextArea siloArea;
 
     public SiloGUI(){
@@ -79,7 +83,7 @@ public class SiloGUI {
         int startIndex = 0; // The starting position of the text to be highlighted
         int endIndex = 2; // The ending position of the text to be highlighted
         siloArea.selectRange(startIndex, endIndex);
-
+        setSiloArea(siloArea);
 
 
         siloArea.setFont(Font.font("Monospaced", 12));
