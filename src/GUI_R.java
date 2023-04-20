@@ -31,7 +31,6 @@ public class GUI_R extends Application {
     private static Button startButton;
     private static Button pauseStepButton;
     private static Button stopButton;
-    private static HBox vBox;
     Interpreter_A interpreterA1 = new Interpreter_A("");
 
 
@@ -84,16 +83,14 @@ public class GUI_R extends Application {
         //TODO: Put inputLabel with inputArea in one VBox and same for output
 //        ioLabel.getChildren().addAll(inputLabel, outputLabel);
 //        ioPanel.getChildren().addAll(inputArea, outputArea);
-        vBox = new HBox();
+        HBox vBox = new HBox();
         for (int i=0; i<interpreterA1.getInputValuesList().size(); i++){
             System.out.println("list contains: " + interpreterA1.getInputValuesList().get(i));
             String inputValueStr = interpreterA1.getInputValuesList().get(i).toString().replaceAll(",", "\n").replaceAll("[ \\[\\]]","");
             vBox.getChildren().add(createInput(inputValueStr));
         }
-
-        //Output
         for (int j = 0; j<interpreterA1.getOutputCoordinatesList().size(); j++){
-            vBox.getChildren().add(createOutput(""));
+            vBox.getChildren().add(createOutput());
         }
 
 
@@ -134,11 +131,10 @@ public class GUI_R extends Application {
             }
             for (int i=0; i<SILO_ROW; i++){
                 for (int j=0; j<SILO_COL; j++) {
-                    Run_J run = new Run_J(i,j);
-                    Thread thread = new Thread(run);
-                    printOutputValues();
-                    thread.start();
-                    //interpreterA1.runInstructions(commandFromGUI, i, j);
+                        Run_J run = new Run_J(i,j);
+                        Thread thread = new Thread(run);
+                        thread.start();
+                        //interpreterA1.runInstructions(commandFromGUI, i, j);
                 }
             }
             startButton.setDisable(true);
@@ -246,33 +242,16 @@ public class GUI_R extends Application {
         return vBox1;
     }
 
-    public void printOutputValues(){
-        System.out.println("Interpreter_A.getOutputValuesList().size(): " + Interpreter_A.getOutputValuesList().size());
-        int temp = Interpreter_A.getOutputValuesList().size();
-        for (int s = 0; s < temp; s++){
-            String outputValueStr = Interpreter_A.getOutputValuesList().get(s).toString().replaceAll(",", "\n").replaceAll("[ \\[\\]]","");
-            GUI_R.drawOutput(outputValueStr);
-        }
-//        String outputValueStr = Interpreter_A.getOutputValuesList().get(Interpreter_A.getOutputValuesList().size()).toString().replaceAll(",", "\n").replaceAll("[ \\[\\]]","");
-    }
 
-    public static void drawOutput(String str){
-        for (int j = 0; j<Interpreter_A.getOutputCoordinatesList().size(); j++){
-            vBox.getChildren().remove(1);
-            vBox.getChildren().add(createOutput(str));
-        }
-    }
-
-
-    public static VBox createOutput(String str){
+    public VBox createOutput(){
         VBox vBox = new VBox();
         Label outputLabel = new Label("OUTPUT");
         outputLabel.setFont(Font.font("Monospaced", 14));
         outputLabel.setTextFill(Color.WHITE);
 
         //Output
-//        String listString2 = interpreterA1.getInputValues().toString().replaceAll(",", "\n").replaceAll("[ \\[\\]]","");
-        TextArea outputArea = new TextArea(str);
+        String listString2 = interpreterA1.getInputValues().toString().replaceAll(",", "\n").replaceAll("[ \\[\\]]","");
+        TextArea outputArea = new TextArea();
         outputArea.setEditable(false);
         outputArea.setPrefHeight(200);
         outputArea.setWrapText(true);
