@@ -1,8 +1,11 @@
 public class Run_J implements Runnable {
     private int i,j;
+
+    private int index = 0;
     public Run_J(int i, int j) {
         this.i= i;
         this.j=j;
+        this.index = index;
     }
 
     public void run() {
@@ -28,5 +31,9 @@ public class Run_J implements Runnable {
 
         }
         System.out.println("outputs:" + Interpreter_A.getOutputValuesList());
+    }
+
+    public int getIndex() {
+        return index;
     }
 }
