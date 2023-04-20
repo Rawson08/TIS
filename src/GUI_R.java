@@ -138,17 +138,17 @@ public class GUI_R extends Application {
                 }
             }
 
-            for (int i=0; i<SILO_ROW; i++){
-                for (int j=0; j<SILO_COL; j++) {
-                    Run_J run = new Run_J(i,j);
-                    Thread thread = new Thread(run);
-                    thread.start();
-                }
-            }
-
-            TextArea textArea = SiloGUI.getSiloArea();
-            textArea.selectRange(1, 15);
-            SiloGUI.setSiloArea(textArea);
+//            for (int i=0; i<SILO_ROW; i++){
+//                for (int j=0; j<SILO_COL; j++) {
+//                    Run_J run = new Run_J(i,j);
+//                    Thread thread = new Thread(run);
+//                    thread.start();
+//                }
+//            }
+//
+//            TextArea textArea = SiloGUI.getSiloArea();
+//            textArea.selectRange(1, 15);
+//            SiloGUI.setSiloArea(textArea);
 
 //            animationTimer = new AnimationTimer() {
 //                @Override
@@ -169,29 +169,7 @@ public class GUI_R extends Application {
 //            };
 //            animationTimer.start();
 
-//            ExecutorService executor = Executors.newFixedThreadPool(SILO_ROW * SILO_COL);
-//            for (int i = 0; i < SILO_ROW; i++) {
-//                for (int j = 0; j < SILO_COL; j++) {
-//                    final int row = i;
-//                    final int col = j;
-//                    executor.submit(() -> {
-//                        Run_J run = new Run_J(row, col);
-//                        run.run();
-//                    });
-//                }
-//            }
-//
-//            animationTimer = new AnimationTimer() {
-//                @Override
-//                public void handle(long now) {
-//                    if (!isRunning) {
-//                        animationTimer.stop();
-//                    } else {
-//                        printOutputValues();
-//                    }
-//                }
-//            };
-//            animationTimer.start();
+            runGame();
 
 
             startButton.setDisable(true);
@@ -201,12 +179,16 @@ public class GUI_R extends Application {
         });
 
         pauseStepButton.setOnAction(event -> {
+            startButton.setDisable(false);
             if (isRunning) {
                 pauseStepButton.setText("Step");
-
                 isRunning = false;
             } else {
                 // TODO: Execute 1 instruction from each silo
+            }
+
+            if (Objects.equals(pauseStepButton.getText(), "Step")){
+                runGame();
             }
         });
 
@@ -223,7 +205,7 @@ public class GUI_R extends Application {
         });
 
         // Disable the pause/step and stop buttons initially
-        pauseStepButton.setDisable(true);
+        pauseStepButton.setDisable(false);
         stopButton.setDisable(true);
 
         // Add the buttons to an HBox
@@ -258,6 +240,32 @@ public class GUI_R extends Application {
         primaryStage.setTitle("Project 4: TIS-100");
         primaryStage.setScene(scene);
         primaryStage.show();
+    }
+
+    private void runGame() {
+        ExecutorService executor = Executors.newFixedThreadPool(SILO_ROW * SILO_COL);
+        for (int i = 0; i < SILO_ROW; i++) {
+            for (int j = 0; j < SILO_COL; j++) {
+                final int row = i;
+                final int col = j;
+                executor.submit(() -> {
+                    Run_J run = new Run_J(row, col);
+                    run.run();
+                });
+            }
+        }
+
+        animationTimer = new AnimationTimer() {
+            @Override
+            public void handle(long now) {
+                if (!isRunning) {
+                    animationTimer.stop();
+                } else {
+                    printOutputValues();
+                }
+            }
+        };
+        animationTimer.start();
     }
 
     public static void textAreaLimiter(TextArea textArea){
