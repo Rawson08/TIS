@@ -133,7 +133,7 @@ class NoopInstruction extends Instruction {
 }
 
 class SwapInstruction extends Instruction {
-int i, j;
+    int i, j;
     public SwapInstruction(int i, int j){
         this.i = i;
         this.j = j;
