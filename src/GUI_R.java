@@ -311,7 +311,7 @@ public class GUI_R extends Application {
     }
 
     public static void drawOutput(String str){
-        for (int j = 0; j<Interpreter_A.getOutputCoordinatesList().size(); j++){
+        for (int j = 0; j<Interpreter_A.getOutputCoordinatesList().size() + 1; j++){
             vBox.getChildren().remove(Interpreter_A.getInputValuesList().size());
             vBox.getChildren().add(createOutput(str));
         }
