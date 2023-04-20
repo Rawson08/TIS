@@ -1,3 +1,5 @@
+import javafx.animation.Animation;
+import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -33,6 +35,7 @@ public class GUI_R extends Application {
     private static Button stopButton;
     private static HBox vBox;
     Interpreter_A interpreterA1 = new Interpreter_A("");
+    private static AnimationTimer animationTimer;
 
 
     @Override
@@ -114,7 +117,6 @@ public class GUI_R extends Application {
         stopButton.setStyle("-fx-border-color: white; -fx-border-width: 1px;");
 
 
-
         startButton.setOnAction(event -> {
             isRunning = true;
 
@@ -136,8 +138,26 @@ public class GUI_R extends Application {
                 for (int j=0; j<SILO_COL; j++) {
                     Run_J run = new Run_J(i,j);
                     Thread thread = new Thread(run);
-                    printOutputValues();
+                    animationTimer = new AnimationTimer() {
+                        @Override
+                        public void handle(long now) {
+                            if (!isRunning) {
+                                animationTimer.stop();
+                            }
+                            else if (isRunning){
+                                printOutputValues();
+                            }
+                            try {
+                                Thread.sleep(1000); // pause the thread for 1 second
+                            } catch (InterruptedException e) {
+                                // handle the exception if the thread is interrupted
+                            }
+
+                        }
+                    };
                     thread.start();
+                    animationTimer.start();
+
                     //interpreterA1.runInstructions(commandFromGUI, i, j);
                 }
             }
@@ -164,7 +184,6 @@ public class GUI_R extends Application {
             pauseStepButton.setText("Pause");
             stopButton.setDisable(true);
             siloGrid.setDisable(false);
-
 
             // TODO: Reset all of the silos
         });
@@ -246,8 +265,8 @@ public class GUI_R extends Application {
         return vBox1;
     }
 
-    public void printOutputValues(){
-        System.out.println("Interpreter_A.getOutputValuesList().size(): " + Interpreter_A.getOutputValuesList().size());
+    public static void printOutputValues(){
+        System.out.println("calling print output values");
         int temp = Interpreter_A.getOutputValuesList().size();
         for (int s = 0; s < temp; s++){
             String outputValueStr = Interpreter_A.getOutputValuesList().get(s).toString().replaceAll(",", "\n").replaceAll("[ \\[\\]]","");
