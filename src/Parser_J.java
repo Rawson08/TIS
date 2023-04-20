@@ -70,22 +70,21 @@ public class Parser_J {
                 case ADD:
                     tokenizer.nextToken();
                     int addNumber = 0;
-                    // TODO: check for proper follow-up token
                     if(tokenizer.getTokenType() == Tokenizer_J.TokenType.NUMBER){
                         return new AddInstruction(Integer.parseInt(tokenizer.getTokenValue()), i, j);
                     }
                     else if(tokenizer.getTokenType() == Tokenizer_J.TokenType.PORT){
                         if(tokenizer.getTokenValue().equals("UP")){
-                            Interpreter_A.arrayOfSilos[i][j].getPortA().getUpPortAccValue();
+                            addNumber = Interpreter_A.arrayOfSilos[i][j].getPortA().getUpPortAccValue();
                         }
                         else if(tokenizer.getTokenValue().equals("DOWN")){
-                            Interpreter_A.arrayOfSilos[i][j].getPortA().getDownPortAccValue();
+                            addNumber = Interpreter_A.arrayOfSilos[i][j].getPortA().getDownPortAccValue();
                         }
                         else if(tokenizer.getTokenValue().equals("LEFT")){
-                            Interpreter_A.arrayOfSilos[i][j].getPortA().getLeftPortAccValue();
+                            addNumber = Interpreter_A.arrayOfSilos[i][j].getPortA().getLeftPortAccValue();
                         }
                         else if(tokenizer.getTokenValue().equals("RIGHT")){
-                            Interpreter_A.arrayOfSilos[i][j].getPortA().getRightPortAccValue();
+                            addNumber = Interpreter_A.arrayOfSilos[i][j].getPortA().getRightPortAccValue();
                         }
                     } else if (tokenizer.getTokenType() == Tokenizer_J.TokenType.REGISTER) {
                         addNumber = Interpreter_A.arrayOfSilos[i][j].getAcc();

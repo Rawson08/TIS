@@ -178,7 +178,7 @@ class AddInstruction extends Instruction {
     public boolean execute() {
         // execute ADD instruction should get src value and add to acc
         int number = src;
-        Interpreter_A.arrayOfSilos[i][j].setAcc(Interpreter_A.arrayOfSilos[i][j].getAcc() + number);
+        Interpreter_A.arrayOfSilos[i][j].setAcc(number + Interpreter_A.arrayOfSilos[i][j].getAcc());
         System.out.println("adding: " + number);
         return true;
     }
