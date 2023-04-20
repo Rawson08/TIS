@@ -249,13 +249,9 @@ public void addInstruction(String commandFromGUI, int i, int j){
     public static List<Integer> getInputValues() {
         return inputValues;
     }
-    public int getNumRows() {
-        return numRows;
-    }
+    public int getNumRows() {return numRows;}
 
-    public int getNumCols() {
-        return numCols;
-    }
+    public int getNumCols() {return numCols;}
 }
 
 

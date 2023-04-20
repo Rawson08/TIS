@@ -13,7 +13,6 @@ import javafx.scene.text.Font;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
-import java.lang.module.FindException;
 import java.util.Collections;
 import java.util.Objects;
 
@@ -132,13 +131,10 @@ public class GUI_R extends Application {
             }
             for (int i=0; i<SILO_ROW; i++){
                 for (int j=0; j<SILO_COL; j++) {
-                    for (int k = 0; k < Interpreter_A.arrayOfSilos[i][j].getListOfInstructions().size(); k++) {
-                        String commandFromGUI = Interpreter_A.arrayOfSilos[i][j].getListOfInstructions().get(k);
-                        Run_J run = new Run_J(i,j, k);
+                        Run_J run = new Run_J(i,j);
                         Thread thread = new Thread(run);
                         thread.start();
                         //interpreterA1.runInstructions(commandFromGUI, i, j);
-                    }
                 }
             }
             startButton.setDisable(true);
