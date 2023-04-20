@@ -19,6 +19,7 @@ public class Run_J implements Runnable {
                     while(index < length && GUI_R.isRunning()) {
                         if(Interpreter_A.arrayOfSilos[i][j].getInstructions().get(index).execute()) {
                             index++;
+                            Interpreter_A.arrayOfSilos[i][j].setInstructionIndex(index);
                         }
                         if(index == length) index = 0;
                         try {
