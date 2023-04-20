@@ -30,11 +30,21 @@ public class SiloGUI {
     private static Label leftArrow;
     private static Label rightArrow;
     private static HBox arrowBox;
+
+    public static void setSiloArea(TextArea siloArea) {
+        SiloGUI.siloArea = siloArea;
+    }
+
+    public static TextArea getSiloArea() {
+        return siloArea;
+    }
+
     private static TextArea siloArea;
 
     public SiloGUI(){
 
     }
+
 
     public BorderPane drawSilo(List<String> str, int currentInstructionIndex, int i, int j){
         accIntValue = Interpreter_A.arrayOfSilos[i][j].getAcc();
@@ -71,6 +81,8 @@ public class SiloGUI {
         GUI_R.textAreaLimiter(siloArea);
 
         // TODO: Highlight the current instruction
+        siloArea.selectRange(5, 10);
+
         siloArea.setFont(Font.font("Monospaced", 12));
         siloArea.setStyle("-fx-control-inner-background: #222222; -fx-text-fill: #ffffff;");
         return new BorderPane(siloArea, upArrow, rightOfSilo, downArrow, leftArrow);

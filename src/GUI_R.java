@@ -146,6 +146,10 @@ public class GUI_R extends Application {
                 }
             }
 
+            TextArea textArea = SiloGUI.getSiloArea();
+            textArea.selectRange(1, 15);
+            SiloGUI.setSiloArea(textArea);
+
 //            animationTimer = new AnimationTimer() {
 //                @Override
 //                public void handle(long now) {
