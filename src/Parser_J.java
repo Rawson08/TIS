@@ -76,7 +76,7 @@ public class Parser_J {
                     tokenizer.nextToken();
                     // TODO: check for proper follow-up token
                     String subString = tokenizer.getTokenValue();
-                    return new SubInstruction(subString);
+                    return new SubInstruction(tokenizer.getTokenType(), subString, i, j);
                 case NEGATE:
                     return new NegateInstruction(i,j);
                 case JUMP:
