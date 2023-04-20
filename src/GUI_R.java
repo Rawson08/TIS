@@ -21,6 +21,8 @@ import java.util.Collections;
 import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class GUI_R extends Application {
 
@@ -40,7 +42,7 @@ public class GUI_R extends Application {
     Interpreter_A interpreterA1 = new Interpreter_A("");
     private static HBox vBox;
     private static AnimationTimer animationTimer;
-
+    private ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
 
     @Override
     public void start(Stage primaryStage) {
@@ -184,13 +186,17 @@ public class GUI_R extends Application {
                 pauseStepButton.setText("Step");
                 isRunning = false;
             } else {
+                stepButtonExecute();
                 // TODO: Execute 1 instruction from each silo
             }
+//            if (Objects.equals(pauseStepButton.getText(), "Step")){
+//
+//                stepButtonExecute();
+//            }
 
-            if (Objects.equals(pauseStepButton.getText(), "Step")){
-                runGame();
-            }
         });
+
+
 
         stopButton.setOnAction(event -> {
             isRunning = false;
@@ -240,6 +246,17 @@ public class GUI_R extends Application {
         primaryStage.setTitle("Project 4: TIS-100");
         primaryStage.setScene(scene);
         primaryStage.show();
+    }
+
+    private void stepButtonExecute() {
+        pauseStepButton.setOnAction(event1 -> {
+            isRunning = true;
+            // Call your method here
+//            executor.schedule(this::runGame, 1000, TimeUnit.MILLISECONDS);
+            runGame();
+            isRunning = false;
+            executor.shutdownNow();
+        });
     }
 
     private void runGame() {
