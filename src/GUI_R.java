@@ -198,17 +198,11 @@ public class GUI_R extends Application {
     }
 
     private void runGame() {
-        ExecutorService executor = Executors.newFixedThreadPool(SILO_ROW * SILO_COL);
-        for (int i = 0; i < SILO_ROW; i++) {
-            for (int j = 0; j < SILO_COL; j++) {
-                final int row = i;
-                final int col = j;
-                executor.submit(() -> {
-                    Run_J run = new Run_J(row, col);
-                    run.run();
-                });
+            for (int i = 0; i < SILO_ROW; i++) {
+                for (int j = 0; j < SILO_COL; j++) {
+                    new Thread(new Run_J(i, j)).start();
+                }
             }
-        }
 
         animationTimer = new AnimationTimer() {
             @Override

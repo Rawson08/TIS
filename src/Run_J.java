@@ -16,13 +16,12 @@ public class Run_J implements Runnable {
         this.i= i;
         this.j=j;
         this.index = index;
-        this.sleepTime = sleepTime+= 100;
+        this.sleepTime = sleepTime;
     }
 
+    @Override
     public synchronized void run() {
-        // code to be executed in this thread
         while(GUI_R.isRunning()) {
-            int index = 0;
             int length = Interpreter_A.arrayOfSilos[i][j].getInstructions().size();
             if(!GUI_R.isRunning()) break;
             while(index < length && GUI_R.isRunning()) {
@@ -30,13 +29,16 @@ public class Run_J implements Runnable {
                     index++;
                     Interpreter_A.arrayOfSilos[i][j].setInstructionIndex(index);
                 }
+                else System.out.println("waiting");
+                notify();
                 if(index == length) index = 0;
                 try {
-                    Thread.sleep(sleepTime); // pause the thread for 1 second
+                    wait(sleepTime); // pause the thread for 1 second
                 } catch (InterruptedException e) {
                     // handle the exception if the thread is interrupted
                 }
             }
+
         }
     }
 
