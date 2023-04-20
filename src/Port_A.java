@@ -1,5 +1,10 @@
 /**
- * This is the port has hold four side values for every silo
+ * Project 4: TIS-100 Game
+ * Class: CS351L
+ * Group Members: Joel Gloetzner, Roshan Subedi, and Aayush Kafle
+ * Description: This is the implementation of the game TIS:100 in JavaFX.
+ *
+ * This is the port that holds four side values for every silo
  */
 public class Port_A {
     private int upPortAccValue;

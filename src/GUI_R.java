@@ -1,7 +1,18 @@
+/*
+ * Project 4: TIS-100 Game
+ * Class: CS351L
+ * Group Members: Joel Gloetzner, Roshan Subedi, and Aayush Kafle
+ * Description: This is the implementation of the game TIS:100 in JavaFX.
+ *
+ * This is the main GUI class which handles the drawing of the GUI, calling the Parsers and Interpreters, logics for
+ * the buttons, implementation of SiloGUI, and all sort of drawing stuffs along with their logic.
+ * */
+
 import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
@@ -253,6 +264,7 @@ public class GUI_R extends Application {
             isRunning = true;
             // Call your method here
 //            executor.schedule(this::runGame, 1000, TimeUnit.MILLISECONDS);
+
             runGame();
             isRunning = false;
             executor.shutdownNow();

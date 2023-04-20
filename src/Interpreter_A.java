@@ -1,4 +1,9 @@
 /**
+ * Project 4: TIS-100 Game
+ * Group Members: Joel Gloetzner, Roshan Subedi, and Aayush Kafle
+ * Description: This is the implementation of the game TIS:100 in JavaFX.
+ *
+ *
  * This is the interpreter to execute internal AT from the silo.
  *
  */

@@ -1,4 +1,9 @@
 /**
+ * Project 4: TIS-100 Game
+ * Class: CS351L
+ * Group Members: Joel Gloetzner, Roshan Subedi, and Aayush Kafle
+ * Description: This is the implementation of the game TIS:100 in JavaFX.
+ *
  * this class represents a parser for the silo language
  */
 public class Parser_J {

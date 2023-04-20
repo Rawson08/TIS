@@ -1,3 +1,12 @@
+/**
+ * Project 4: TIS-100 Game
+ * Class: CS351L
+ * Group Members: Joel Gloetzner, Roshan Subedi, and Aayush Kafle
+ * Description: This is the implementation of the game TIS:100 in JavaFX.
+ *
+ * This is the Thread class which handles threading for each silos respectively. Called from the GUI_R Class.
+ */
+
 public class Run_J implements Runnable {
     private int i,j;
     private int index = 0;

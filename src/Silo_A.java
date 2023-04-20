@@ -3,6 +3,11 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
+ * Project 4: TIS-100 Game
+ * Class: CS351L
+ * Group Members: Joel Gloetzner, Roshan Subedi, and Aayush Kafle
+ * Description: This is the implementation of the game TIS:100 in JavaFX.
+ *
  * This class is where we index every silo through two-dimensional array as we discussed in our weekly meeting.
  *
  */
