@@ -1,4 +1,6 @@
 import javafx.animation.AnimationTimer;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -13,9 +15,12 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.util.Collections;
 import java.util.Objects;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class GUI_R extends Application {
 
@@ -132,6 +137,7 @@ public class GUI_R extends Application {
                     }
                 }
             }
+
             for (int i=0; i<SILO_ROW; i++){
                 for (int j=0; j<SILO_COL; j++) {
                     Run_J run = new Run_J(i,j);
