@@ -69,28 +69,9 @@ public class Parser_J {
                     return new SaveInstruction(i, j);
                 case ADD:
                     tokenizer.nextToken();
-                    int addNumber = 0;
-                    if(tokenizer.getTokenType() == Tokenizer_J.TokenType.NUMBER){
-                        return new AddInstruction(Integer.parseInt(tokenizer.getTokenValue()), i, j);
-                    }
-                    else if(tokenizer.getTokenType() == Tokenizer_J.TokenType.PORT){
-                        if(tokenizer.getTokenValue().equals("UP")){
-                            addNumber = Interpreter_A.arrayOfSilos[i][j].getPortA().getUpPortAccValue();
-                        }
-                        else if(tokenizer.getTokenValue().equals("DOWN")){
-                            addNumber = Interpreter_A.arrayOfSilos[i][j].getPortA().getDownPortAccValue();
-                        }
-                        else if(tokenizer.getTokenValue().equals("LEFT")){
-                            addNumber = Interpreter_A.arrayOfSilos[i][j].getPortA().getLeftPortAccValue();
-                        }
-                        else if(tokenizer.getTokenValue().equals("RIGHT")){
-                            addNumber = Interpreter_A.arrayOfSilos[i][j].getPortA().getRightPortAccValue();
-                        }
-                    } else if (tokenizer.getTokenType() == Tokenizer_J.TokenType.REGISTER) {
-                        addNumber = Interpreter_A.arrayOfSilos[i][j].getAcc();
-                    }
-
-                    return new AddInstruction(addNumber, i, j);
+                    String addName = tokenizer.getTokenValue();
+                    Tokenizer_J.TokenType addType = tokenizer.getTokenType();
+                    return new AddInstruction(addType,addName, i, j);
                 case SUB:
                     tokenizer.nextToken();
                     // TODO: check for proper follow-up token
