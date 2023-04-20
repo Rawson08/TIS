@@ -213,14 +213,41 @@ class AddInstruction extends Instruction {
 
 class SubInstruction extends Instruction {
     private String src;
+    private Tokenizer_J.TokenType tokenType;
+    private int i, j;
 
-    public SubInstruction(String src) {
+    public SubInstruction(Tokenizer_J.TokenType tokenType, String src, int i, int j) {
         this.src = src;
+        this.tokenType = tokenType;
+        this.i = i;
+        this.j = j;
     }
 
     @Override
     public boolean execute() {
         // execute SUB instruction will subtract src value from acc
+        int subNumber = 0;
+        if(tokenType == Tokenizer_J.TokenType.NUMBER){
+            subNumber = Integer.parseInt(src);
+        }
+        else if(tokenType == Tokenizer_J.TokenType.PORT){
+            if(src.equals("UP")){
+                subNumber = Interpreter_A.arrayOfSilos[i][j].getPortA().getUpPortAccValue();
+            }
+            else if(src.equals("DOWN")){
+                subNumber = Interpreter_A.arrayOfSilos[i][j].getPortA().getDownPortAccValue();
+            }
+            else if(src.equals("LEFT")){
+                subNumber = Interpreter_A.arrayOfSilos[i][j].getPortA().getLeftPortAccValue();
+            }
+            else if(src.equals("RIGHT")){
+                subNumber = Interpreter_A.arrayOfSilos[i][j].getPortA().getRightPortAccValue();
+            }
+        } else if (tokenType == Tokenizer_J.TokenType.REGISTER) {
+            subNumber = Interpreter_A.arrayOfSilos[i][j].getAcc();
+        }
+        Interpreter_A.arrayOfSilos[i][j].setAcc(subNumber + Interpreter_A.arrayOfSilos[i][j].getAcc());
+        System.out.println("subtracting: " + subNumber);
         return true;
     }
 }
