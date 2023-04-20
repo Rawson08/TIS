@@ -14,6 +14,7 @@ public class Silo_A {
     // added list of instructions
     private ArrayList<Instruction> instructions;
     private List<String> listOfInstructions;
+    private int instructionIndex = 0;
 
     public void setSiloInsCount(int siloInsCount) {
         this.siloInsCount = siloInsCount;
@@ -26,6 +27,7 @@ public class Silo_A {
         this.instructions = new ArrayList<>();
         this.listOfInstructions = new ArrayList<>();
         this.portA = new Port_A();
+        this.instructionIndex = instructionIndex;
     }
 
     public ArrayList<Instruction> getInstructions() {
@@ -76,5 +78,13 @@ public class Silo_A {
         for (Instruction instruction : instructions) {
             instruction.execute();
         }
+    }
+
+    public int getInstructionIndex() {
+        return instructionIndex;
+    }
+
+    public void setInstructionIndex(int instructionIndex) {
+        this.instructionIndex = instructionIndex;
     }
 }
