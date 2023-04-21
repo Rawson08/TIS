@@ -77,7 +77,8 @@ public class SiloGUI {
         BorderPane.setMargin(downArrow, new Insets(0, 0, 10, 125));
 
         //This is the Silo TextArea section
-        siloArea = new TextArea(str.toString().replaceAll("[\\[\\]]", "").replaceAll(", ","\n"));
+        siloArea = new TextArea(str.toString().replaceAll("[\\[\\]]", "")
+                .replaceAll(", ","\n"));
 
         // TODO: Decided to make the program run from the cmd first and then make it run from the Silo inputs
         siloArea.setEditable(true);

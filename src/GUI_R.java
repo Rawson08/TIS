@@ -60,7 +60,8 @@ public class GUI_R extends Application {
 
         BorderPane root = new BorderPane();
         Scene scene = new Scene(root, screenWidth, screenHeight);
-        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("buttonStyles.css")).toExternalForm());        // Create silo grid
+        scene.getStylesheets().add(Objects.requireNonNull(getClass()
+                .getResource("buttonStyles.css")).toExternalForm());        // Create silo grid
         GridPane siloGrid = new GridPane();
         siloGrid.setAlignment(Pos.CENTER);
         siloGrid.setHgap(10);
@@ -78,7 +79,8 @@ public class GUI_R extends Application {
         vBox = new HBox();
         for (int i=0; i<interpreterA1.getInputValuesList().size(); i++){
             System.out.println("list contains: " + interpreterA1.getInputValuesList().get(i));
-            String inputValueStr = interpreterA1.getInputValuesList().get(i).toString().replaceAll(",", "\n").replaceAll("[ \\[\\]]","");
+            String inputValueStr = interpreterA1.getInputValuesList().get(i).toString()
+                    .replaceAll(",", "\n").replaceAll("[ \\[\\]]","");
             vBox.getChildren().add(createInput(inputValueStr));
         }
         for (int j = 0; j<interpreterA1.getOutputCoordinatesList().size(); j++){
@@ -169,8 +171,10 @@ public class GUI_R extends Application {
         for (int i = 0; i < SILO_ROW; i++) {
             for (int j = 0; j < SILO_COL; j++){
                 silo = new SiloGUI();
-                String cmdCommands = Interpreter_A.arrayOfSilos[i][j].getListOfInstructions().toString().replaceAll("[\\[\\]]", "");
-                siloGrid.add(silo.drawSilo(Collections.singletonList(cmdCommands), currentInstructionIndex, i, j), j, i);
+                String cmdCommands = Interpreter_A.arrayOfSilos[i][j].getListOfInstructions().toString().
+                        replaceAll("[\\[\\]]", "");
+                siloGrid.add(silo.drawSilo(Collections.singletonList(cmdCommands),
+                        currentInstructionIndex, i, j), j, i);
 
                 // disable textAreaInputForNewInstructions when the start button is pressed
                 silo.textAreaInputForNewInstructions(Interpreter_A.arrayOfSilos, i, j);
@@ -260,7 +264,8 @@ public class GUI_R extends Application {
     public void printOutputValues(){
         int temp = Interpreter_A.getOutputValuesList().size();
         for (int s = 0; s < temp; s++){
-            String outputValueStr = Interpreter_A.getOutputValuesList().get(s).toString().replaceAll(",", "\n").replaceAll("[ \\[\\]]","");
+            String outputValueStr = Interpreter_A.getOutputValuesList().get(s).toString().
+                    replaceAll(",", "\n").replaceAll("[ \\[\\]]","");
             GUI_R.drawOutput(outputValueStr);
         }
     }

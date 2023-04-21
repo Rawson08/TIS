@@ -33,4 +33,3 @@
 
 ## Errors and Bugs
 1. No highlight feature to show the current line the code is working from.
-2. 
